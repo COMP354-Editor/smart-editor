@@ -1,20 +1,25 @@
 <template>
   <div id="app">
-    <landing-page></landing-page>
+    <Editor></Editor>
   </div>
 </template>
 
 <script>
-  import LandingPage from '@/components/LandingPage'
+import LandingPage from './components/LandingPage'
+import Editor from './components/Editor'
 
-  export default {
-    name: 'smart-editor',
-    components: {
-      LandingPage
-    }
+export default {
+  name: 'smart-editor',
+  components: {
+    Editor,
+    LandingPage
   }
+}
 </script>
 
 <style>
-  /* CSS */
+#app{
+  /*overflow-x: hidden;*/
+}
+
 </style>

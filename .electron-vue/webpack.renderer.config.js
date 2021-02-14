@@ -19,7 +19,7 @@ const { VueLoaderPlugin } = require('vue-loader')
  * that provide pure *.vue files that need compiling
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/webpack-configurations.html#white-listing-externals
  */
-let whiteListedModules = ['vue']
+let whiteListedModules = ['vue', 'vuetify']
 
 let rendererConfig = {
   devtool: '#cheap-module-eval-source-map',
@@ -49,11 +49,6 @@ let rendererConfig = {
           'css-loader',
           {
             loader: 'sass-loader',
-            // Requires sass-loader@^7.0.0
-            options: {
-              implementation: require('sass'),
-              indentedSyntax: true // optional
-            },
             // Requires sass-loader@^8.0.0
             options: {
               implementation: require('sass'),
@@ -159,6 +154,7 @@ let rendererConfig = {
   resolve: {
     alias: {
       '@': path.join(__dirname, '../src/renderer'),
+      // 'vue$': path.resolve(__dirname, 'node_modules/vue/dist/vue.esm.js')
       'vue$': 'vue/dist/vue.esm.js'
     },
     extensions: ['.js', '.vue', '.json', '.css', '.node']

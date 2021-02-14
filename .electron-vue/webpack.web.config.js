@@ -36,11 +36,6 @@ let webConfig = {
           'css-loader',
           {
             loader: 'sass-loader',
-            // Requires sass-loader@^7.0.0
-            options: {
-              implementation: require('sass'),
-              indentedSyntax: true // optional
-            },
             // Requires sass-loader@^8.0.0
             options: {
               implementation: require('sass'),
@@ -131,6 +126,7 @@ let webConfig = {
   resolve: {
     alias: {
       '@': path.join(__dirname, '../src/renderer'),
+      // 'vue$': path.resolve(__dirname, 'node_modules/vue/dist/vue.esm.js')
       'vue$': 'vue/dist/vue.esm.js'
     },
     extensions: ['.js', '.vue', '.json', '.css']
