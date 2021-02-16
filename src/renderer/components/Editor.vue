@@ -1,24 +1,22 @@
 <template>
-  <TextArea ></TextArea>
+  <div class="wrapper">
+    <TextArea></TextArea>
+  </div>
 </template>
 
 <script>
-// import { remote } from 'electron'
 import TextArea from './TextArea'
 
 export default {
   components: {TextArea},
   id: 'editor',
   name: 'Editor'
-  // data () {
-  //   return {
-  //     height: remote.getCurrentWindow().getSize()[1]
-  //   }
-  // }
-
 }
 </script>
 
 <style scoped>
+.wrapper {
+  padding: 3px 3px 3px 0px;
+}
 
 </style>

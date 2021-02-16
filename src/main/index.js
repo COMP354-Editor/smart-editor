@@ -30,6 +30,11 @@ function createWindow () {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
+  // send window height
+  mainWindow.on('resize', () => {
+    mainWindow.webContents.send('window-resize', mainWindow.getSize()[1])
+  })
 }
 
 app.on('ready', createWindow)

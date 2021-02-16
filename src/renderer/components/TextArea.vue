@@ -1,21 +1,29 @@
 <template>
-  <textarea contenteditable v-model="textValue" :style="{height:textAreaHeight + 'px'}"></textarea>
+    <textarea autofocus v-model="textValue" :style="{height:textAreaHeight + 'px'}"/>
 </template>
 
 <script>
+import { remote, ipcRenderer } from 'electron'
+
 export default {
   name: 'TextArea',
   data () {
     return {
-      textValue: 'initial data'
+      textValue: 'initial data',
+      textAreaHeight: 0
     }
   },
   computed: {
-    textAreaHeight () {
-      let numberOfLineBreaks = (this.textValue.match(/\n/g) || []).length
-      // min-height + offset + lines x line-height
-      return 20 + 40 + numberOfLineBreaks * 20
-    }
+  },
+  created () {
+    // cut textarea height to prevent overflow
+    const cutOffset = 50
+    // set textarea height on first open
+    this.textAreaHeight = remote.getCurrentWindow().getSize()[1] - cutOffset
+    // textarea height listen on 'window-resize' channel, message is window height
+    ipcRenderer.on('window-resize', (event, message) => {
+      this.textAreaHeight = message - cutOffset
+    })
   }
 }
 </script>
@@ -26,18 +34,10 @@ textarea {
   /*border: 0;*/
   border: 1px solid;
 
-  width: 75%;
-  margin-left: 3%;
+  width: 100%;
 
   /* disable resize, hide resize bar*/
   resize: none;
-
-  overflow: hidden;
-
-  /* used by auto grow */
-  min-height: 40px;
-  line-height: 20px;
-
 }
 
 textarea:focus {
