@@ -1,5 +1,5 @@
 <template>
-  <ToolBar/>
+  <ToolBar />
 </template>
 
 <script>

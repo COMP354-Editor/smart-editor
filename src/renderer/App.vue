@@ -2,18 +2,18 @@
   <div id="app">
     <v-app>
       <v-main>
-        <v-container fluid >
+        <v-container fluid>
           <v-row>
             <v-col cols="2">
-              <SideMenu/>
+              <SideMenu />
             </v-col>
             <v-col cols="10">
-              <Editor/>
+              <Editor />
             </v-col>
           </v-row>
         </v-container>
       </v-main>
-      <v-footer></v-footer>
+      <v-footer />
     </v-app>
   </div>
 </template>
@@ -23,7 +23,7 @@ import Editor from './components/Editor'
 import SideMenu from './components/SideMenu'
 
 export default {
-  name: 'smart-editor',
+  name: 'SmartEditor',
   components: {
     SideMenu,
     Editor

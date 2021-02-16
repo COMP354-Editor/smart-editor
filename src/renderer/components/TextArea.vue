@@ -1,5 +1,9 @@
 <template>
-    <textarea autofocus v-model="textValue" :style="{height:textAreaHeight + 'px'}"/>
+  <textarea
+    v-model="textValue"
+    autofocus
+    :style="{height:textAreaHeight + 'px'}"
+  />
 </template>
 
 <script>

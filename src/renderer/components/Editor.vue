@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <TextArea></TextArea>
+    <TextArea />
   </div>
 </template>
 
@@ -8,9 +8,9 @@
 import TextArea from './TextArea'
 
 export default {
+  name: 'Editor',
   components: {TextArea},
-  id: 'editor',
-  name: 'Editor'
+  id: 'editor'
 }
 </script>
 
