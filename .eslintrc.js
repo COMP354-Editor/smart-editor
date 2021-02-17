@@ -2,7 +2,8 @@ module.exports = {
   root: true,
   parser: 'vue-eslint-parser',
   parserOptions: {
-    sourceType: 'module'
+    sourceType: 'module',
+    parser: '@typescript-eslint/parser'
   },
   env: {
     browser: true,
@@ -10,7 +11,7 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'plugin:vue/recommended'
+    'plugin:vue/recommended',
   ],
   globals: {
     __static: true
