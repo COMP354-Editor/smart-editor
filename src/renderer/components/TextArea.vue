@@ -2,8 +2,9 @@
   <textarea
     v-model="textValue"
     autofocus
-    :style="{height:textAreaHeight + 'px'}"
+    v-bind:style="{height:textAreaHeight + 'px'}"
   />
+
 </template>
 
 <script>
@@ -42,6 +43,7 @@ textarea {
 
   /* disable resize, hide resize bar*/
   resize: none;
+  min-height:10px;
 }
 
 textarea:focus {
