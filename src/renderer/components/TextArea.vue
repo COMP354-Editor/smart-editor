@@ -5,20 +5,44 @@
     contenteditable
     :style="{height:textAreaHeight + 'px'}"
   >
+    <component
+      :is="textComponent.component"
+      v-for="(textComponent,index) in textComponents"
+      :key="index"
+      v-bind="textComponent.props"
+    />
   </div>
 </template>
 
 <script>
 import { remote, ipcRenderer } from 'electron'
+import HighlightedText from './HighlightedText'
+import PlainText from './PlainText'
 
 export default {
   name: 'TextArea',
+  components: {HighlightedText, PlainText},
   data () {
     return {
-      textValue: `initial <mark>data</mark>`,
-      textAreaHeight: 0
+      textAreaHeight: 0,
+      textComponents: [
+        {
+          component: PlainText,
+          props: {
+            text: 'plain text'
+          }
+        },
+        {
+          component: HighlightedText,
+          props: {
+            text: 'highlight text'
+          }
+        }
+
+      ]
     }
   },
+
   created () {
     // cut textarea height to prevent overflow
     // these two number are from experiment
