@@ -10,7 +10,7 @@
             >
               <SideMenu />
             </v-col>
-            <v-col 
+            <v-col
               :cols="editorCol"
               @mouseenter="onSideMenuNotHovered"
             >
@@ -28,7 +28,6 @@
 import Editor from './components/Editor'
 import SideMenu from './components/SideMenu'
 
-let ticktock
 export default {
   name: 'SmartEditor',
   components: {
@@ -37,7 +36,8 @@ export default {
   },
   data () {
     return {
-      isSideMenuHovered: false
+      isSideMenuHovered: false,
+      ticktock: 0
     }
   },
   computed: {
@@ -54,12 +54,12 @@ export default {
   },
   methods:{
     onSideMenuHovered(){
-      clearTimeout(ticktock)
-      ticktock=setTimeout(() => { this.isSideMenuHovered = true }, 800)
+      clearTimeout(this.ticktock)
+      this.ticktock=setTimeout(() => { this.isSideMenuHovered = true }, 800)
     },
     onSideMenuNotHovered(){
-      clearTimeout(ticktock)
-      ticktock=setTimeout(() => { this.isSideMenuHovered = false }, 800)
+      clearTimeout(this.ticktock)
+      this.ticktock=setTimeout(() => { this.isSideMenuHovered = false }, 800)
     }
   },
 
