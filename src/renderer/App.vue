@@ -5,19 +5,19 @@
         <v-container fluid>
           <v-row>
             <v-col
-                :cols="sideMenuCol"
-                @mouseover="sideMenuHovered=true"
-                @mouseleave="sideMenuHovered=false"
-                >
-              <SideMenu />
+              :cols="sideMenuCol"
+              @mouseover="sideMenuHovered=true"
+              @mouseleave="sideMenuHovered=false"
+            >
+              <SideMenu/>
             </v-col>
             <v-col :cols="editorCol">
-              <Editor />
+              <Editor/>
             </v-col>
           </v-row>
         </v-container>
       </v-main>
-      <v-footer />
+      <v-footer/>
     </v-app>
   </div>
 </template>
@@ -28,27 +28,27 @@ import SideMenu from './components/SideMenu'
 
 export default {
   name: 'SmartEditor',
-  data(){
+  components: {
+    SideMenu,
+    Editor
+  },
+  data () {
     return {
       sideMenuHovered: false
     }
   },
   computed: {
-    sideMenuCol(){
+    sideMenuCol () {
       if (this.sideMenuHovered) {
         return 3
-      }else{
+      } else {
         return 2
       }
     },
-    editorCol(){
+    editorCol () {
       return 12 - this.sideMenuCol
     }
   },
-  components: {
-    SideMenu,
-    Editor
-  }
 }
 </script>
 

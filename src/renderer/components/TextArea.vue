@@ -1,10 +1,11 @@
 <template>
-  <textarea
-    v-model="textValue"
-    autofocus
-    v-bind:style="{height:textAreaHeight + 'px'}"
-  />
-
+  <div
+    ref="editor"
+    class="editor"
+    contenteditable
+    :style="{height:textAreaHeight + 'px'}"
+  >
+  </div>
 </template>
 
 <script>
@@ -14,27 +15,33 @@ export default {
   name: 'TextArea',
   data () {
     return {
-      textValue: 'initial data',
+      textValue: `initial <mark>data</mark>`,
       textAreaHeight: 0
     }
   },
-  computed: {
-  },
   created () {
     // cut textarea height to prevent overflow
-    const cutOffset = 50
+    // these two number are from experiment
+    // const cutRatio = 1.005
+    // const cutRatio = 1
+    const cutOffSet = 70
+
     // set textarea height on first open
-    this.textAreaHeight = remote.getCurrentWindow().getSize()[1] - cutOffset
+    this.textAreaHeight = remote.getCurrentWindow().getSize()[1] - cutOffSet
     // textarea height listen on 'window-resize' channel, message is window height
     ipcRenderer.on('window-resize', (event, message) => {
-      this.textAreaHeight = message - cutOffset
+      this.textAreaHeight = message - cutOffSet
     })
+  },
+  mounted () {
+    // auto focus
+    this.$refs.editor.focus()
   }
 }
 </script>
 
 <style scoped>
-textarea {
+.editor {
   /*remove border*/
   /*border: 0;*/
   border: 1px solid;
@@ -43,10 +50,10 @@ textarea {
 
   /* disable resize, hide resize bar*/
   resize: none;
-  min-height:10px;
+  min-height: 10px;
 }
 
-textarea:focus {
+.editor:focus {
   /* disable highlight on focus */
   outline: none;
 }

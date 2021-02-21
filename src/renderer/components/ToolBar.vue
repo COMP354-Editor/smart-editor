@@ -6,22 +6,22 @@
       v-if="!inSearch"
       dense
     >
-      <v-spacer />
+      <v-spacer/>
       <v-btn icon>
         <v-icon>mdi-playlist-edit</v-icon>
       </v-btn>
-      <v-spacer />
+      <v-spacer/>
       <v-btn icon>
         <v-icon>mdi-file-tree</v-icon>
       </v-btn>
-      <v-spacer />
+      <v-spacer/>
       <v-btn
         icon
         @click="toggleSearch()"
       >
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
-      <v-spacer />
+      <v-spacer/>
     </v-toolbar>
     <!--    <v-toolbar-->
     <!--        dense-->

@@ -2,6 +2,29 @@
 
 > An electron-vue project
 
+## Development Environment Setup
+### For macOS
+#### Prerequisites
+1. Have `Node.js` installed in your machine. 
+   If not, follow the instruction [here](https://dyclassroom.com/howto-mac/how-to-install-nodejs-and-npm-on-mac-using-homebrew) to install. 
+   
+2. Have `yarn` installed in your machine. 
+   If not, once you meet the first prerequisite, follow the instruction [here](https://classic.yarnpkg.com/en/docs/install#mac-stable) to install.
+   
+#### IDE Setup
+Webstorm (by Jetbrains) is the recommended IDE for this project. Visual Studio Code is also a great tool if you are familiar 
+with it. If you want to use Webstorm, it will set up almost everything for you. If you would like to go ahead with VSCode, 
+make sure you have `Vetur` extension installed for `Vue` support. 
+
+#### Repository Setup
+1. Fork this repository to your own github by clicking on the fork button on the top-right corner on the home page
+
+2. Clone the repository that is in your own github to your local machine.
+
+3. Set a remote
+
+
+
 #### Build Setup
 
 ``` bash
