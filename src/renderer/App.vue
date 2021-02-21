@@ -6,12 +6,14 @@
           <v-row>
             <v-col
               :cols="sideMenuCol"
-              @mouseenter="sideMenuHovered"
+              @mouseenter="onSideMenuHovered"
             >
               <SideMenu />
             </v-col>
-            <v-col :cols="editorCol"
-                   @mouseenter="sideMenuNotHovered">
+            <v-col 
+              :cols="editorCol"
+              @mouseenter="onSideMenuNotHovered"
+            >
               <Editor />
             </v-col>
           </v-row>
@@ -35,23 +37,12 @@ export default {
   },
   data () {
     return {
-      isHovered: false
+      isSideMenuHovered: false
     }
-  },
-  methods:{
-    sideMenuHovered(){
-      clearTimeout(ticktock)
-      ticktock=setTimeout(() => { this.isHovered = true }, 800)
-    },
-    sideMenuNotHovered(){
-      clearTimeout(ticktock)
-      ticktock=setTimeout(() => { this.isHovered = false }, 800)
-    }
-
   },
   computed: {
     sideMenuCol () {
-      if (this.isHovered) {
+      if (this.isSideMenuHovered) {
         return 4
       } else {
         return 2
@@ -61,6 +52,17 @@ export default {
       return 12 - this.sideMenuCol
     }
   },
+  methods:{
+    onSideMenuHovered(){
+      clearTimeout(ticktock)
+      ticktock=setTimeout(() => { this.isSideMenuHovered = true }, 800)
+    },
+    onSideMenuNotHovered(){
+      clearTimeout(ticktock)
+      ticktock=setTimeout(() => { this.isSideMenuHovered = false }, 800)
+    }
+  },
+
 }
 </script>
 
