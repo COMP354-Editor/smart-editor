@@ -1,15 +1,23 @@
 <template>
   <div
     ref="editor"
-    class="editor"
-    contenteditable
     :style="{height:textAreaHeight + 'px'}"
   >
-    <component
-      :is="textComponent.component"
-      v-for="(textComponent,index) in textComponents"
-      :key="index"
-      v-bind="textComponent.props"
+    <div
+      v-if="highlightView"
+      class="editor"
+    >
+      <component
+        :is="textComponent.component"
+        v-for="(textComponent,index) in textComponents"
+        :key="index"
+        v-bind="textComponent.props"
+      />
+    </div>
+    <textarea
+      v-else
+      v-model="textValue"
+      class="editor"
     />
   </div>
 </template>
@@ -24,7 +32,12 @@ export default {
   components: {HighlightedText, PlainText},
   data () {
     return {
+      // response to windows size change
       textAreaHeight: 0,
+      // enable text to be highlighted
+      // use to preview edits
+      highlightView: false,
+      textValue: 'initial data',
       textComponents: [
         {
           component: PlainText,
@@ -42,12 +55,8 @@ export default {
       ]
     }
   },
-
   created () {
     // cut textarea height to prevent overflow
-    // these two number are from experiment
-    // const cutRatio = 1.005
-    // const cutRatio = 1
     const cutOffSet = 70
 
     // set textarea height on first open
@@ -60,6 +69,47 @@ export default {
   mounted () {
     // auto focus
     this.$refs.editor.focus()
+  },
+  methods: {
+    toggleHighlightView () {
+      this.highlightView = !this.highlightView
+    },
+
+    // highlight text pieces specified by ranges
+    // ranges is an array of object of {from: int, to: int}
+    highlight (ranges) {
+      if (ranges.length === 0) return
+      this.textComponents = []
+      let front = 0 // record where to start processing
+      for (let i = 0; i < ranges.length; i++) {
+        // push components in textComponents
+
+        // --------from-----------to-----from----------to----
+        // ..Plain.....Highlight....Plain....Highlight....Plain
+
+        this.textComponents.push({
+          component: PlainText,
+          props: {
+            text: this.textValue.substring(front, ranges[i].from)
+          }
+        }, {
+          component: HighlightedText,
+          props: {
+            text: this.textValue.substring(ranges[i].from, ranges[i].to)
+          }
+        })
+        front = ranges[i].to
+      }
+      this.textComponents.push({
+        component: PlainText,
+        props: {
+          text: this.textValue.substring(front)
+        }
+      })
+
+      this.toggleHighlightView()
+    }
+
   }
 }
 </script>
@@ -71,6 +121,7 @@ export default {
   border: 1px solid;
 
   width: 100%;
+  height: 100%;
 
   /* disable resize, hide resize bar*/
   resize: none;

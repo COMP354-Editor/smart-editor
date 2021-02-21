@@ -9,15 +9,15 @@
               @mouseover="sideMenuHovered=true"
               @mouseleave="sideMenuHovered=false"
             >
-              <SideMenu/>
+              <SideMenu />
             </v-col>
             <v-col :cols="editorCol">
-              <Editor/>
+              <Editor />
             </v-col>
           </v-row>
         </v-container>
       </v-main>
-      <v-footer/>
+      <v-footer />
     </v-app>
   </div>
 </template>
