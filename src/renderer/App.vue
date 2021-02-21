@@ -6,12 +6,12 @@
           <v-row>
             <v-col
               :cols="sideMenuCol"
-              @mouseover="sideMenuHovered=true"
-              @mouseleave="sideMenuHovered=false"
+              @mouseenter="sideMenuHovered"
             >
               <SideMenu />
             </v-col>
-            <v-col :cols="editorCol">
+            <v-col :cols="editorCol"
+                   @mouseenter="sideMenuNotHovered">
               <Editor />
             </v-col>
           </v-row>
@@ -26,6 +26,7 @@
 import Editor from './components/Editor'
 import SideMenu from './components/SideMenu'
 
+let ticktock
 export default {
   name: 'SmartEditor',
   components: {
@@ -34,13 +35,24 @@ export default {
   },
   data () {
     return {
-      sideMenuHovered: false
+      isHovered: false
     }
+  },
+  methods:{
+    sideMenuHovered(){
+      clearTimeout(ticktock)
+      ticktock=setTimeout(() => { this.isHovered = true }, 800)
+    },
+    sideMenuNotHovered(){
+      clearTimeout(ticktock)
+      ticktock=setTimeout(() => { this.isHovered = false }, 800)
+    }
+
   },
   computed: {
     sideMenuCol () {
-      if (this.sideMenuHovered) {
-        return 3
+      if (this.isHovered) {
+        return 4
       } else {
         return 2
       }
