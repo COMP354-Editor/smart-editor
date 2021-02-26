@@ -8,7 +8,7 @@
               :cols="sideMenuCol"
               @mouseenter="onSideMenuHovered"
             >
-              <SideMenu />
+              <SideMenu :is-that-hovered="isSideMenuHovered" />
             </v-col>
             <v-col
               :cols="editorCol"
@@ -43,7 +43,7 @@ export default {
   computed: {
     sideMenuCol () {
       if (this.isSideMenuHovered) {
-        return 4
+        return 3
       } else {
         return 2
       }
@@ -52,23 +52,33 @@ export default {
       return 12 - this.sideMenuCol
     }
   },
-  methods:{
-    onSideMenuHovered(){
-      clearTimeout(this.ticktock)
-      this.ticktock=setTimeout(() => { this.isSideMenuHovered = true }, 800)
+  methods: {
+    onSideMenuHovered () {
+      clearTimeout(ticktock)
+      ticktock = setTimeout(() => {
+        this.toggleSideMenuHovered()
+      }, 800)
     },
-    onSideMenuNotHovered(){
-      clearTimeout(this.ticktock)
-      this.ticktock=setTimeout(() => { this.isSideMenuHovered = false }, 800)
+    onSideMenuNotHovered () {
+      clearTimeout(ticktock)
+      ticktock = setTimeout(() => {
+        this.toggleSideMenuHovered()
+      }, 800)
+    },
+    toggleSideMenuHovered(){
+      this.isSideMenuHovered = !this.isSideMenuHovered
+
     }
   },
-
 }
 </script>
 
 <style>
 html {
   overflow: hidden;
+}
+#app{
+  background: linear-gradient(110.5deg, #C7F3EE 0%, #CFE7E4 7.38%, #F3E9DA 92.91%), #C4C4C4;
 }
 
 </style>
