@@ -1,17 +1,21 @@
 <template>
-  <ToolBar
-    :is-that-hovered="isThatHovered"
-  />
+  <div>
+    <ToolBar
+      :is-side-menu-hovered="isSideMenuHovered"
+    />
+    <EditPanel />
+  </div>
 </template>
 
 <script>
 import ToolBar from './ToolBar'
+import EditPanel from './EditPanel'
 
 export default {
   name: 'SideMenu',
-  components: {ToolBar},
+  components: {EditPanel, ToolBar},
   props: {
-    isThatHovered: Boolean
+    isSideMenuHovered: Boolean
   }
 }
 </script>
