@@ -28,7 +28,6 @@
 import Editor from './components/Editor'
 import SideMenu from './components/SideMenu'
 
-let ticktock
 export default {
   name: 'SmartEditor',
   components: {
@@ -37,7 +36,8 @@ export default {
   },
   data () {
     return {
-      isSideMenuHovered: false
+      isSideMenuHovered: false,
+      ticktock: 0
     }
   },
   computed: {
@@ -67,9 +67,9 @@ export default {
     },
     toggleSideMenuHovered(){
       this.isSideMenuHovered = !this.isSideMenuHovered
+
     }
   },
-
 }
 </script>
 
