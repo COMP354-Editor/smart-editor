@@ -8,9 +8,7 @@
               :cols="sideMenuCol"
               @mouseenter="onSideMenuHovered"
             >
-              <SideMenu :is-that-hovered="isSideMenuHovered">
-                <ToolBar />
-              </SideMenu>
+              <SideMenu :is-that-hovered="isSideMenuHovered" />
             </v-col>
             <v-col
               :cols="editorCol"
@@ -29,15 +27,13 @@
 <script>
 import Editor from './components/Editor'
 import SideMenu from './components/SideMenu'
-import ToolBar from './components/ToolBar'
 
 let ticktock
 export default {
   name: 'SmartEditor',
   components: {
     SideMenu,
-    Editor,
-    ToolBar
+    Editor
   },
   data () {
     return {
