@@ -11,14 +11,14 @@
         menu
       </v-btn>
       <v-btn
-        v-show="isThatHovered"
+        v-show="isSideMenuHovered"
         id="group"
       >
         group
       </v-btn>
       <v-spacer />
       <v-btn
-        v-show="isThatHovered"
+        v-show="isSideMenuHovered"
         class="no-background-hover"
         style="right:20px"
         icon
@@ -35,10 +35,6 @@
         <v-icon>mdi-close-circle</v-icon>
       </v-btn>
     </v-toolbar>
-    <!--    <v-toolbar-->
-    <!--        dense-->
-    <!--        class="search-toolbar"-->
-    <!--    >-->
     <v-text-field
       v-if="inSearch"
       autofocus
@@ -50,7 +46,6 @@
       class="text-field"
       @blur="toggleSearch()"
     />
-    <!--    </v-toolbar>-->
   </div>
 </template>
 
@@ -58,7 +53,7 @@
 export default {
   name: 'ToolBar',
   props: {
-    isThatHovered: Boolean
+    isSideMenuHovered: Boolean
   },
   data () {
     return {
@@ -66,7 +61,7 @@ export default {
     }
   },
   watch: {
-    isThatHovered: function (val){
+    isThatHovered: function (val) {
       console.log(val)
     }
   },
@@ -80,28 +75,29 @@ export default {
 </script>
 
 <style scoped>
-#group{
+#group {
   width: 65px;
   height: 26px;
   background: #FFA24D;
   border-radius: 36px;
 
-  font-family: Roboto,sans-serif;
+  font-family: Roboto, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
   letter-spacing: -0.333333px;
   color: #F4F4F4;
   box-shadow: 0 0 0 #c6c6c6;
-  left:6px
+  left: 6px
 }
-#menu{
+
+#menu {
   width: 65px;
   height: 26px;
   background: #858585;
   border-radius: 36px;
 
-  font-family: Roboto,sans-serif;
+  font-family: Roboto, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
@@ -109,20 +105,24 @@ export default {
   color: #F4F4F4;
   box-shadow: 0 0 0 #c6c6c6;
 }
-#ToolBar{
+
+#ToolBar {
   background: #E9E9E9;
   border-radius: 36px;
   box-shadow: 0 0 0 #c6c6c6;
 }
-.text-field{
+
+.text-field {
   border-radius: 36px;
 }
-.no-background-hover{
+
+.no-background-hover {
   width: 26px;
   height: 26px;
-  right:10px;
+  right: 10px;
 }
-.no-background-hover::before{
+
+.no-background-hover::before {
   background-color: transparent !important;
 }
 </style>

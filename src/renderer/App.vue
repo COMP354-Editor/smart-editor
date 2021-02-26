@@ -8,7 +8,7 @@
               :cols="sideMenuCol"
               @mouseenter="onSideMenuHovered"
             >
-              <SideMenu :is-that-hovered="isSideMenuHovered" />
+              <SideMenu :is-side-menu-hovered="isSideMenuHovered" />
             </v-col>
             <v-col
               :cols="editorCol"
@@ -54,21 +54,17 @@ export default {
   },
   methods: {
     onSideMenuHovered () {
-      clearTimeout(ticktock)
-      ticktock = setTimeout(() => {
-        this.toggleSideMenuHovered()
+      clearTimeout(this.ticktock)
+      this.ticktock = setTimeout(() => {
+        this.isSideMenuHovered = true
       }, 800)
     },
     onSideMenuNotHovered () {
-      clearTimeout(ticktock)
-      ticktock = setTimeout(() => {
-        this.toggleSideMenuHovered()
+      clearTimeout(this.ticktock)
+      this.ticktock = setTimeout(() => {
+        this.isSideMenuHovered = false
       }, 800)
     },
-    toggleSideMenuHovered(){
-      this.isSideMenuHovered = !this.isSideMenuHovered
-
-    }
   },
 }
 </script>
