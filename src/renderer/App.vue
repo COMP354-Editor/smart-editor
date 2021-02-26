@@ -8,9 +8,11 @@
               :cols="sideMenuCol"
               @mouseenter="onSideMenuHovered"
             >
-              <SideMenu />
+              <SideMenu :is-that-hovered="isSideMenuHovered">
+                <ToolBar />
+              </SideMenu>
             </v-col>
-            <v-col 
+            <v-col
               :cols="editorCol"
               @mouseenter="onSideMenuNotHovered"
             >
@@ -27,13 +29,15 @@
 <script>
 import Editor from './components/Editor'
 import SideMenu from './components/SideMenu'
+import ToolBar from './components/ToolBar'
 
 let ticktock
 export default {
   name: 'SmartEditor',
   components: {
     SideMenu,
-    Editor
+    Editor,
+    ToolBar
   },
   data () {
     return {
@@ -43,7 +47,7 @@ export default {
   computed: {
     sideMenuCol () {
       if (this.isSideMenuHovered) {
-        return 4
+        return 3
       } else {
         return 2
       }
@@ -52,14 +56,21 @@ export default {
       return 12 - this.sideMenuCol
     }
   },
-  methods:{
-    onSideMenuHovered(){
+  methods: {
+    onSideMenuHovered () {
       clearTimeout(ticktock)
-      ticktock=setTimeout(() => { this.isSideMenuHovered = true }, 800)
+      ticktock = setTimeout(() => {
+        this.toggleSideMenuHovered()
+      }, 800)
     },
-    onSideMenuNotHovered(){
+    onSideMenuNotHovered () {
       clearTimeout(ticktock)
-      ticktock=setTimeout(() => { this.isSideMenuHovered = false }, 800)
+      ticktock = setTimeout(() => {
+        this.toggleSideMenuHovered()
+      }, 800)
+    },
+    toggleSideMenuHovered(){
+      this.isSideMenuHovered = !this.isSideMenuHovered
     }
   },
 
@@ -69,6 +80,9 @@ export default {
 <style>
 html {
   overflow: hidden;
+}
+#app{
+  background: linear-gradient(110.5deg, #C7F3EE 0%, #CFE7E4 7.38%, #F3E9DA 92.91%), #C4C4C4;
 }
 
 </style>

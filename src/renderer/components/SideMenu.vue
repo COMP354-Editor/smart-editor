@@ -1,5 +1,7 @@
 <template>
-  <ToolBar />
+  <ToolBar
+    :is-that-hovered="isThatHovered"
+  />
 </template>
 
 <script>
@@ -7,7 +9,10 @@ import ToolBar from './ToolBar'
 
 export default {
   name: 'SideMenu',
-  components: {ToolBar}
+  components: {ToolBar},
+  props: {
+    isThatHovered: Boolean
+  }
 }
 </script>
 

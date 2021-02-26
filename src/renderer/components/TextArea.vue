@@ -1,5 +1,6 @@
 <template>
   <div
+    id="TextArea"
     ref="editor"
     :style="{height:textAreaHeight + 'px'}"
   >
@@ -116,21 +117,20 @@ export default {
 
 <style scoped>
 .editor {
-  /*remove border*/
-  /*border: 0;*/
-  border: 1px solid;
-
+  padding:10px;
   width: 100%;
   height: 100%;
-
-  /* disable resize, hide resize bar*/
   resize: none;
   min-height: 10px;
+  color:#545454;
 }
 
 .editor:focus {
   /* disable highlight on focus */
   outline: none;
 }
-
+#TextArea{
+  background: #F7F7F7;
+  border-radius: 12px;
+}
 </style>
