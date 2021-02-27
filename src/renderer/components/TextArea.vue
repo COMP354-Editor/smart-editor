@@ -1,7 +1,6 @@
 <template>
   <div
-    id="TextArea"
-    ref="editor"
+    id="text-area"
   >
     <div
       v-if="highlightView"
@@ -16,6 +15,7 @@
     </div>
     <textarea
       v-else
+      ref="editor"
       v-model="textValue"
       class="editor"
     />
@@ -103,21 +103,24 @@ export default {
 </script>
 
 <style scoped>
+#text-area {
+  height: 100%;
+  background: #F7F7F7;
+  border-radius: 12px;
+}
+
 .editor {
-  padding:10px;
+  padding: 10px;
   width: 100%;
   height: 100%;
   resize: none;
   min-height: 10px;
-  color:#545454;
+  color: #545454;
 }
 
 .editor:focus {
   /* disable highlight on focus */
   outline: none;
 }
-#TextArea{
-  background: #F7F7F7;
-  border-radius: 12px;
-}
+
 </style>

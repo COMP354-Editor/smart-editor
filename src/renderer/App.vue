@@ -2,37 +2,29 @@
   <div id="app">
     <v-app>
       <v-main>
-        <v-container
-          fluid
+        <div
+          id="container"
+          :style="{height:heightPixel + 'px'}"
         >
-          <div :style="{height:appHeight + 'px'}">
-            <div style="display:inline-block; width:100%">
-              <div
-                id="sideMenu"
-                :style="{
-                  width:sideMenuWidthPixel + 'px',
-                  height:sideMenuHeightPixel + 'px',
-                }"
-
-                @mouseenter="onSideMenuHovered"
-              >
-                <SideMenu :is-side-menu-hovered="isSideMenuHovered" />
-              </div>
-              <div
-                id="Editor"
-                :style="{
-                  width:editorWidthPixel + 'px',
-                  height:editorHeightPixel + 'px',
-                }"
-                @mouseenter="onSideMenuNotHovered"
-              >
-                <Editor />
-              </div>
-            </div>
+          <div
+            id="side-menu-container"
+            @mouseenter="onSideMenuHovered()"
+          >
+            <SideMenu
+              :is-side-menu-hovered="isSideMenuHovered"
+              :style="{width:sideMenuWidthPixel + 'px'}"
+              style="height: 100%"
+            />
           </div>
-        </v-container>
+          <div
+            id="editor-container"
+            :style="{width:editorWidthPixel + 'px'}"
+            @mouseenter="onSideMenuNotHovered()"
+          >
+            <Editor />
+          </div>
+        </div>
       </v-main>
-      <v-footer />
     </v-app>
   </div>
 </template>
@@ -52,33 +44,42 @@ export default {
     return {
       isSideMenuHovered: false,
       ticktock: 0,
-      appHeight: 0
+      heightPixel: 0,
+      widthPixel: 0
     }
   },
   computed: {
     sideMenuWidthPixel () {
       if (this.isSideMenuHovered) {
+        // sideMenu width when hovered
         return 265
       } else {
+        // sideMenu width when not hovered
         return 176
       }
     },
-    sideMenuHeightPixel () {
-      if (this.isSideMenuHovered) {
-        return 931
-      } else {
-        return 935
-      }
-    },
     editorWidthPixel () {
-      return 1440 - this.sideMenuWidthPixel
+      // cut width to prevent overflow
+      return this.widthPixel - this.sideMenuWidthPixel
     },
-    editorHeightPixel () {
-      return 1024 - this.sideMenuHeightPixel
-    },
+  },
+  created () {
+    // cut textarea height to prevent overflow
+    const heightCutOffset = 70
+    const widthCutOffset = 55
+
+    // set textarea height on first open
+    this.widthPixel = remote.getCurrentWindow().getSize()[0] - widthCutOffset
+    this.heightPixel = remote.getCurrentWindow().getSize()[1] - heightCutOffset
+    // textarea height listen on 'window-resize' channel, message is window height
+    ipcRenderer.on('window-resize', (event, message) => {
+      this.widthPixel = message[0] - widthCutOffset
+      this.heightPixel = message[1] - heightCutOffset
+    })
   },
   methods: {
     onSideMenuHovered () {
+      console.log('on side menu hovered')
       clearTimeout(this.ticktock)
       this.ticktock = setTimeout(() => {
         this.isSideMenuHovered = true
@@ -90,17 +91,6 @@ export default {
         this.isSideMenuHovered = false
       }, 800)
     },
-  },
-  created () {
-    // cut textarea height to prevent overflow
-    const cutOffSet = 70
-
-    // set textarea height on first open
-    this.sideMenuHeight = remote.getCurrentWindow().getSize()[1] - cutOffSet
-    // textarea height listen on 'window-resize' channel, message is window height
-    ipcRenderer.on('window-resize', (event, message) => {
-      this.sideMenuHeight = message - cutOffSet
-    })
   },
 }
 </script>
@@ -114,17 +104,22 @@ html {
   background: linear-gradient(110.5deg, #C7F3EE 0%, #CFE7E4 7.38%, #F3E9DA 92.91%), #C4C4C4;
 }
 
-#sideMenu {
-  left: 26px;
-  top: 68px;
-  float: left
+#container {
+  width: 100%;
+  padding-top: 20px;
 }
 
-#Editor {
-  left: 20px;
-  top: 20px;
-  padding-left: 27px;
-  float: left
+#side-menu-container {
+  margin-left: 10px;
+  top: 68px;
+  height: 100%;
+  float: left;
+}
+
+#editor-container {
+  margin-left: 10px;
+  height: 100%;
+  float: left;
 }
 
 </style>

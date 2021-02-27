@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="editor">
     <TextArea />
   </div>
 </template>
@@ -15,5 +15,8 @@ export default {
 </script>
 
 <style scoped>
+#editor{
+  height: 100%;
+}
 
 </style>
