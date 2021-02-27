@@ -15,8 +15,5 @@ export default {
 </script>
 
 <style scoped>
-.wrapper {
-  padding: 3px 3px 3px 0;
-}
 
 </style>

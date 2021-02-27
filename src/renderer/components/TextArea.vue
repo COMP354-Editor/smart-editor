@@ -2,7 +2,6 @@
   <div
     id="TextArea"
     ref="editor"
-    :style="{height:textAreaHeight + 'px'}"
   >
     <div
       v-if="highlightView"
@@ -24,7 +23,6 @@
 </template>
 
 <script>
-import { remote, ipcRenderer } from 'electron'
 import HighlightedText from './HighlightedText'
 import PlainText from './PlainText'
 
@@ -55,17 +53,6 @@ export default {
 
       ]
     }
-  },
-  created () {
-    // cut textarea height to prevent overflow
-    const cutOffSet = 70
-
-    // set textarea height on first open
-    this.textAreaHeight = remote.getCurrentWindow().getSize()[1] - cutOffSet
-    // textarea height listen on 'window-resize' channel, message is window height
-    ipcRenderer.on('window-resize', (event, message) => {
-      this.textAreaHeight = message - cutOffSet
-    })
   },
   mounted () {
     // auto focus
