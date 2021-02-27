@@ -32,7 +32,7 @@
         icon
         class="no-background-hover"
         large
-        @click="turnOffSideMenu"
+        @click="$emit('turnOffSideMenu')"
       >
         <v-icon>mdi-arrow-top-left-thick</v-icon>
       </v-btn>
@@ -82,7 +82,7 @@ export default {
       this.inSearch = !this.inSearch
     },
     turnOffSideMenu () {
-      this.$emit('offSideMenu', this.offSideMenu)
+      this.$emit('turnOffSideMenu')
     }
   }
 
