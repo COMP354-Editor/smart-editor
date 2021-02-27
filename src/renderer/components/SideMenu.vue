@@ -1,7 +1,11 @@
 <template>
-  <div id="side-menu">
+  <div
+    v-if="sideMenuFlipFlop"
+    id="side-menu"
+  >
     <ToolBar
       :is-side-menu-hovered="isSideMenuHovered"
+      @offSideMenu="turnOffSideMenu"
     />
     <EditPanel />
   </div>
@@ -18,7 +22,15 @@ export default {
     isSideMenuHovered: Boolean
   },
   data () {
-    return {}
+    return {
+      sideMenuFlipFlop:true
+    }
+  },
+  methods:{
+    turnOffSideMenu: function (offSideMenu) {
+      this.sideMenuFlipFlop = offSideMenu
+      this.$emit('maximizeEditor', this.sideMenuFlipFlop)
+    }
   },
 }
 

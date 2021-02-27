@@ -6,6 +6,14 @@
           id="container"
           :style="{height:heightPixel + 'px'}"
         >
+          <v-btn
+            v-if="!fullScreenFlipFlop"
+            id="Cancel-the-full-screen"
+            icon
+            large
+          >
+            <v-icon>mdi-arrow-bottom-right-thick</v-icon>
+          </v-btn>
           <div
             id="side-menu-container"
             @mouseenter="onSideMenuHovered()"
@@ -14,6 +22,7 @@
               :is-side-menu-hovered="isSideMenuHovered"
               :style="{width:sideMenuWidthPixel + 'px'}"
               style="height: 100%"
+              @maximizeEditor="maximizeEditor"
             />
           </div>
           <div
@@ -45,17 +54,20 @@ export default {
       isSideMenuHovered: false,
       ticktock: 0,
       heightPixel: 0,
-      widthPixel: 0
+      widthPixel: 0,
+      fullScreenFlipFlop:true
     }
   },
   computed: {
     sideMenuWidthPixel () {
       if (this.isSideMenuHovered) {
         // sideMenu width when hovered
-        return 265
-      } else {
+        return 359
+      } else if(!this.fullScreenFlipFlop) {
+        return 0
+      }else{
         // sideMenu width when not hovered
-        return 176
+        return 177
       }
     },
     editorWidthPixel () {
@@ -66,7 +78,7 @@ export default {
   created () {
     // cut textarea height to prevent overflow
     const heightCutOffset = 70
-    const widthCutOffset = 55
+    const widthCutOffset = 80
 
     // set textarea height on first open
     this.widthPixel = remote.getCurrentWindow().getSize()[0] - widthCutOffset
@@ -91,6 +103,9 @@ export default {
         this.isSideMenuHovered = false
       }, 800)
     },
+    maximizeEditor: function (maximizeEditor) {
+      this.fullScreenFlipFlop = maximizeEditor
+    },
   },
 }
 </script>
@@ -107,19 +122,29 @@ html {
 #container {
   width: 100%;
   padding-top: 20px;
+  display: inline-block;
 }
 
 #side-menu-container {
-  margin-left: 10px;
+  margin-left:20px;
   top: 68px;
   height: 100%;
   float: left;
 }
 
 #editor-container {
-  margin-left: 10px;
+  margin-left: 20px;
   height: 100%;
   float: left;
+}
+#Cancel-the-full-screen{
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  transform:translate(5px,-15px);
+}
+#Cancel-the-full-screen::before{
+  background-color: transparent !important;
 }
 
 </style>

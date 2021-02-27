@@ -1,5 +1,7 @@
 <template>
-  <li>{{ content }}</li>
+  <div id="content">
+    {{ content }}
+  </div>
 </template>
 
 <script>
@@ -15,5 +17,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

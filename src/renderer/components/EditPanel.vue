@@ -1,7 +1,9 @@
 <template>
   <div id="edit-panel">
+    <div id="edit-item-holder" />
     <EditItem
       v-for="edit in edits.slice(0, 4)"
+      id="edit-item"
       :key="edit.key"
       :content="edit.content"
     />
@@ -34,5 +36,17 @@ export default {
   border-radius: 12px;
   flex: 2;
 }
-
+#edit-item {
+  display: grid;
+  place-items: center;
+  background: #F4F4F4;
+  border-radius: 36px;
+  margin-left:13px;
+  margin-right:13px;
+  margin-bottom:2px;
+}
+#edit-item-holder{
+  margin-top: 50px;
+}
 </style>
+
