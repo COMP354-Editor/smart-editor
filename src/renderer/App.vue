@@ -7,8 +7,8 @@
           :style="{height:heightPixel + 'px'}"
         >
           <v-btn
-            v-if="!fullScreenFlipFlop"
-            id="Cancel-the-full-screen"
+            v-if="!isEditorFullScreen"
+            id="cancel-full-screen"
             icon
             large
             @click="turnOnSideMenu()"
@@ -23,7 +23,7 @@
               :is-side-menu-hovered="isSideMenuHovered"
               :style="{width:sideMenuWidthPixel + 'px'}"
               style="height: 100%"
-              :side-menu-on="fullScreenFlipFlop"
+              :side-menu-on="isEditorFullScreen"
               @maximizeEditor="maximizeEditor"
             />
           </div>
@@ -54,10 +54,11 @@ export default {
   data () {
     return {
       isSideMenuHovered: false,
+      // timer to expand sideMenu
       ticktock: 0,
       heightPixel: 0,
       widthPixel: 0,
-      fullScreenFlipFlop:true
+      isEditorFullScreen:true
     }
   },
   computed: {
@@ -65,7 +66,7 @@ export default {
       if (this.isSideMenuHovered) {
         // sideMenu width when hovered
         return 359
-      } else if(!this.fullScreenFlipFlop) {
+      } else if(!this.isEditorFullScreen) {
         return 0
       }else{
         // sideMenu width when not hovered
@@ -106,10 +107,10 @@ export default {
       }, 800)
     },
     maximizeEditor: function (maximizeEditor) {
-      this.fullScreenFlipFlop = maximizeEditor
+      this.isEditorFullScreen = maximizeEditor
     },
     turnOnSideMenu(){
-      this.fullScreenFlipFlop=true
+      this.isEditorFullScreen=true
     }
   },
 }
@@ -142,13 +143,13 @@ html {
   height: 100%;
   float: left;
 }
-#Cancel-the-full-screen{
+#cancel-full-screen{
   width: 26px;
   height: 26px;
   position: absolute;
   transform:translate(5px,-15px);
 }
-#Cancel-the-full-screen::before{
+#cancel-full-screen::before{
   background-color: transparent !important;
 }
 
