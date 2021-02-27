@@ -7,11 +7,11 @@
           :style="{height:heightPixel + 'px'}"
         >
           <v-btn
-            v-if="!fullScreenFlipFlop"
-            id="Cancel-the-full-screen"
+            v-if="isEditorFullScreen"
+            id="cancel-full-screen"
             icon
             large
-            @click="turnOnSideMenu()"
+            @click="isEditorFullScreen = false"
           >
             <v-icon>mdi-arrow-bottom-right-thick</v-icon>
           </v-btn>
@@ -20,11 +20,12 @@
             @mouseenter="onSideMenuHovered()"
           >
             <SideMenu
+              v-if="!isEditorFullScreen"
               :is-side-menu-hovered="isSideMenuHovered"
+              :is-side-menu-on="!isEditorFullScreen"
               :style="{width:sideMenuWidthPixel + 'px'}"
               style="height: 100%"
-              :side-menu-on="fullScreenFlipFlop"
-              @maximizeEditor="maximizeEditor"
+              @maximizeEditor="isEditorFullScreen = true"
             />
           </div>
           <div
@@ -54,10 +55,11 @@ export default {
   data () {
     return {
       isSideMenuHovered: false,
+      // timer to expand sideMenu
       ticktock: 0,
       heightPixel: 0,
       widthPixel: 0,
-      fullScreenFlipFlop:true
+      isEditorFullScreen: false
     }
   },
   computed: {
@@ -65,9 +67,10 @@ export default {
       if (this.isSideMenuHovered) {
         // sideMenu width when hovered
         return 359
-      } else if(!this.fullScreenFlipFlop) {
+      } else if (this.isEditorFullScreen) {
+        // sideMenu folded when editor is full screen
         return 0
-      }else{
+      } else {
         // sideMenu width when not hovered
         return 177
       }
@@ -93,7 +96,6 @@ export default {
   },
   methods: {
     onSideMenuHovered () {
-      console.log('on side menu hovered')
       clearTimeout(this.ticktock)
       this.ticktock = setTimeout(() => {
         this.isSideMenuHovered = true
@@ -105,12 +107,6 @@ export default {
         this.isSideMenuHovered = false
       }, 800)
     },
-    maximizeEditor: function (maximizeEditor) {
-      this.fullScreenFlipFlop = maximizeEditor
-    },
-    turnOnSideMenu(){
-      this.fullScreenFlipFlop=true
-    }
   },
 }
 </script>
@@ -131,7 +127,7 @@ html {
 }
 
 #side-menu-container {
-  margin-left:20px;
+  margin-left: 20px;
   top: 68px;
   height: 100%;
   float: left;
@@ -142,13 +138,15 @@ html {
   height: 100%;
   float: left;
 }
-#Cancel-the-full-screen{
+
+#cancel-full-screen {
   width: 26px;
   height: 26px;
   position: absolute;
-  transform:translate(5px,-15px);
+  transform: translate(5px, -15px);
 }
-#Cancel-the-full-screen::before{
+
+#cancel-full-screen::before {
   background-color: transparent !important;
 }
 
