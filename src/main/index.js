@@ -20,7 +20,7 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 1024,
+    heightPixel: 1024,
     useContentSize: true,
     width: 1440
   })
@@ -33,7 +33,7 @@ function createWindow () {
 
   // send window height
   mainWindow.on('resize', () => {
-    mainWindow.webContents.send('window-resize', mainWindow.getSize()[1])
+    mainWindow.webContents.send('window-resize', mainWindow.getSize())
   })
 }
 

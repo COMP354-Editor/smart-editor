@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="edit-panel">
     <EditItem
       v-for="edit in edits.slice(0, 4)"
       :key="edit.key"
@@ -28,5 +28,9 @@ export default {
 </script>
 
 <style scoped>
+#edit-panel{
+  margin-top: 10px;
+  flex: 2;
+}
 
 </style>

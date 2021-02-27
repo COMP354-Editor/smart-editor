@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div id="side-menu">
     <ToolBar
       :is-side-menu-hovered="isSideMenuHovered"
     />
-    <EditPanel id="editPanel"/>
+    <EditPanel id="editPanel" />
   </div>
 </template>
 
@@ -17,19 +17,24 @@ export default {
   props: {
     isSideMenuHovered: Boolean
   },
-  data(){
-    return {
-    }
+  data () {
+    return {}
   },
 }
 
 </script>
 
 <style scoped>
-#editPanel{
-  top: 16px;
+#editPanel {
   position: relative;
   background: #E9E9E9;
   border-radius: 12px;
 }
+
+#side-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
 </style>
