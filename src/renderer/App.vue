@@ -11,6 +11,7 @@
             id="Cancel-the-full-screen"
             icon
             large
+            @click="turnOnSideMenu()"
           >
             <v-icon>mdi-arrow-bottom-right-thick</v-icon>
           </v-btn>
@@ -22,6 +23,7 @@
               :is-side-menu-hovered="isSideMenuHovered"
               :style="{width:sideMenuWidthPixel + 'px'}"
               style="height: 100%"
+              :side-menu-on="fullScreenFlipFlop"
               @maximizeEditor="maximizeEditor"
             />
           </div>
@@ -106,6 +108,9 @@ export default {
     maximizeEditor: function (maximizeEditor) {
       this.fullScreenFlipFlop = maximizeEditor
     },
+    turnOnSideMenu(){
+      this.fullScreenFlipFlop=true
+    }
   },
 }
 </script>
