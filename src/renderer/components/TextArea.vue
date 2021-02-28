@@ -104,18 +104,15 @@ export default {
 
 <style scoped>
 #text-area {
-  height: 100%;
-  background: #F7F7F7;
-  border-radius: 12px;
 }
-
 .editor {
-  padding: 10px;
+  padding-top: 5px;
   width: 100%;
   height: 100%;
   resize: none;
   min-height: 10px;
   color: #545454;
+  font-size: 18px;
 }
 
 .editor:focus {

@@ -17,4 +17,7 @@ export default {
 </script>
 
 <style scoped>
+#content{
+  color:#545454;
+}
 </style>

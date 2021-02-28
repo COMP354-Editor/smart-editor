@@ -41,6 +41,7 @@
         icon
         class="no-background-hover"
         large
+        @click="$emit('unHoverSideMenu')"
       >
         <v-icon>mdi-close-circle</v-icon>
       </v-btn>
@@ -82,6 +83,9 @@ export default {
     },
     turnOffSideMenu () {
       this.$emit('turnOffSideMenu')
+    },
+    unHoverSideMenu() {
+      this.$emit('unHoverSideMenu')
     }
   }
 

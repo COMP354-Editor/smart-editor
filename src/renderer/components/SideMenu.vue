@@ -5,6 +5,7 @@
     <ToolBar
       :is-side-menu-hovered="isSideMenuHovered"
       @turnOffSideMenu="$emit('maximizeEditor')"
+      @unHoverSideMenu="$emit('unHoverSideMenu')"
     />
     <EditPanel />
   </div>

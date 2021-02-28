@@ -26,6 +26,7 @@
               :style="{width:sideMenuWidthPixel + 'px'}"
               style="height: 100%"
               @maximizeEditor="isEditorFullScreen = true"
+              @unHoverSideMenu="isSideMenuHovered=false"
             />
           </div>
           <div
@@ -82,7 +83,7 @@ export default {
   },
   created () {
     // cut textarea height to prevent overflow
-    const heightCutOffset = 70
+    const heightCutOffset = 75
     const widthCutOffset = 80
 
     // set textarea height on first open
