@@ -46,6 +46,8 @@
         <v-icon>mdi-close-circle</v-icon>
       </v-btn>
     </v-toolbar>
+
+    <!--  search clicked: show search bar  -->
     <v-text-field
       v-if="inSearch"
       autofocus
@@ -84,7 +86,7 @@ export default {
     turnOffSideMenu () {
       this.$emit('turnOffSideMenu')
     },
-    unHoverSideMenu() {
+    unHoverSideMenu () {
       this.$emit('unHoverSideMenu')
     }
   }

@@ -22,7 +22,6 @@
             <SideMenu
               v-if="!isEditorFullScreen"
               :is-side-menu-hovered="isSideMenuHovered"
-              :is-side-menu-on="!isEditorFullScreen"
               :style="{width:sideMenuWidthPixel + 'px'}"
               style="height: 100%"
               @maximizeEditor="isEditorFullScreen = true"
@@ -89,6 +88,7 @@ export default {
     // set textarea height on first open
     this.widthPixel = remote.getCurrentWindow().getSize()[0] - widthCutOffset
     this.heightPixel = remote.getCurrentWindow().getSize()[1] - heightCutOffset
+
     // textarea height listen on 'window-resize' channel, message is window height
     ipcRenderer.on('window-resize', (event, message) => {
       this.widthPixel = message[0] - widthCutOffset

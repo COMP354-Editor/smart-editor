@@ -10,6 +10,7 @@
 
 <script>
 import SearchAndReplace from './SearchAndReplace'
+
 export default {
   name: 'DocumentHeaderPanel',
   components: {SearchAndReplace},
@@ -18,11 +19,12 @@ export default {
 </script>
 
 <style scoped>
-#document-header-panel{
+#document-header-panel {
   display: flex;
 }
-#title{
-  font-family: Roboto,serif;
+
+#title {
+  font-family: Roboto, serif;
   font-style: normal;
   font-weight: 900;
   font-size: 36px;

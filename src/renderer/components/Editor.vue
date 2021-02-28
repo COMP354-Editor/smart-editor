@@ -17,22 +17,24 @@ import DocumentHeaderPanel from './DocumentHeaderPanel'
 
 export default {
   name: 'Editor',
-  components: {TextArea,DocumentHeaderPanel},
+  components: {TextArea, DocumentHeaderPanel},
   id: 'editor'
 }
 </script>
 
 <style scoped>
-#editor{
+#editor {
   height: 100%;
   background: #F7F7F7;
   border-radius: 12px;
 }
-#content-box{
+
+#content-box {
   padding: 20px;
 }
-#time{
-  font-family: Roboto,serif;
+
+#time {
+  font-family: Roboto, serif;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
@@ -41,7 +43,8 @@ export default {
   padding-left: 3px;
   padding-bottom: 3px;
 }
-#deco_underline{
+
+#deco_underline {
   width: 427px;
   height: 0;
   border: 1px solid #777777;

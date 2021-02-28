@@ -105,6 +105,7 @@ export default {
 <style scoped>
 #text-area {
 }
+
 .editor {
   padding-top: 5px;
   width: 100%;
