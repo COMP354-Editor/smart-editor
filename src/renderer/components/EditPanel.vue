@@ -1,7 +1,9 @@
 <template>
   <div id="edit-panel">
+    <div id="edit-item-holder" />
     <EditItem
-      v-for="edit in edits.slice(0, 4)"
+      v-for="edit in edits.slice(0, 14)"
+      id="edit-item"
       :key="edit.key"
       :content="edit.content"
     />
@@ -21,6 +23,16 @@ export default {
         {key: 1, content: 'edit 2'},
         {key: 2, content: 'edit 3'},
         {key: 3, content: 'edit 4'},
+        {key: 4, content: 'edit 5'},
+        {key: 5, content: 'edit 6'},
+        {key: 6, content: 'edit 7'},
+        {key: 7, content: 'edit 8'},
+        {key: 8, content: 'edit 9'},
+        {key: 9, content: 'edit 10'},
+        {key: 10, content: 'edit 11'},
+        {key: 11, content: 'edit 12'},
+        {key: 12, content: 'edit 13'},
+        {key: 13, content: 'edit 14'},
       ]
     }
   }
@@ -34,5 +46,18 @@ export default {
   border-radius: 12px;
   flex: 2;
 }
-
+#edit-item {
+  display: grid;
+  place-items: center;
+  background: #F4F4F4;
+  border-radius: 36px;
+  margin-left:13px;
+  margin-right:13px;
+  margin-bottom:2px;
+  user-select: none;
+}
+#edit-item-holder{
+  margin-top: 40px;
+}
 </style>
+

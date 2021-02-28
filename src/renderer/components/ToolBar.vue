@@ -5,7 +5,7 @@
     <v-toolbar
       v-if="!inSearch"
       id="ToolBar"
-      dense
+      height="40px"
     >
       <v-btn id="menu">
         menu
@@ -28,9 +28,20 @@
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
       <v-btn
+        v-if="!isSideMenuHovered"
         icon
         class="no-background-hover"
         large
+        @click="$emit('turnOffSideMenu')"
+      >
+        <v-icon>mdi-arrow-top-left-thick</v-icon>
+      </v-btn>
+      <v-btn
+        v-if="isSideMenuHovered"
+        icon
+        class="no-background-hover"
+        large
+        @click="$emit('unHoverSideMenu')"
       >
         <v-icon>mdi-close-circle</v-icon>
       </v-btn>
@@ -41,6 +52,7 @@
       hide-details
       filled
       rounded
+      dense
       placeholder="Search Edits"
       prepend-inner-icon="mdi-magnify"
       class="text-field"
@@ -53,11 +65,11 @@
 export default {
   name: 'ToolBar',
   props: {
-    isSideMenuHovered: Boolean
+    isSideMenuHovered: Boolean,
   },
   data () {
     return {
-      inSearch: false
+      inSearch: false,
     }
   },
   watch: {
@@ -68,6 +80,12 @@ export default {
   methods: {
     toggleSearch () {
       this.inSearch = !this.inSearch
+    },
+    turnOffSideMenu () {
+      this.$emit('turnOffSideMenu')
+    },
+    unHoverSideMenu() {
+      this.$emit('unHoverSideMenu')
     }
   }
 

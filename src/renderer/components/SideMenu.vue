@@ -1,7 +1,11 @@
 <template>
-  <div id="side-menu">
+  <div
+    id="side-menu"
+  >
     <ToolBar
       :is-side-menu-hovered="isSideMenuHovered"
+      @turnOffSideMenu="$emit('maximizeEditor')"
+      @unHoverSideMenu="$emit('unHoverSideMenu')"
     />
     <EditPanel />
   </div>
@@ -15,10 +19,7 @@ export default {
   name: 'SideMenu',
   components: {EditPanel, ToolBar},
   props: {
-    isSideMenuHovered: Boolean
-  },
-  data () {
-    return {}
+    isSideMenuHovered: Boolean,
   },
 }
 
