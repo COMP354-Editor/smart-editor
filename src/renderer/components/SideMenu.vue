@@ -3,9 +3,9 @@
     id="side-menu"
   >
     <ToolBar
-      :is-side-menu-hovered="isSideMenuHovered"
+      :is-side-menu-folded="isSideMenuFolded"
       @turnOffSideMenu="$emit('maximizeEditor')"
-      @unHoverSideMenu="$emit('unHoverSideMenu')"
+      @foldSideMenu="$emit('foldSideMenu')"
     />
     <EditPanel />
   </div>
@@ -19,7 +19,7 @@ export default {
   name: 'SideMenu',
   components: {EditPanel, ToolBar},
   props: {
-    isSideMenuHovered: Boolean,
+    isSideMenuFolded: Boolean,
   },
 }
 

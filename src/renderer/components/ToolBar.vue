@@ -11,14 +11,15 @@
         menu
       </v-btn>
       <v-btn
-        v-show="isSideMenuHovered"
+        v-show="!isSideMenuFolded"
         id="group"
       >
         group
       </v-btn>
       <v-spacer />
+      <!-- search button -->
       <v-btn
-        v-show="isSideMenuHovered"
+        v-show="!isSideMenuFolded"
         class="no-background-hover"
         style="right:20px"
         icon
@@ -28,7 +29,7 @@
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
       <v-btn
-        v-if="!isSideMenuHovered"
+        v-if="!isSideMenuFolded"
         icon
         class="no-background-hover"
         large
@@ -36,18 +37,19 @@
       >
         <v-icon>mdi-arrow-top-left-thick</v-icon>
       </v-btn>
+      <!-- fold sideMenu button -->
       <v-btn
-        v-if="isSideMenuHovered"
+        v-if="!isSideMenuFolded"
         icon
         class="no-background-hover"
         large
-        @click="$emit('unHoverSideMenu')"
+        @click="$emit('foldSideMenu')"
       >
         <v-icon>mdi-close-circle</v-icon>
       </v-btn>
     </v-toolbar>
 
-    <!--  search clicked: show search bar  -->
+    <!-- search clicked: show search bar -->
     <v-text-field
       v-if="inSearch"
       autofocus
@@ -67,7 +69,7 @@
 export default {
   name: 'ToolBar',
   props: {
-    isSideMenuHovered: Boolean,
+    isSideMenuFolded: Boolean,
   },
   data () {
     return {
