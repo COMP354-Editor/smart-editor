@@ -29,13 +29,16 @@
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
       <v-btn
-        v-if="!isSideMenuFolded"
+        v-if="isSideMenuFolded"
         icon
         class="no-background-hover"
         large
         @click="$emit('turnOffSideMenu')"
       >
-        <v-icon>mdi-arrow-top-left-thick</v-icon>
+        <img
+          src="build/icons/FullScreen.svg"
+          alt="FullScreen"
+        >
       </v-btn>
       <!-- fold sideMenu button -->
       <v-btn

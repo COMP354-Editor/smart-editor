@@ -24,14 +24,20 @@
       class="no-background-hover"
       x-small
     >
-      <v-icon>mdi-file-replace-outline</v-icon>
+      <img
+        src="build/icons/replace.svg"
+        alt="replace"
+      >
     </v-btn>
     <v-btn
       icon
       class="no-background-hover"
       x-small
     >
-      <v-icon>mdi-find-replace</v-icon>
+      <img
+        src="build/icons/replaceAll.svg"
+        alt="replaceAll"
+      >
     </v-btn>
   </div>
 </template>

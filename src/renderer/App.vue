@@ -13,7 +13,10 @@
             large
             @click="isEditorFullScreen = false"
           >
-            <v-icon>mdi-arrow-bottom-right-thick</v-icon>
+            <img
+              src="build/icons/UnFullScreen.svg"
+              alt="UnFullScreen"
+            >
           </v-btn>
           <div
             id="side-menu-container"
