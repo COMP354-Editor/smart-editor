@@ -120,13 +120,14 @@ html {
   overflow: hidden;
 }
 
+
 .bg_folded {
-  <!--"Do not remove this, it is actually working"-->
+  /*"Do not remove this, it is actually working"*/
   background: linear-gradient(110.5deg, #C7F3EE 0%, #CFE7E4 7.38%, #F3E9DA 92.91%), #C4C4C4;
 }
 
 .bg_unfolded {
-  <!--"Do not remove this, it is actually working"-->
+  /*"Do not remove this, it is actually working"*/
   background: linear-gradient(110.5deg, #C7F3EE 0%, #CFE7E4 21.9%, #F3E9DA 92.91%), #C4C4C4;
 }
 
