@@ -56,7 +56,7 @@ export default {
 #deco_underline {
   width: 427px;
   height: 0;
-  border: 1px solid #777777;
+  border-top: 3px solid #777777;
 }
 
 #text-area-container {

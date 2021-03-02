@@ -48,14 +48,15 @@ export default {
 }
 
 #edit-item {
-  display: grid;
-  place-items: center;
   background: #F4F4F4;
   border-radius: 36px;
+  height: 24px;
   margin-left: 13px;
   margin-right: 13px;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
   user-select: none;
+  text-indent: 5px;
+  padding-top: 3px;
 }
 
 #edit-item-holder {
