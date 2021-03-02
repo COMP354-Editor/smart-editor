@@ -53,12 +53,14 @@ export default {
   width: 231px;
   height: 28px;
 
+  margin-left: auto;
+  order: 2;
+
   background: #E8E8E8;
   border-radius: 36px;
   box-sizing: inherit;
   display: flex;
   align-items: center;
-  float: right !important;
   font-size: 9px;
   color: #A6A6A6;
   text-indent: 5%

@@ -92,7 +92,7 @@ export default {
     this.widthPixel = remote.getCurrentWindow().getSize()[0] - widthCutOffset
     this.heightPixel = remote.getCurrentWindow().getSize()[1] - heightCutOffset
 
-    // textarea height listen on 'window-resize' channel, message is window height
+    // component size listen on 'window-resize' channel, message is window size
     ipcRenderer.on('window-resize', (event, message) => {
       this.widthPixel = message[0] - widthCutOffset
       this.heightPixel = message[1] - heightCutOffset

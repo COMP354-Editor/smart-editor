@@ -30,7 +30,7 @@ export default {
 #side-menu {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  /*align-items: stretch;*/
 }
 
 </style>

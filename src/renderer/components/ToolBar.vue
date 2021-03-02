@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!--      TODO: toolbar not looking good on small screens.-->
-    <!--    Consider: collapse toolbar into a button on small screens -->
     <v-toolbar
       v-if="!inSearch"
       id="ToolBar"

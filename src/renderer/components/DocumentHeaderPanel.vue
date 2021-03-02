@@ -3,7 +3,6 @@
     <div id="title">
       This is title
     </div>
-    <v-spacer />
     <SearchAndReplace />
   </div>
 </template>

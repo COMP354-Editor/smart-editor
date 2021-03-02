@@ -4,7 +4,7 @@
   >
     <div
       v-if="highlightView"
-      class="editor"
+      class="text-area-editable"
     >
       <component
         :is="textComponent.component"
@@ -15,9 +15,9 @@
     </div>
     <textarea
       v-else
-      ref="editor"
+      ref="textarea"
       v-model="textValue"
-      class="editor"
+      class="text-area-editable"
     />
   </div>
 </template>
@@ -31,12 +31,11 @@ export default {
   components: {HighlightedText, PlainText},
   data () {
     return {
-      // response to windows size change
-      textAreaHeight: 0,
       // enable text to be highlighted
       // use to preview edits
       highlightView: false,
       textValue: 'initial data',
+      // used in highlight view
       textComponents: [
         {
           component: PlainText,
@@ -56,7 +55,7 @@ export default {
   },
   mounted () {
     // auto focus
-    this.$refs.editor.focus()
+    this.$refs.textarea.focus()
   },
   methods: {
     toggleHighlightView () {
@@ -65,6 +64,7 @@ export default {
 
     // highlight text pieces specified by ranges
     // ranges is an array of object of {from: int, to: int}
+    // TODO: in application, user add highlight one by one, not as a whole
     highlight (ranges) {
       if (ranges.length === 0) return
       this.textComponents = []
@@ -104,8 +104,10 @@ export default {
 
 <style scoped>
 #text-area {
+  height: 100%;
 }
-.editor {
+
+.text-area-editable {
   padding-top: 5px;
   width: 100%;
   height: 100%;
@@ -115,7 +117,7 @@ export default {
   font-size: 18px;
 }
 
-.editor:focus {
+.text-area-editable:focus {
   /* disable highlight on focus */
   outline: none;
 }

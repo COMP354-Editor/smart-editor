@@ -1,12 +1,18 @@
 <template>
   <div id="editor">
     <div id="content-box">
-      <DocumentHeaderPanel />
+      <div>
+        <!-- DO NOT delete div wrapping this, otherwise wired bug will occur-->
+        <DocumentHeaderPanel />
+      </div>
+
       <div id="time">
         2021/02/27
       </div>
       <div id="deco_underline" />
-      <TextArea />
+      <div id="text-area-container">
+        <TextArea />
+      </div>
     </div>
   </div>
 </template>
@@ -27,10 +33,13 @@ export default {
   height: 100%;
   background: #F7F7F7;
   border-radius: 12px;
+  padding: 20px;
 }
 
 #content-box {
-  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 #time {
@@ -48,5 +57,9 @@ export default {
   width: 427px;
   height: 0;
   border: 1px solid #777777;
+}
+
+#text-area-container {
+  flex: 2;
 }
 </style>
