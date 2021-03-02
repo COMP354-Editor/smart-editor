@@ -48,7 +48,10 @@
         large
         @click="$emit('foldSideMenu')"
       >
-        <v-icon>mdi-close-circle</v-icon>
+        <img
+          src="build/icons/crossButton.svg"
+          alt="crossButton"
+        >
       </v-btn>
     </v-toolbar>
 
@@ -91,9 +94,6 @@ export default {
     turnOffSideMenu () {
       this.$emit('turnOffSideMenu')
     },
-    unHoverSideMenu () {
-      this.$emit('unHoverSideMenu')
-    }
   }
 
 }
