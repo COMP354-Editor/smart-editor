@@ -34,7 +34,10 @@
         large
         @click="$emit('turnOffSideMenu')"
       >
-        <v-icon>mdi-arrow-top-left-thick</v-icon>
+        <img
+          src="build/icons/FullScreen.svg"
+          alt="FullScreen"
+        >
       </v-btn>
       <v-btn
         v-if="isSideMenuHovered"
