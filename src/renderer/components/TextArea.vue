@@ -121,5 +121,17 @@ export default {
   /* disable highlight on focus */
   outline: none;
 }
-
+.text-area-editable::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.text-area-editable::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  background-color: #909090;
+}
+.text-area-editable::-webkit-scrollbar-track {
+  background-color: transparent;
+}
 </style>
