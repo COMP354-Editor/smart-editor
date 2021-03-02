@@ -21,18 +21,17 @@
           >
             <SideMenu
               v-if="!isEditorFullScreen"
-              :is-side-menu-hovered="isSideMenuHovered"
-              :is-side-menu-on="!isEditorFullScreen"
+              :is-side-menu-folded="isSideMenuFolded"
               :style="{width:sideMenuWidthPixel + 'px'}"
               style="height: 100%"
               @maximizeEditor="isEditorFullScreen = true"
-              @unHoverSideMenu="isSideMenuHovered=false"
+              @foldSideMenu="isSideMenuFolded = true"
             />
           </div>
           <div
             id="editor-container"
             :style="{width:editorWidthPixel + 'px'}"
-            @mouseenter="onSideMenuNotHovered()"
+            @mouseenter="onEditorHovered()"
           >
             <Editor />
           </div>
@@ -55,7 +54,7 @@ export default {
   },
   data () {
     return {
-      isSideMenuHovered: false,
+      isSideMenuFolded: true,
       // timer to expand sideMenu
       ticktock: 0,
       heightPixel: 0,
@@ -65,14 +64,14 @@ export default {
   },
   computed: {
     sideMenuWidthPixel () {
-      if (this.isSideMenuHovered) {
-        // sideMenu width when hovered
+      if (!this.isSideMenuFolded) {
+        // sideMenu width when expanded
         return 359
       } else if (this.isEditorFullScreen) {
-        // sideMenu folded when editor is full screen
+        // sideMenu hidden when editor is full screen
         return 0
       } else {
-        // sideMenu width when not hovered
+        // sideMenu width when folded
         return 177
       }
     },
@@ -89,6 +88,7 @@ export default {
     // set textarea height on first open
     this.widthPixel = remote.getCurrentWindow().getSize()[0] - widthCutOffset
     this.heightPixel = remote.getCurrentWindow().getSize()[1] - heightCutOffset
+
     // textarea height listen on 'window-resize' channel, message is window height
     ipcRenderer.on('window-resize', (event, message) => {
       this.widthPixel = message[0] - widthCutOffset
@@ -99,13 +99,15 @@ export default {
     onSideMenuHovered () {
       clearTimeout(this.ticktock)
       this.ticktock = setTimeout(() => {
-        this.isSideMenuHovered = true
+        // expand side menu after time out
+        this.isSideMenuFolded = false
       }, 800)
     },
-    onSideMenuNotHovered () {
+    onEditorHovered () {
       clearTimeout(this.ticktock)
       this.ticktock = setTimeout(() => {
-        this.isSideMenuHovered = false
+        // fold side menu after time out
+        this.isSideMenuFolded = true
       }, 800)
     },
   },

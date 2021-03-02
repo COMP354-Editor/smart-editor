@@ -46,17 +46,19 @@ export default {
   border-radius: 12px;
   flex: 2;
 }
+
 #edit-item {
   display: grid;
   place-items: center;
   background: #F4F4F4;
   border-radius: 36px;
-  margin-left:13px;
-  margin-right:13px;
-  margin-bottom:2px;
+  margin-left: 13px;
+  margin-right: 13px;
+  margin-bottom: 2px;
   user-select: none;
 }
-#edit-item-holder{
+
+#edit-item-holder {
   margin-top: 40px;
 }
 </style>

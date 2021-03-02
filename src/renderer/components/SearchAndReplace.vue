@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style scoped>
-#searchAndReplace{
+#searchAndReplace {
   width: 231px;
   height: 28px;
 
@@ -52,11 +52,12 @@ export default {
   box-sizing: inherit;
   display: flex;
   align-items: center;
-  float:right !important;
+  float: right !important;
   font-size: 9px;
   color: #A6A6A6;
-  text-indent:5%
+  text-indent: 5%
 }
+
 #search {
   width: 78px;
   height: 20px;
@@ -68,7 +69,8 @@ export default {
   display: flex;
   place-items: center;
 }
-#searchAndReplace_deco{
+
+#searchAndReplace_deco {
   width: 33px;
   height: 28px;
 
@@ -77,7 +79,8 @@ export default {
   border-radius: 36px;
   z-index: 11;
 }
-#replace{
+
+#replace {
   width: 77px;
   height: 20px;
 
@@ -88,11 +91,12 @@ export default {
   display: flex;
   place-items: center;
 }
+
 .no-background-hover {
   width: 26px;
   height: 26px;
-  float:right;
-  z-index:13
+  float: right;
+  z-index: 13
 }
 
 .no-background-hover::before {
