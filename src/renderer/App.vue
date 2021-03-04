@@ -1,45 +1,47 @@
 <template>
-  <div :class="{ bg_folded: isSideMenuFolded, bg_unfolded: !isSideMenuFolded }">
-    <v-main>
-      <div
-        id="container"
-        :style="{height:heightPixel + 'px'}"
-      >
-        <v-btn
-          v-if="isEditorFullScreen"
-          id="cancel-full-screen"
-          icon
-          large
-          @click="isEditorFullScreen = false"
+  <v-app>
+    <div :class="{ bg_folded: isSideMenuFolded, bg_unfolded: !isSideMenuFolded }">
+      <v-main>
+        <div
+          id="container"
+          :style="{height:heightPixel + 'px'}"
         >
-          <img
-            src="build/icons/UnFullScreen.svg"
-            alt="UnFullScreen"
+          <v-btn
+            v-if="isEditorFullScreen"
+            id="cancel-full-screen"
+            icon
+            large
+            @click="isEditorFullScreen = false"
           >
-        </v-btn>
-        <div
-          id="side-menu-container"
-          @mouseenter="onSideMenuHovered()"
-        >
-          <SideMenu
-            v-if="!isEditorFullScreen"
-            :is-side-menu-folded="isSideMenuFolded"
-            :style="{width:sideMenuWidthPixel + 'px'}"
-            style="height: 100%"
-            @maximizeEditor="isEditorFullScreen = true"
-            @foldSideMenu="isSideMenuFolded = true"
-          />
+            <img
+              src="build/icons/UnFullScreen.svg"
+              alt="UnFullScreen"
+            >
+          </v-btn>
+          <div
+            id="side-menu-container"
+            @mouseenter="onSideMenuHovered()"
+          >
+            <SideMenu
+              v-if="!isEditorFullScreen"
+              :is-side-menu-folded="isSideMenuFolded"
+              :style="{width:sideMenuWidthPixel + 'px'}"
+              style="height: 100%"
+              @maximizeEditor="isEditorFullScreen = true"
+              @foldSideMenu="isSideMenuFolded = true"
+            />
+          </div>
+          <div
+            id="editor-container"
+            :style="{width:editorWidthPixel + 'px'}"
+            @mouseenter="onEditorHovered()"
+          >
+            <Editor />
+          </div>
         </div>
-        <div
-          id="editor-container"
-          :style="{width:editorWidthPixel + 'px'}"
-          @mouseenter="onEditorHovered()"
-        >
-          <Editor />
-        </div>
-      </div>
-    </v-main>
-  </div>
+      </v-main>
+    </div>
+  </v-app>
 </template>
 
 <script>
@@ -124,11 +126,13 @@ html {
 .bg_folded {
   /*"Do not remove this, it is actually working"*/
   background: linear-gradient(110.5deg, #C7F3EE 0%, #CFE7E4 7.38%, #F3E9DA 92.91%), #C4C4C4;
+  height:100%
 }
 
 .bg_unfolded {
   /*"Do not remove this, it is actually working"*/
   background: linear-gradient(110.5deg, #C7F3EE 0%, #CFE7E4 21.9%, #F3E9DA 92.91%), #C4C4C4;
+  height:100%
 }
 
 #container {
