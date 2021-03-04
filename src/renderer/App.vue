@@ -2,6 +2,7 @@
   <v-app>
     <div :class="{ bg_folded: isSideMenuFolded, bg_unfolded: !isSideMenuFolded }">
       <v-main>
+        <Navbar id="navbar" />
         <div
           id="container"
           :style="{height:heightPixel + 'px'}"
@@ -47,13 +48,15 @@
 <script>
 import Editor from './components/Editor'
 import SideMenu from './components/SideMenu'
+import Navbar from './components/Navbar'
 import { remote, ipcRenderer } from 'electron'
 
 export default {
   name: 'SmartEditor',
   components: {
     SideMenu,
-    Editor
+    Editor,
+    Navbar
   },
   data () {
     return {
@@ -113,6 +116,7 @@ export default {
         this.isSideMenuFolded = true
       }, 800)
     },
+
   },
 }
 </script>
@@ -121,18 +125,29 @@ export default {
 html {
   overflow: hidden;
 }
-
+#app{
+  background: transparent;
+}
+#navbar{
+  background: linear-gradient(110.5deg, rgba(122, 131, 125, 0), rgba(199, 243, 238, 0.8) 15%, rgba(207, 231, 228, 0.8) 7.38%, rgba(122, 131, 125, 0));
+  position: sticky;
+  top:0;
+  margin-bottom: 5px;
+  width:100%;
+}
 
 .bg_folded {
   /*"Do not remove this, it is actually working"*/
-  background: linear-gradient(110.5deg, #C7F3EE 0%, #CFE7E4 7.38%, #F3E9DA 92.91%), #C4C4C4;
-  height:100%
+  background: linear-gradient(110.5deg, rgba(199, 243, 238, 0.8) 0%, rgba(207, 231, 228, 0.8) 7.38%, rgba(243, 233, 218, 0.8) 92.91%), rgba(196, 196, 196, 0.8);
+  height:100%;
+  border-radius: 12px;
 }
 
 .bg_unfolded {
   /*"Do not remove this, it is actually working"*/
-  background: linear-gradient(110.5deg, #C7F3EE 0%, #CFE7E4 21.9%, #F3E9DA 92.91%), #C4C4C4;
-  height:100%
+  background: linear-gradient(110.5deg, rgba(199, 243, 238, 0.8) 0%, rgba(207, 231, 228, 0.8) 7.38%, rgba(243, 233, 218, 0.8) 92.91%), rgba(196, 196, 196, 0.8);
+  height:100%;
+  border-radius: 12px;
 }
 
 #container {
