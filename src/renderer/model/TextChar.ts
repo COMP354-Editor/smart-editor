@@ -1,5 +1,5 @@
 export default class TextChar {
-    content: string;
+    readonly content: string;
     isWritingUndone: boolean;
     isDeleted: boolean;
 
