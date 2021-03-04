@@ -129,11 +129,7 @@ html {
   background: transparent;
 }
 #navbar{
-  background: linear-gradient(110.5deg, rgba(122, 131, 125, 0), rgba(199, 243, 238, 0.8) 15%, rgba(207, 231, 228, 0.8) 7.38%, rgba(122, 131, 125, 0));
-  position: sticky;
-  top:0;
-  margin-bottom: 5px;
-  width:100%;
+  margin-bottom: 1px;
 }
 
 .bg_folded {

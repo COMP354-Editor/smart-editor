@@ -1,9 +1,10 @@
 <template>
-  <v-row class="flex">
+  <v-row class="flex" style="right:20px">
     <div class="dragBar" />
+
     <v-btn
       icon
-      large
+      medium
       title="minimize"
       class="minimize noDrag"
       @click="setWin('min')"
@@ -12,7 +13,7 @@
     </v-btn>
     <v-btn
       icon
-      large
+      medium
       title="maximize"
       class="maximize noDrag"
       @click="setWin('max')"
@@ -22,7 +23,7 @@
 
     <v-btn
       icon
-      large
+      medium
       title="close"
       class="close noDrag"
       @click="setWin('close')"
@@ -49,28 +50,42 @@ export default {
 
 .dragBar{
   flex:2;
-  height: 35px;
   -webkit-app-region: drag;
   -webkit-user-select: none;
+  left: 2px;
+  background: linear-gradient(110.5deg, rgba(122, 131, 125, 0), rgba(199, 243, 238, 0.8) 15%, rgba(207, 231, 228, 0.8) 7.38%, rgba(122, 131, 125, 0));
+  height: 40px;
+  width:100%;
+  position: sticky;
+  top:0;
 }
 
 .minimize{
-  margin-top: 5px;
+  margin-top: 15px;
   width: 40px;
   height: 26px;
   border-radius: 2px;
+  right:10px;
+  position: sticky;
+  top:0;
 }
 .maximize{
-  margin-top: 5px;
+  margin-top: 15px;
   width: 40px;
   height: 26px;
   border-radius: 2px;
+  right:10px;
+  position: sticky;
+  top:0;
 }
 .close{
-  margin-top: 5px;
+  margin-top: 15px;
   width: 40px;
   height: 26px;
   border-radius: 2px;
+  right:10px;
+  position: sticky;
+  top:0;
 }
 
 </style>

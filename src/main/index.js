@@ -20,9 +20,9 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    heightPixel: 1024,
+    height: 601,
     useContentSize: true,
-    width: 1440,
+    width: 1060,
     frame: false,
     titleBarStyle: 'hidden',
     transparent: true,
@@ -36,7 +36,7 @@ function createWindow () {
     if (!stateChange) {
       console.log("max")
       stateChange = true
-      mainWindow.setSize(1440,601)
+      mainWindow.setSize(1060,601)
       mainWindow.center()
     } else {
       mainWindow.maximize()
