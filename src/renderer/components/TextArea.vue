@@ -25,6 +25,7 @@
 <script>
 import HighlightedText from './HighlightedText'
 import PlainText from './PlainText'
+import TextCharManager from '../model/TextCharManager.ts'
 
 export default {
   name: 'TextArea',
@@ -34,7 +35,7 @@ export default {
       // enable text to be highlighted
       // use to preview edits
       highlightView: false,
-      textValue: 'initial data',
+      textValue: TextCharManager.getTextValue(),
       // used in highlight view
       textComponents: [
         {
@@ -121,16 +122,19 @@ export default {
   /* disable highlight on focus */
   outline: none;
 }
+
 .text-area-editable::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
+
 .text-area-editable::-webkit-scrollbar-thumb {
   border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   background-color: #909090;
 }
+
 .text-area-editable::-webkit-scrollbar-track {
   background-color: transparent;
 }
