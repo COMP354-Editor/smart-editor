@@ -5,7 +5,10 @@
       id="ToolBar"
       height="40px"
     >
-      <v-btn id="menu">
+      <v-btn
+        id="menu"
+        @click="$emit('turnMenuOn')"
+      >
         menu
       </v-btn>
       <v-btn
@@ -88,9 +91,6 @@ export default {
   methods: {
     toggleSearch () {
       this.inSearch = !this.inSearch
-    },
-    turnOffSideMenu () {
-      this.$emit('turnOffSideMenu')
     },
   }
 

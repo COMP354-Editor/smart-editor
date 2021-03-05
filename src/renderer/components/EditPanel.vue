@@ -1,12 +1,12 @@
 <template>
   <div id="edit-panel">
-    <div id="edit-item-holder" />
-    <EditItem
-      v-for="edit in edits.slice(0, 14)"
-      id="edit-item"
-      :key="edit.key"
-      :content="edit.content"
-    />
+    <div id="scroll-panel">
+      <EditItem
+        v-for="edit in edits"
+        :key="edit.key"
+        :content="edit.content"
+      />
+    </div>
   </div>
 </template>
 
@@ -32,7 +32,11 @@ export default {
         {key: 10, content: 'edit 11'},
         {key: 11, content: 'edit 12'},
         {key: 12, content: 'edit 13'},
-        {key: 13, content: 'edit 14'},
+        {key: 14, content: 'edit 15'},
+        {key: 15, content: 'edit 16'},
+        {key: 16, content: 'edit 17'},
+        {key: 17, content: 'edit 18'},
+        {key: 18, content: 'edit 19'},
       ]
     }
   }
@@ -45,22 +49,14 @@ export default {
   background: #E9E9E9;
   border-radius: 12px;
   flex: 2;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 0 40px 0;
 }
 
-#edit-item {
-  background: #F4F4F4;
-  border-radius: 36px;
-  height: 24px;
-  margin-left: 13px;
-  margin-right: 13px;
-  margin-bottom: 4px;
-  user-select: none;
-  text-indent: 5px;
-  padding-top: 3px;
+#scroll-panel {
+  overflow: auto;
 }
 
-#edit-item-holder {
-  margin-top: 40px;
-}
 </style>
 

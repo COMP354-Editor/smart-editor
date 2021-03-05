@@ -2,6 +2,7 @@
   <v-app>
     <div :class="{ bg_folded: isSideMenuFolded, bg_unfolded: !isSideMenuFolded }">
       <v-main>
+        <Navbar id="navbar" />
         <div
           id="container"
           :style="{height:heightPixel + 'px'}"
@@ -29,6 +30,8 @@
               style="height: 100%"
               @maximizeEditor="isEditorFullScreen = true"
               @foldSideMenu="isSideMenuFolded = true"
+              @lockFold="foldLockHandler()"
+              @unlockFold="unfoldLockHandler()"
             />
           </div>
           <div
@@ -47,13 +50,15 @@
 <script>
 import Editor from './components/Editor'
 import SideMenu from './components/SideMenu'
+import Navbar from './components/Navbar'
 import { remote, ipcRenderer } from 'electron'
 
 export default {
   name: 'SmartEditor',
   components: {
     SideMenu,
-    Editor
+    Editor,
+    Navbar
   },
   data () {
     return {
@@ -63,6 +68,7 @@ export default {
       heightPixel: 0,
       widthPixel: 0,
       isEditorFullScreen: false,
+      isFoldLocked: false,
     }
   },
   computed: {
@@ -101,19 +107,33 @@ export default {
   methods: {
     onSideMenuHovered () {
       clearTimeout(this.ticktock)
-      this.ticktock = setTimeout(() => {
-        // expand side menu after time out
-        this.isSideMenuFolded = false
-      }, 800)
+      console.log("onSideMenuHovered hoverLock "+this.isFoldLocked+" sideMenu "+this.isSideMenuFolded)
+      if(!this.isFoldLocked) {
+        this.ticktock = setTimeout(() => {
+          // expand side menu after time out
+          this.isSideMenuFolded = false
+        }, 800)
+      }
     },
     onEditorHovered () {
       clearTimeout(this.ticktock)
-      this.ticktock = setTimeout(() => {
-        // fold side menu after time out
-        this.isSideMenuFolded = true
-      }, 800)
+      if(!this.isFoldLocked) {
+        this.ticktock = setTimeout(() => {
+          // fold side menu after time out
+          this.isSideMenuFolded = true
+        }, 800)
+      }
     },
+    foldLockHandler(){
+      clearTimeout(this.ticktock);
+      this.isFoldLocked=true
+    },
+    unfoldLockHandler(){
+      clearTimeout();
+      this.isFoldLocked=false
+    }
   },
+
 }
 </script>
 
@@ -121,18 +141,26 @@ export default {
 html {
   overflow: hidden;
 }
-
+#app{
+  /*"Do not remove this, it is actually working"*/
+  background: transparent;
+}
+#navbar{
+  margin-bottom: 1px;
+}
 
 .bg_folded {
   /*"Do not remove this, it is actually working"*/
-  background: linear-gradient(110.5deg, #C7F3EE 0%, #CFE7E4 7.38%, #F3E9DA 92.91%), #C4C4C4;
-  height:100%
+  background: linear-gradient(110.5deg, rgba(199, 243, 238, 0.8) 0%, rgba(207, 231, 228, 0.8) 7.38%, rgba(243, 233, 218, 0.8) 92.91%), rgba(196, 196, 196, 0.8);
+  height:100%;
+  border-radius: 12px;
 }
 
 .bg_unfolded {
   /*"Do not remove this, it is actually working"*/
-  background: linear-gradient(110.5deg, #C7F3EE 0%, #CFE7E4 21.9%, #F3E9DA 92.91%), #C4C4C4;
-  height:100%
+  background: linear-gradient(110.5deg, rgba(199, 243, 238, 0.8) 0%, rgba(207, 231, 228, 0.8) 7.38%, rgba(243, 233, 218, 0.8) 92.91%), rgba(196, 196, 196, 0.8);
+  height:100%;
+  border-radius: 12px;
 }
 
 #container {

@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow} from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 
 /**
  * Set `__static` path to static files in production
@@ -20,11 +20,41 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    heightPixel: 1024,
+    height: 601,
     useContentSize: true,
-    width: 1440
+    width: 1060,
+    frame: false,
+    titleBarStyle: 'hidden',
+    transparent: true,
+    hasShadow: false
   })
 
+  // TODO: windows OS specific feature
+  ipcMain.on('min', () => {
+    mainWindow.minimize()
+  })
+
+  // TODO: windowMaximized shouldn't only be changed by button
+  let windowMaximized = false
+  ipcMain.on('max', () => {
+    if (windowMaximized) {
+      console.log('max')
+      windowMaximized = false
+      /*
+      TODO: window size should be determined by size before maximize rather than
+            a hard-coded size
+      */
+      mainWindow.setSize(1060, 601)
+      mainWindow.center()
+    } else {
+      windowMaximized = true
+      mainWindow.maximize()
+    }
+
+  })
+  ipcMain.on('close', () => {
+    mainWindow.close()
+  })
   mainWindow.loadURL(winURL)
 
   mainWindow.on('closed', () => {

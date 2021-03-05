@@ -6,6 +6,10 @@
       :is-side-menu-folded="isSideMenuFolded"
       @turnOffSideMenu="$emit('maximizeEditor')"
       @foldSideMenu="$emit('foldSideMenu')"
+      @turnMenuOn="turnTheMenuOn()"
+    />
+    <Menu
+      v-if="isMenuOn"
     />
     <EditPanel />
   </div>
@@ -14,13 +18,30 @@
 <script>
 import ToolBar from './ToolBar'
 import EditPanel from './EditPanel'
+import Menu from './Menu'
 
 export default {
   name: 'SideMenu',
-  components: {EditPanel, ToolBar},
+  components: {EditPanel, ToolBar, Menu},
   props: {
     isSideMenuFolded: Boolean,
   },
+  data () {
+    return {
+      isMenuOn: false
+    }
+  },
+  methods:{
+    turnTheMenuOn(){
+      if(this.isMenuOn){
+        this.isMenuOn=false
+        this.$emit('unlockFold')
+      }else{
+        this.isMenuOn=true
+        this.$emit('lockFold')
+      }
+    }
+  }
 }
 
 </script>
@@ -32,5 +53,4 @@ export default {
   flex-direction: column;
   /*align-items: stretch;*/
 }
-
 </style>
