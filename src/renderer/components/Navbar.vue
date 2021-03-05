@@ -4,35 +4,36 @@
     style="right:20px"
   >
     <div class="dragBar" />
+    <div v-if="isWindows">
+      <v-btn
+        icon
+        medium
+        title="minimize"
+        class="minimize noDrag"
+        @click="setWin('min')"
+      >
+        <v-icon>mdi-window-minimize</v-icon>
+      </v-btn>
+      <v-btn
+        icon
+        medium
+        title="maximize"
+        class="maximize noDrag"
+        @click="setWin('max')"
+      >
+        <v-icon>mdi-window-maximize</v-icon>
+      </v-btn>
 
-    <v-btn
-      icon
-      medium
-      title="minimize"
-      class="minimize noDrag"
-      @click="setWin('min')"
-    >
-      <v-icon>mdi-window-minimize</v-icon>
-    </v-btn>
-    <v-btn
-      icon
-      medium
-      title="maximize"
-      class="maximize noDrag"
-      @click="setWin('max')"
-    >
-      <v-icon>mdi-window-maximize</v-icon>
-    </v-btn>
-
-    <v-btn
-      icon
-      medium
-      title="close"
-      class="close noDrag"
-      @click="setWin('close')"
-    >
-      <v-icon>mdi-close-circle</v-icon>
-    </v-btn>
+      <v-btn
+        icon
+        medium
+        title="close"
+        class="close noDrag"
+        @click="setWin('close')"
+      >
+        <v-icon>mdi-close-circle</v-icon>
+      </v-btn>
+    </div>
   </v-row>
 </template>
 
@@ -40,6 +41,14 @@
 const {ipcRenderer} = require("electron");
 export default {
   name: 'Narbar',
+  data(){
+    return{
+      isWindows: process.platform==='win32'
+    }
+  },
+  created(){
+    console.log(process)
+  },
   methods:{
     setWin(type){
       ipcRenderer.send(type);

@@ -42,7 +42,6 @@ function createWindow () {
       mainWindow.maximize()
       stateChange = false
     }
-
   });
   ipcMain.on('close', () =>{
     mainWindow.close();
