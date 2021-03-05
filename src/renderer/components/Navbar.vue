@@ -1,5 +1,8 @@
 <template>
-  <v-row class="flex" style="right:20px">
+  <v-row
+    class="flex"
+    style="right:20px"
+  >
     <div class="dragBar" />
 
     <v-btn
@@ -30,7 +33,6 @@
     >
       <v-icon>mdi-close-circle</v-icon>
     </v-btn>
-
   </v-row>
 </template>
 
@@ -50,6 +52,7 @@ export default {
 
 .dragBar{
   flex:2;
+  /*"Do not remove this, it is actually working"*/
   -webkit-app-region: drag;
   -webkit-user-select: none;
   left: 2px;

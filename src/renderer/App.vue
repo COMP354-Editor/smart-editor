@@ -30,6 +30,8 @@
               style="height: 100%"
               @maximizeEditor="isEditorFullScreen = true"
               @foldSideMenu="isSideMenuFolded = true"
+              @lockFold="foldLockHandler()"
+              @unlockFold="unfoldLockHandler()"
             />
           </div>
           <div
@@ -66,6 +68,7 @@ export default {
       heightPixel: 0,
       widthPixel: 0,
       isEditorFullScreen: false,
+      isFoldLocked: false,
     }
   },
   computed: {
@@ -104,20 +107,33 @@ export default {
   methods: {
     onSideMenuHovered () {
       clearTimeout(this.ticktock)
-      this.ticktock = setTimeout(() => {
-        // expand side menu after time out
-        this.isSideMenuFolded = false
-      }, 800)
+      console.log("onSideMenuHovered hoverLock "+this.isFoldLocked+" sideMenu "+this.isSideMenuFolded)
+      if(!this.isFoldLocked) {
+        this.ticktock = setTimeout(() => {
+          // expand side menu after time out
+          this.isSideMenuFolded = false
+        }, 800)
+      }
     },
     onEditorHovered () {
       clearTimeout(this.ticktock)
-      this.ticktock = setTimeout(() => {
-        // fold side menu after time out
-        this.isSideMenuFolded = true
-      }, 800)
+      if(!this.isFoldLocked) {
+        this.ticktock = setTimeout(() => {
+          // fold side menu after time out
+          this.isSideMenuFolded = true
+        }, 800)
+      }
     },
-
+    foldLockHandler(){
+      clearTimeout(this.ticktock);
+      this.isFoldLocked=true
+    },
+    unfoldLockHandler(){
+      clearTimeout();
+      this.isFoldLocked=false
+    }
   },
+
 }
 </script>
 
@@ -126,6 +142,7 @@ html {
   overflow: hidden;
 }
 #app{
+  /*"Do not remove this, it is actually working"*/
   background: transparent;
 }
 #navbar{

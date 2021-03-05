@@ -2,7 +2,7 @@
   <div id="edit-panel">
     <div id="edit-item-holder" />
     <EditItem
-      v-for="edit in edits.slice(0, 14)"
+      v-for="edit in edits.slice(0, 4)"
       id="edit-item"
       :key="edit.key"
       :content="edit.content"
@@ -45,6 +45,8 @@ export default {
   background: #E9E9E9;
   border-radius: 12px;
   flex: 2;
+  display: flex;
+  flex-direction: column;
 }
 
 #edit-item {
@@ -54,9 +56,12 @@ export default {
   margin-left: 13px;
   margin-right: 13px;
   margin-bottom: 4px;
-  user-select: none;
-  text-indent: 5px;
-  padding-top: 3px;
+  box-shadow: 0 0 0 #c6c6c6;
+  justify-content: inherit;
+  font-size:13px;
+}
+#edit-item::before {
+  background-color: transparent !important;
 }
 
 #edit-item-holder {

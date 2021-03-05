@@ -1,5 +1,7 @@
 <template>
-  <div id="editor">
+  <div
+    id="editor"
+  >
     <div id="content-box">
       <div>
         <!-- DO NOT delete div wrapping this, otherwise wired bug will occur-->

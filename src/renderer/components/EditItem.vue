@@ -1,7 +1,7 @@
 <template>
-  <div id="content">
+  <v-btn id="content">
     {{ content }}
-  </div>
+  </v-btn>
 </template>
 
 <script>
