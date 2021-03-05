@@ -11,7 +11,7 @@
     <Menu
       v-if="isMenuOn"
     />
-    <EditPanel />
+    <EditPanel :is-side-menu-folded="isSideMenuFolded" />
   </div>
 </template>
 

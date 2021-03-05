@@ -26,12 +26,11 @@ export default {
   background: #F4F4F4;
   border-radius: 36px;
   height: 24px;
-  margin-left: 13px;
-  margin-right: 13px;
   margin-bottom: 4px;
   box-shadow: 0 0 0 #c6c6c6;
   font-size: 13px;
   width: 90%;
+  text-transform: none;
 }
 
 #edit-item-container {
