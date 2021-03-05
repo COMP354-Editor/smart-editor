@@ -55,8 +55,6 @@ export default {
       ]
     }
   },
-  computed () {
-  },
   mounted () {
     // auto focus
     this.$refs.textarea.focus()

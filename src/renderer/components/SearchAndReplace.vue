@@ -25,7 +25,7 @@
       x-small
     >
       <img
-        src="build/icons/replace.svg"
+        src="../assets/icons/replace.svg"
         alt="replace"
       >
     </v-btn>
@@ -35,7 +35,7 @@
       x-small
     >
       <img
-        src="build/icons/replaceAll.svg"
+        src="../assets/icons/replaceAll.svg"
         alt="replaceAll"
       >
     </v-btn>

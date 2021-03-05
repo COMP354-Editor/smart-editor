@@ -37,7 +37,7 @@
         @click="$emit('turnOffSideMenu')"
       >
         <img
-          src="build/icons/FullScreen.svg"
+          src="../assets/icons/FullScreen.svg"
           alt="FullScreen"
         >
       </v-btn>
@@ -50,7 +50,7 @@
         @click="$emit('foldSideMenu')"
       >
         <img
-          src="build/icons/crossButton.svg"
+          src="../assets/icons/crossButton.svg"
           alt="crossButton"
         >
       </v-btn>

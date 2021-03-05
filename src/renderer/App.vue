@@ -15,7 +15,7 @@
             @click="isEditorFullScreen = false"
           >
             <img
-              src="build/icons/UnFullScreen.svg"
+              src="./assets/icons/UnFullScreen.svg"
               alt="UnFullScreen"
             >
           </v-btn>
@@ -107,7 +107,6 @@ export default {
   methods: {
     onSideMenuHovered () {
       clearTimeout(this.ticktock)
-      console.log("onSideMenuHovered hoverLock "+this.isFoldLocked+" sideMenu "+this.isSideMenuFolded)
       if(!this.isFoldLocked) {
         this.ticktock = setTimeout(() => {
           // expand side menu after time out

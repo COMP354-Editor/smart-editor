@@ -63,5 +63,8 @@ export default {
 
 #text-area-container {
   flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
 }
 </style>
