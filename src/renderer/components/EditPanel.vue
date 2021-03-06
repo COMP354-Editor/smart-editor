@@ -1,6 +1,11 @@
 <template>
-  <div id="edit-panel">
-    <SelectUndoPanel :is-side-menu-folded="isSideMenuFolded" />
+  <div
+    id="edit-panel"
+  >
+    <SelectUndoPanel
+      :is-side-menu-folded="isSideMenuFolded"
+      @enable-select-undo="isSelectUndoAble=!isSelectUndoAble; lockSelectPanel() "
+    />
     <v-btn
       id="scroll-top-btn"
       :class="{ panel_folded: isSideMenuFolded, panel_unfolded: !isSideMenuFolded }"
@@ -17,8 +22,17 @@
     </div>
     <v-btn
       id="scroll-end-btn"
+      :class="{ panel_folded1: !isSelectUndoAble, panel_unfolded1: isSelectUndoAble }"
       height="18px"
     />
+    <v-btn
+      v-if="isSelectUndoAble"
+      id="apply"
+      height="32px"
+      width="136px"
+    >
+      apply
+    </v-btn>
   </div>
 </template>
 
@@ -54,8 +68,25 @@ export default {
         {key: 17, content: 'edit 18'},
         {key: 18, content: 'edit 19'},
       ],
+      isSelectUndoAble: false
     }
   },
+  watch: {
+    isSideMenuFolded: function (val) {
+      if (val) {
+        this.isSelectUndoAble = false
+      }
+    }
+  },
+  methods: {
+    lockSelectPanel () {
+      if (this.isSelectUndoAble) {
+        this.$emit('lockFold')
+      } else {
+        this.$emit('unlockFold')
+      }
+    },
+  }
 }
 </script>
 <style scoped>
@@ -66,6 +97,14 @@ export default {
 /*"Do not remove this, it is actually working"*/
 .panel_unfolded{
   margin-top: 0;
+}
+/*"Do not remove this, it is actually working"*/
+.panel_folded1{
+  margin-bottom: 37px;
+}
+/*"Do not remove this, it is actually working"*/
+.panel_unfolded1{
+  margin-bottom: 0;
 }
 #scroll-top-btn{
   box-shadow: 0 0 0 #c6c6c6;
@@ -95,7 +134,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 2% 0 60px 0;
+  padding: 2% 0 5px 0;
 }
 
 #scroll-panel {
@@ -109,6 +148,15 @@ export default {
   border-radius: 5px;
   -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   background: rgba(0, 0, 0, 0.2);
+}
+#apply{
+  background: #88D9CF;
+  border-radius: 36px;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top: 5px;
+  color:#FFFFFF;
+  box-shadow: 0 0 0 #c6c6c6;
 }
 
 </style>

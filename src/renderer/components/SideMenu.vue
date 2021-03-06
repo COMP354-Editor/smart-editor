@@ -11,7 +11,11 @@
     <Menu
       v-if="isMenuOn"
     />
-    <EditPanel :is-side-menu-folded="isSideMenuFolded" />
+    <EditPanel
+      :is-side-menu-folded="isSideMenuFolded"
+      @unlockFold="$emit('unlockFold')"
+      @lockFold="$emit('lockFold')"
+    />
   </div>
 </template>
 

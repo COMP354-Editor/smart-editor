@@ -3,10 +3,16 @@
     v-if="!isSideMenuFolded"
     id="select-undo-operator"
   >
-    <v-btn id="delete">
+    <v-btn
+      id="delete"
+      :class="{unlockedDelete: enableSelectUndo, lockedDelete: !enableSelectUndo}"
+    >
       Delete
     </v-btn>
-    <v-btn id="select">
+    <v-btn 
+      id="select"
+      @click="$emit('enable-select-undo', enableSelectUndo); enableSelectUndo=!enableSelectUndo"
+    >
       Select
     </v-btn>
   </div>
@@ -16,8 +22,21 @@
 export default {
   name: 'SelectUndoPanel',
   props: {
-    isSideMenuFolded: Boolean,
+    isSideMenuFolded: Boolean
   },
+  data(){
+    return{
+      enableSelectUndo:false
+    }
+  },
+  watch:{
+    isSideMenuFolded: function (val) {
+      if(val) {
+        this.enableSelectUndo = false
+      }
+    }
+  }
+
 }
 </script>
 
@@ -28,10 +47,19 @@ export default {
   margin-left: auto;
   margin-right: 14px;
 }
+/*"Do not remove this, it is actually working"*/
+.unlockedDelete{
+  background: #FA9A9A !important;
+  color: #F4F4F4 !important;
+}
+/*"Do not remove this, it is actually working"*/
+.lockedDelete{
+  background: #B9B9B9 !important;
+  color: #F4F4F4 !important;
+}
 #delete{
   width: 44px;
   height: 22px;
-  background: #B9B9B9;
   border-radius: 36px;
 
   font-family: Roboto, sans-serif;
@@ -39,7 +67,6 @@ export default {
   font-weight: normal;
   font-size: 12px;
   letter-spacing: -0.333333px;
-  color: #F4F4F4;
   box-shadow: 0 0 0 #c6c6c6;
   margin-right: 4px;
   text-transform: none;
