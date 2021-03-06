@@ -28,7 +28,7 @@ export default {
   },
   data () {
     return {
-      isMenuOn: false
+      isMenuOn: false,
     }
   },
   methods:{
@@ -40,7 +40,7 @@ export default {
         this.isMenuOn=true
         this.$emit('lockFold')
       }
-    }
+    },
   }
 }
 

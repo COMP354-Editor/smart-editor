@@ -85,6 +85,7 @@ export default {
   width:90%;
   margin-left:auto;
   margin-right:auto;
+  margin-top: 4px;
 }
 #edit-panel {
   margin-top: 10px;
@@ -94,7 +95,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 11px 0 60px 0;
+  padding: 2% 0 60px 0;
 }
 
 #scroll-panel {
