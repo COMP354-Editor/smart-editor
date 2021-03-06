@@ -24,7 +24,7 @@ export default {
 <style scoped>
 
 #select-undo-operator{
-  margin-bottom: 11px;
+  margin-bottom: 2%;
   margin-left: auto;
   margin-right: 14px;
 }
