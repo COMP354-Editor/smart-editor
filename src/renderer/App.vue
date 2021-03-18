@@ -144,6 +144,7 @@ html {
   /*"Do not remove this, it is actually working"*/
   background: transparent;
 }
+
 #navbar{
   margin-bottom: 1px;
 }

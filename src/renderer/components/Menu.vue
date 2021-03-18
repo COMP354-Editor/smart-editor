@@ -2,7 +2,7 @@
   <div id="menu">
     <v-btn
       height="25px"
-      class="menu-layer0"
+      :class="{ menu_layer0: !isFileListOn, file_layer0_unfolded: isFileListOn }"
       @click="turnOnFileList()"
     >
       File
@@ -15,7 +15,7 @@
     <File v-if="isFileListOn" />
     <v-btn
       height="25px"
-      class="menu-layer0"
+      :class="{ menu_layer0: !isEditListOn, edit_layer0_unfolded: isEditListOn }"
       @click="turnOnEditList()"
     >
       Edits
@@ -28,13 +28,13 @@
     <Edit v-if="isEditListOn" />
     <v-btn
       height="25px"
-      class="menu-layer0"
+      class="menu_layer0"
     >
       Help
     </v-btn>
     <v-btn
       height="25px"
-      class="menu-layer0"
+      class="menu_layer0"
     >
       Exit
     </v-btn>
@@ -88,21 +88,25 @@ export default {
   padding-top: 11px;
   padding-bottom: 24px;
 }
-.menu-layer0{
+.menu_layer0{
   box-shadow: 0 0 0 #c6c6c6;
-  margin-bottom: 2px;
-  margin-top: 2px;
+  margin-bottom: 4px;
   justify-content: inherit;
   border-radius: 0;
 }
-.menu-layer0{
+.file_layer0_unfolded{
+  /*"Do not remove this, it is actually working"*/
   box-shadow: 0 0 0 #c6c6c6;
-  margin-bottom: 2px;
-  margin-top: 2px;
   justify-content: inherit;
   border-radius: 0;
 }
-.menu-layer0::before {
+.edit_layer0_unfolded{
+  /*"Do not remove this, it is actually working"*/
+  box-shadow: 0 0 0 #c6c6c6;
+  justify-content: inherit;
+  border-radius: 0;
+}
+.menu_layer0::before {
   background-color: transparent !important;
 }
 </style>

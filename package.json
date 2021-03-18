@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "author": "Hugo Zheng <zhenghugo515@gmail.com>",
   "description": "An electron-vue project",
-  "license": null,
+  "license": "MIT",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
@@ -101,6 +101,7 @@
     "ts-loader": "^8.0.17",
     "typescript": "^4.1.5",
     "url-loader": "^1.0.1",
+    "vue-devtools": "^5.1.4",
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^15.2.4",
     "vue-style-loader": "^4.1.0",
