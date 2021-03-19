@@ -28,7 +28,7 @@
               :is-side-menu-folded="isSideMenuFolded"
               :style="{width:sideMenuWidthPixel + 'px'}"
               style="height: 100%"
-              @maximizeEditor="isEditorFullScreen = true"
+              @maximizeEditor="isEditorFullScreen = true; unfoldLockHandler()"
               @foldSideMenu="isSideMenuFolded = true"
               @lockFold="foldLockHandler()"
               @unlockFold="unfoldLockHandler()"
