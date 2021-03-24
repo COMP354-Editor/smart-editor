@@ -48,7 +48,7 @@ let rendererConfig = {
         exclude: /node_modules/,
       },
       {
-        test: /\.s(c|a)ss$/,
+        test: /\.s([ca])ss$/,
         use: [
           'vue-style-loader',
           'css-loader',

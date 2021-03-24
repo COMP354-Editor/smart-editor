@@ -11,11 +11,20 @@ class TextCharManager {
     }
 
     /**
+     * clear all contents; used in testing
+     */
+    clear(): void {
+        this.textChars = []
+        this.visibleTextChars = []
+    }
+
+    /**
      * create a textChar at a position
      * @param position - the index as a visible char
-     * @param content - a char or string
+     * @param content - a char or string to create
      */
     createTextChar(position: number, content: string): void {
+        // TODO: may return the created textChars
         // get the index in textChars should the new TextChar being inserted
         // TODO: when visibleTextChars.length === 0
         let index = this.textChars.indexOf(this.visibleTextChars[position])
