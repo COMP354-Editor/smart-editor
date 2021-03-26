@@ -12,13 +12,26 @@
     <div id="replace">
       replace with
     </div>
-    <v-btn
-      class="no-background-hover"
-      icon
-      x-small
-    >
-      <v-icon>mdi-magnify</v-icon>
-    </v-btn>
+    <div class="whichOne">
+      <v-btn
+        class="no-background-hover"
+        icon
+        x-small
+        height="13"
+        width="13"
+      >
+        <v-icon>mdi-menu-up</v-icon>
+      </v-btn>
+      <v-btn
+        class="no-background-hover"
+        icon
+        x-small
+        height="13"
+        width="13"
+      >
+        <v-icon>mdi-menu-down</v-icon>
+      </v-btn>
+    </div>
     <v-btn
       icon
       class="no-background-hover"
@@ -49,13 +62,15 @@ export default {
 </script>
 
 <style scoped>
+.whichOne{
+  display: flex;
+  flex-direction: column;
+}
 #searchAndReplace {
   width: 231px;
   height: 28px;
-
   margin-left: auto;
   order: 2;
-
   background: #E8E8E8;
   border-radius: 36px;
   box-sizing: inherit;
@@ -69,7 +84,6 @@ export default {
 #search {
   width: 78px;
   height: 20px;
-
   background: #FFFFFF;
   margin-left: 5px;
   border-radius: 32px;
@@ -81,7 +95,6 @@ export default {
 #searchAndReplace_deco {
   width: 33px;
   height: 28px;
-
   margin-left: -14px;
   background: #E8E8E8;
   border-radius: 36px;
@@ -91,7 +104,6 @@ export default {
 #replace {
   width: 77px;
   height: 20px;
-
   margin-left: -28px;
   background: #FFFFFF;
   border-radius: 36px;
@@ -101,8 +113,6 @@ export default {
 }
 
 .no-background-hover {
-  width: 26px;
-  height: 26px;
   float: right;
   z-index: 13
 }
