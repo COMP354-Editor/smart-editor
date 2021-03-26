@@ -21,7 +21,7 @@
       <v-btn
         v-if="!isSideMenuFolded&&isGroupOn"
         id="groupOn"
-        @click="$emit('turnGroupOn')"
+        @click="$emit('turnGroupOff'); isGroupOn=false"
       >
         group
       </v-btn>
@@ -55,7 +55,7 @@
         icon
         class="no-background-hover"
         large
-        @click="$emit('foldSideMenu')"
+        @click="$emit('foldSideMenu'); $emit('unlockFold')"
       >
         <img
           src="../assets/icons/crossButton.svg"

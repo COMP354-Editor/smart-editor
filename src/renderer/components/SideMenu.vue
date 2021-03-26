@@ -7,17 +7,21 @@
       @turnOffSideMenu="$emit('maximizeEditor')"
       @foldSideMenu="$emit('foldSideMenu')"
       @turnMenuOn="turnTheMenuOn()"
-      @turnGroupOn="isGroupOn=true; $emit('turnGroupOn')"
+      @turnGroupOn="isGroupOn=true; $emit('turnGroupOn');$emit('lockFold')"
+      @turnGroupOff="isGroupOn=false; $emit('turnGroupOff');$emit('unlockFold')"
+      @unlockFold="$emit('unlockFold')"
+      @lockFold="$emit('lockFold')"
     />
     <Menu
-      id="menu"
       v-if="isMenuOn"
+      id="menu"
     />
     <div id="ContentFamily">
       <Group
         v-if="isGroupOn"
       />
       <EditPanel
+        :is-group-on="isGroupOn"
         :is-side-menu-folded="isSideMenuFolded"
         @unlockFold="$emit('unlockFold')"
         @lockFold="$emit('lockFold')"
@@ -70,6 +74,7 @@ export default {
 #ContentFamily{
   display: flex;
   flex-direction: row;
+  flex: 2;
 }
 
 #menu {

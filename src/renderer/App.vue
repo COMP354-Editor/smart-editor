@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div :class="{ bg_folded: isSideMenuFolded, bg_unfolded: !isSideMenuFolded }">
+    <div :class="{ bg_folded: isSideMenuFolded, bg_unfolded: !isSideMenuFolded&&!isGroupOn, bg_unfolded_groupOn:!isSideMenuFolded&&isGroupOn}">
       <v-main>
         <Navbar id="navbar" />
         <div
@@ -33,6 +33,7 @@
               @lockFold="onFoldLock()"
               @unlockFold="onUnfoldLock()"
               @turnGroupOn="isGroupOn=true"
+              @turnGroupOff="isGroupOn=false"
             />
           </div>
           <div
@@ -40,7 +41,9 @@
             :style="{width:editorWidthPixel + 'px'}"
             @mouseenter="onEditorHovered()"
           >
-            <Editor />
+            <Editor
+              :is-group-on="isGroupOn"
+            />
           </div>
         </div>
       </v-main>
@@ -164,10 +167,17 @@ html {
 
 .bg_unfolded {
   /*"Do not remove this, it is actually working"*/
-  background: linear-gradient(110.5deg, rgba(199, 243, 238, 0.8) 0%, rgba(207, 231, 228, 0.8) 7.38%, rgba(243, 233, 218, 0.8) 92.91%), rgba(196, 196, 196, 0.8);
+  background: linear-gradient(110.5deg, rgba(199, 243, 238, 0.8) 0%, rgba(207, 231, 228, 0.8) 21.9%, rgba(243, 233, 218, 0.8) 92.91%), rgba(196, 196, 196, 0.8);
   height:100%;
   border-radius: 12px;
 }
+.bg_unfolded_groupOn {
+  /*"Do not remove this, it is actually working"*/
+  background: linear-gradient(110.5deg, rgba(199, 243, 238, 0.8) 5.93%, rgba(207, 231, 228, 0.8) 36.41%, rgba(243, 233, 218, 0.8) 92.91%), rgba(196, 196, 196, 0.8);
+  height:100%;
+  border-radius: 12px;
+}
+
 
 #container {
   width: 100%;

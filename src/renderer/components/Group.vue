@@ -4,7 +4,7 @@
   >
     <div id="group_addOrDelete">
       <v-btn class="btn add">
-        Add
+        Add Group
       </v-btn>
       <v-btn class="btn delete">
         Delete
@@ -12,7 +12,7 @@
     </div>
     <v-btn
       id="scroll-top-btn"
-      :class="{ panel_folded: isSideMenuFolded, panel_unfolded: !isSideMenuFolded }"
+      class="panel_folded"
       height="18px"
     />
     <v-spacer />
@@ -72,27 +72,14 @@ export default {
 .add{
   background: #FBFBFB !important;
   color: #656565 !important;
+  width: 50px !important;
 }
 .delete{
   background: #FF8989 !important;
   color: #FFFFFF !important;
 }
-
-/*"Do not remove this, it is actually working"*/
 .panel_folded{
-  margin-top: 34px;
-}
-/*"Do not remove this, it is actually working"*/
-.panel_unfolded{
   margin-top: 0;
-}
-/*"Do not remove this, it is actually working"*/
-.panel_folded1{
-  margin-bottom: 0;
-}
-/*"Do not remove this, it is actually working"*/
-.panel_unfolded1{
-  margin-bottom: 0;
 }
 #scroll-top-btn{
   box-shadow: 0 0 0 #c6c6c6;
@@ -122,7 +109,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 2% 0 5px 0;
+  padding: 9px 0 5px 0;
   margin-right: 20px;
 }
 #apply{
