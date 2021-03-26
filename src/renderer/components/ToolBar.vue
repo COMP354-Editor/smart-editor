@@ -12,8 +12,16 @@
         menu
       </v-btn>
       <v-btn
-        v-show="!isSideMenuFolded"
-        id="group"
+        v-if="!isSideMenuFolded&&!isGroupOn"
+        id="groupOff"
+        @click="$emit('turnGroupOn'); isGroupOn=true"
+      >
+        group
+      </v-btn>
+      <v-btn
+        v-if="!isSideMenuFolded&&isGroupOn"
+        id="groupOn"
+        @click="$emit('turnGroupOff'); isGroupOn=false"
       >
         group
       </v-btn>
@@ -47,7 +55,7 @@
         icon
         class="no-background-hover"
         large
-        @click="$emit('foldSideMenu')"
+        @click="$emit('foldSideMenu'); $emit('unlockFold')"
       >
         <img
           src="../assets/icons/crossButton.svg"
@@ -81,11 +89,17 @@ export default {
   data () {
     return {
       inSearch: false,
+      isGroupOn:false
     }
   },
   watch: {
     isThatHovered: function (val) {
       console.log(val)
+    },
+    isSideMenuFolded: function (val) {
+      if(val) {
+        this.isGroupOn = false
+      }
     }
   },
   methods: {
@@ -98,7 +112,22 @@ export default {
 </script>
 
 <style scoped>
-#group {
+#groupOff {
+  width: 65px;
+  height: 26px;
+  background: #858585;
+  border-radius: 36px;
+
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  letter-spacing: -0.333333px;
+  color: #F4F4F4;
+  box-shadow: 0 0 0 #c6c6c6;
+  margin-left: 6px
+}
+#groupOn {
   width: 65px;
   height: 26px;
   background: #FFA24D;
@@ -111,7 +140,7 @@ export default {
   letter-spacing: -0.333333px;
   color: #F4F4F4;
   box-shadow: 0 0 0 #c6c6c6;
-  left: 6px
+  margin-left: 6px
 }
 
 #menu {

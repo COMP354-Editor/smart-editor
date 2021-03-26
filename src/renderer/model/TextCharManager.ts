@@ -17,6 +17,7 @@ class TextCharManager {
      */
     createTextChar(position: number, content: string): void {
         // get the index in textChars should the new TextChar being inserted
+        // TODO: when visibleTextChars.length === 0
         let index = this.textChars.indexOf(this.visibleTextChars[position])
         // if content is a char
         if (content.length === 1) {
@@ -44,7 +45,6 @@ class TextCharManager {
         if (this.visibleTextChars.length === 0) return ''
         return this.visibleTextChars.map(textChar => textChar.content).reduce((str1, str2) => str1.concat(str2))
     }
-
 
 }
 

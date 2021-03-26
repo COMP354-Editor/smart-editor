@@ -7,15 +7,26 @@
       @turnOffSideMenu="$emit('maximizeEditor')"
       @foldSideMenu="$emit('foldSideMenu')"
       @turnMenuOn="turnTheMenuOn()"
-    />
-    <Menu
-      v-if="isMenuOn"
-    />
-    <EditPanel
-      :is-side-menu-folded="isSideMenuFolded"
+      @turnGroupOn="isGroupOn=true; $emit('turnGroupOn');$emit('lockFold')"
+      @turnGroupOff="isGroupOn=false; $emit('turnGroupOff');$emit('unlockFold')"
       @unlockFold="$emit('unlockFold')"
       @lockFold="$emit('lockFold')"
     />
+    <Menu
+      v-if="isMenuOn"
+      id="menu"
+    />
+    <div id="ContentFamily">
+      <GroupPanel
+        v-if="isGroupOn"
+      />
+      <EditPanel
+        :is-group-on="isGroupOn"
+        :is-side-menu-folded="isSideMenuFolded"
+        @unlockFold="$emit('unlockFold')"
+        @lockFold="$emit('lockFold')"
+      />
+    </div>
   </div>
 </template>
 
@@ -23,34 +34,52 @@
 import ToolBar from './ToolBar'
 import EditPanel from './EditPanel'
 import Menu from './Menu'
+import GroupPanel from './GroupPanel'
 
 export default {
   name: 'SideMenu',
-  components: {EditPanel, ToolBar, Menu},
+  components: {EditPanel, ToolBar, Menu, GroupPanel},
   props: {
     isSideMenuFolded: Boolean,
   },
-  data () {
+  data() {
     return {
       isMenuOn: false,
+      isGroupOn: false
     }
   },
-  methods:{
-    turnTheMenuOn(){
-      if(this.isMenuOn){
-        this.isMenuOn=false
+  watch: {
+    isSideMenuFolded: function (val) {
+      if (val) {
+        this.isGroupOn = false
+      }
+    }
+  },
+  methods: {
+    turnTheMenuOn() {
+      if (this.isMenuOn) {
+        this.isMenuOn = false
         this.$emit('unlockFold')
-      }else{
-        this.isMenuOn=true
+      } else {
+        this.isMenuOn = true
         this.$emit('lockFold')
       }
-    },
+    }
   }
 }
 
 </script>
 
 <style scoped>
+#ContentFamily {
+  display: flex;
+  flex-direction: row;
+  flex: 2;
+}
+
+#menu {
+  flex: 0 0 auto;
+}
 
 #side-menu {
   display: flex;

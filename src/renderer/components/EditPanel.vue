@@ -3,12 +3,13 @@
     id="edit-panel"
   >
     <SelectUndoPanel
+      v-if="!isGroupOn"
       :is-side-menu-folded="isSideMenuFolded"
       @enable-select-undo="isSelectUndoAble=!isSelectUndoAble; lockSelectPanel() "
     />
     <v-btn
       id="scroll-top-btn"
-      :class="{ panel_folded: isSideMenuFolded, panel_unfolded: !isSideMenuFolded }"
+      :class="{ panel_folded: isSideMenuFolded, panel_unfolded: !isSideMenuFolded&&!isGroupOn, panel_unfolded_GroupOn: !isSideMenuFolded&&isGroupOn}"
       height="18px"
     />
     <div
@@ -45,6 +46,7 @@ export default {
   components: {EditItem, SelectUndoPanel},
   props: {
     isSideMenuFolded: Boolean,
+    isGroupOn:Boolean
   },
   data () {
     return {
@@ -67,6 +69,16 @@ export default {
         {key: 16, content: 'edit 17'},
         {key: 17, content: 'edit 18'},
         {key: 18, content: 'edit 19'},
+        {key: 19, content: 'edit 20'},
+        {key: 20, content: 'edit 21'},
+        {key: 21, content: 'edit 22'},
+        {key: 22, content: 'edit 23'},
+        {key: 23, content: 'edit 24'},
+        {key: 24, content: 'edit 25'},
+        {key: 25, content: 'edit 26'},
+        {key: 26, content: 'edit 27'},
+        {key: 27, content: 'edit 28'},
+
       ],
       isSelectUndoAble: false
     }
@@ -97,6 +109,9 @@ export default {
 /*"Do not remove this, it is actually working"*/
 .panel_unfolded{
   margin-top: 0;
+}
+.panel_unfolded_GroupOn{
+  margin-top: 25px;
 }
 /*"Do not remove this, it is actually working"*/
 .panel_folded1{
@@ -130,7 +145,7 @@ export default {
   margin-top: 10px;
   background: #E9E9E9;
   border-radius: 12px;
-  flex: 2;
+  flex: 3;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

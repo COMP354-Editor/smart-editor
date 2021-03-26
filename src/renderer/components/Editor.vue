@@ -5,13 +5,19 @@
     <div id="content-box">
       <div>
         <!-- DO NOT delete div wrapping this, otherwise wired bug will occur-->
-        <DocumentHeaderPanel />
+        <DocumentHeaderPanel v-if="!isTooTight||!isGroupOn" />
       </div>
 
-      <div id="time">
+      <div
+        v-if="!isTooTight||!isGroupOn"
+        id="time"
+      >
         2021/02/27
       </div>
-      <div id="deco_underline" />
+      <div 
+        v-if="!isTooTight||!isGroupOn"
+        id="deco_underline"
+      />
       <div id="text-area-container">
         <TextArea />
       </div>
@@ -22,11 +28,27 @@
 <script>
 import TextArea from './TextArea'
 import DocumentHeaderPanel from './DocumentHeaderPanel'
+import { remote, ipcRenderer } from 'electron'
 
 export default {
   name: 'Editor',
   components: {TextArea, DocumentHeaderPanel},
-  id: 'editor'
+  props:{
+    isGroupOn:Boolean
+  },
+  data(){
+    return{
+      isTooTight:false
+    }
+  },
+  id: 'editor',
+  created () {
+    this.isTooTight =  1181>remote.getCurrentWindow().getSize()[0]
+
+    ipcRenderer.on('window-resize', (event, message) => {
+      this.isTooTight = 1181 > message[0];
+    })
+  }
 }
 </script>
 

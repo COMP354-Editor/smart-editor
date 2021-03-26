@@ -43,9 +43,11 @@ export default {
 <style scoped>
 
 #select-undo-operator{
-  margin-bottom: 2%;
+  margin-bottom: 7px;
   margin-left: auto;
-  margin-right: 14px;
+  margin-right: auto;
+  width: 90%;
+  text-align: right;
 }
 /*"Do not remove this, it is actually working"*/
 .unlockedDelete{
@@ -84,7 +86,6 @@ export default {
   letter-spacing: -0.333333px;
   color: #656565;
   box-shadow: 0 0 0 #c6c6c6;
-  margin-right: 4px;
   text-transform: none;
 }
 </style>
