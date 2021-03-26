@@ -32,6 +32,7 @@
               @foldSideMenu="isSideMenuFolded = true"
               @lockFold="onFoldLock()"
               @unlockFold="onUnfoldLock()"
+              @turnGroupOn="isGroupOn=true"
             />
           </div>
           <div
@@ -69,13 +70,18 @@ export default {
       widthPixel: 0,
       isEditorFullScreen: false,
       isFoldLocked: false,
+      isGroupOn: false
     }
   },
   computed: {
     sideMenuWidthPixel () {
       if (!this.isSideMenuFolded) {
         // sideMenu width when expanded
-        return 359
+        if(this.isGroupOn){
+          return 643
+        }else{
+          return 359
+        }
       } else if (this.isEditorFullScreen) {
         // sideMenu hidden when editor is full screen
         return 0

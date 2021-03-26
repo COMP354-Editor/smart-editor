@@ -130,7 +130,7 @@ export default {
   margin-top: 10px;
   background: #E9E9E9;
   border-radius: 12px;
-  flex: 2;
+  flex: 3;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

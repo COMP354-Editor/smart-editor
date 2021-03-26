@@ -1,0 +1,138 @@
+<template>
+  <div
+    id="group-panel"
+  >
+    <div id="group_addOrDelete">
+      <v-btn class="btn add">
+        Add
+      </v-btn>
+      <v-btn class="btn delete">
+        Delete
+      </v-btn>
+    </div>
+    <v-btn
+      id="scroll-top-btn"
+      :class="{ panel_folded: isSideMenuFolded, panel_unfolded: !isSideMenuFolded }"
+      height="18px"
+    />
+    <v-spacer />
+    <v-btn
+      id="scroll-end-btn"
+      :class="{ panel_folded1: !isSelectUndoAble, panel_unfolded1: isSelectUndoAble }"
+      height="18px"
+    />
+    <v-btn
+      id="apply"
+      height="32px"
+      width="136px"
+    >
+      apply
+    </v-btn>
+  </div>
+</template>
+
+<script>
+
+export default {
+  name: 'Group',
+  components: {},
+  props: {
+  },
+  data () {
+    return {
+    }
+  },
+
+}
+</script>
+<style scoped>
+#group_addOrDelete{
+  display: flex;
+  flex-direction: row;
+  width:90%;
+  margin-left:auto;
+  margin-right:auto;
+  margin-bottom: 7px;
+}
+.btn{
+  width: 33px;
+  height: 22px !important;
+  border-radius: 36px;
+
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  letter-spacing: -0.333333px;
+  box-shadow: 0 0 0 #c6c6c6;
+  margin-right: 8px;
+  text-transform: none;
+}
+
+.add{
+  background: #FBFBFB !important;
+  color: #656565 !important;
+}
+.delete{
+  background: #FF8989 !important;
+  color: #FFFFFF !important;
+}
+
+/*"Do not remove this, it is actually working"*/
+.panel_folded{
+  margin-top: 34px;
+}
+/*"Do not remove this, it is actually working"*/
+.panel_unfolded{
+  margin-top: 0;
+}
+/*"Do not remove this, it is actually working"*/
+.panel_folded1{
+  margin-bottom: 0;
+}
+/*"Do not remove this, it is actually working"*/
+.panel_unfolded1{
+  margin-bottom: 0;
+}
+#scroll-top-btn{
+  box-shadow: 0 0 0 #c6c6c6;
+  background: #909090 !important;
+  border-radius: 8px;
+  z-index: 99;
+  width:90%;
+  margin-left:auto;
+  margin-right:auto;
+  margin-bottom: 4px;
+}
+#scroll-end-btn{
+  box-shadow: 0 0 0 #c6c6c6;
+  background: #909090 !important;
+  border-radius: 8px;
+  z-index: 99;
+  width:90%;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top: 4px;
+}
+#group-panel {
+  margin-top: 10px;
+  background: #E9E9E9;
+  border-radius: 12px;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 2% 0 5px 0;
+  margin-right: 20px;
+}
+#apply{
+  background: #88D9CF;
+  border-radius: 36px;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top: 5px;
+  color:#FFFFFF;
+  box-shadow: 0 0 0 #c6c6c6;
+}
+</style>
+
