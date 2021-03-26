@@ -42,17 +42,26 @@
         x-small
         :ripple="false"
       >
-        <v-icon class="icon-position">
-          mdi-menu-up
+        <v-icon
+          size="18px"
+          color="#7C7C7C"
+          style="bottom: 0"
+        >
+          mdi-menu-up-outline
         </v-icon>
       </v-btn>
+      <div style="height: 1px;width:1px "/>
       <v-btn
         class="no-background-hover"
         x-small
         :ripple="false"
       >
-        <v-icon class="icon-position">
-          mdi-menu-down
+        <v-icon
+          size="18px"
+          color="#7C7C7C"
+          style="bottom: 5px"
+        >
+          mdi-menu-down-outline
         </v-icon>
       </v-btn>
     </div>
@@ -105,7 +114,7 @@ export default {
 
 <style scoped>
 #replaceButtons{
-  margin-left: 9px;
+  margin-left: 13px;
 }
 #justifyReplace{
   padding-top: 4px;
@@ -118,9 +127,6 @@ export default {
   outline: none;
   height: 95%;
   text-indent: 4px;
-}
-.icon-position{
-  bottom: 5px;
 }
 .whichOne{
   display: flex;

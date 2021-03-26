@@ -28,10 +28,10 @@
               :is-side-menu-folded="isSideMenuFolded"
               :style="{width:sideMenuWidthPixel + 'px'}"
               style="height: 100%"
-              @maximizeEditor="isEditorFullScreen = true; unfoldLockHandler()"
+              @maximizeEditor="isEditorFullScreen = true; onUnfoldLock()"
               @foldSideMenu="isSideMenuFolded = true"
-              @lockFold="foldLockHandler()"
-              @unlockFold="unfoldLockHandler()"
+              @lockFold="onFoldLock()"
+              @unlockFold="onUnfoldLock()"
             />
           </div>
           <div
@@ -123,11 +123,11 @@ export default {
         }, 800)
       }
     },
-    foldLockHandler(){
+    onFoldLock(){
       clearTimeout(this.ticktock);
       this.isFoldLocked=true
     },
-    unfoldLockHandler(){
+    onUnfoldLock(){
       clearTimeout();
       this.isFoldLocked=false
     }
