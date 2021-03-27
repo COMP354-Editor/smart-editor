@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import DocumentHeaderPanel from '/src/renderer/components/DocumentHeaderPanel'
+import DocumentHeaderPanel from '/src/renderer/components/editor/DocumentHeaderPanel'
 
 describe('DocumentHeaderPanel.vue', () => {
   it('should contain title', () => {

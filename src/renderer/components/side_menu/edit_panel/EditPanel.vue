@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import EditItem from './EditItem'
+import EditItem from '../EditItem'
 import SelectUndoPanel from './SelectUndoPanel'
 
 export default {

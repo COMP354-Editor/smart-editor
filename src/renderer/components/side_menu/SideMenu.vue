@@ -32,9 +32,9 @@
 
 <script>
 import ToolBar from './ToolBar'
-import EditPanel from './EditPanel'
-import Menu from './Menu'
-import GroupPanel from './GroupPanel'
+import EditPanel from './edit_panel/EditPanel'
+import Menu from './menu/Menu'
+import GroupPanel from './group_panel/GroupPanel'
 
 export default {
   name: 'SideMenu',

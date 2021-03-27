@@ -52,8 +52,8 @@
 </template>
 
 <script>
-import Editor from './components/Editor'
-import SideMenu from './components/SideMenu'
+import Editor from './components/editor/Editor'
+import SideMenu from './components/side_menu/SideMenu'
 import Navbar from './components/Navbar'
 import { remote, ipcRenderer } from 'electron'
 

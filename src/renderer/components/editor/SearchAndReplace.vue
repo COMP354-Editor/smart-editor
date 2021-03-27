@@ -70,7 +70,7 @@
         @click="eraseText();"
       >
         <img
-          src="../assets/icons/replace.svg"
+          src="../../assets/icons/replace.svg"
           alt="replace"
         >
       </v-btn>
@@ -81,7 +81,7 @@
         @click="eraseText();"
       >
         <img
-          src="../assets/icons/replaceAll.svg"
+          src="../../assets/icons/replaceAll.svg"
           alt="replaceAll"
         >
       </v-btn>
