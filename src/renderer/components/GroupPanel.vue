@@ -13,7 +13,9 @@
       class="panel_folded"
       height="18px"
     />
-    <v-spacer />
+    <div id="scroll-panel">
+      <GroupContainer />
+    </div>
     <!--      :class="{ panel_folded1: !isSelectUndoAble, panel_unfolded1: isSelectUndoAble }"-->
     <v-btn
       id="scroll-end-btn"
@@ -31,9 +33,11 @@
 
 <script>
 
+import GroupContainer from "./GroupContainer";
+
 export default {
   name: 'GroupPanel',
-  components: {},
+  components: {GroupContainer},
   props: {},
   data() {
     return {}
@@ -101,6 +105,21 @@ export default {
   margin-left: auto;
   margin-right: auto;
   margin-top: 4px;
+}
+
+#scroll-panel {
+  overflow: auto;
+}
+
+#scroll-panel::-webkit-scrollbar {
+  width: 0;
+  height: 1px;
+}
+
+#scroll-panel::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 #group-panel {
