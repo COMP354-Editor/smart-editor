@@ -12,31 +12,28 @@
       >
         mdi-magnify
       </v-icon>
-      <textarea
+      <label for="inputSearch" />
+      <input
         id="inputSearch"
+        v-model="searchText"
+        type="text"
         class="input"
-        @keypress="isSearchTyped=true"
-      />
+      >
     </div>
     <div id="searchAndReplace_deco" />
     <div
       id="replace"
-      @mouseenter="isReplaceEntered=true"
-      @mouseleave="isReplaceEntered=false"
     >
-      <p
-        v-if="!isReplaceEntered&&!isReplaceTyped"
-        id="justifyReplace"
-      >
-        Replace with
-      </p>
-      <textarea
+      <label for="inputReplace" />
+      <input
         id="inputReplace"
+        v-model="replaceText"
+        type="text"
         class="input"
-        @keypress="isReplaceTyped=true"
-      />
+        placeholder="Replace with"
+      >
     </div>
-    <div class="whichOne">
+    <div class="previous-next">
       <v-btn
         class="no-background-hover"
         x-small
@@ -70,7 +67,7 @@
         icon
         class="no-background-hover"
         x-small
-        @click="eraseText(); isReplaceTyped=false; isSearchTyped=false"
+        @click="eraseText();"
       >
         <img
           src="../assets/icons/replace.svg"
@@ -81,7 +78,7 @@
         icon
         class="no-background-hover"
         x-small
-        @click="eraseText(); isReplaceTyped=false; isSearchTyped=false"
+        @click="eraseText();"
       >
         <img
           src="../assets/icons/replaceAll.svg"
@@ -97,16 +94,20 @@ export default {
   name: 'SearchAndReplace',
   data() {
     return {
+      searchText: '',
+      replaceText: '',
       isSearchEntered: false,
-      isReplaceEntered: false,
-      isSearchTyped: false,
-      isReplaceTyped: false,
+    }
+  },
+  computed: {
+    isSearchTyped: function () {
+      return this.searchText.length !== 0
     }
   },
   methods: {
     eraseText() {
-      document.getElementById("inputSearch").value = "";
-      document.getElementById("inputReplace").value = "";
+      this.searchText = ''
+      this.replaceText = ''
     }
   }
 }
@@ -117,21 +118,16 @@ export default {
   margin-left: 13px;
 }
 
-#justifyReplace {
-  padding-top: 4px;
-  font-size: 9px;
-  text-indent: 4px;
-}
-
 .input {
   overflow: hidden;
   resize: none;
   outline: none;
   height: 95%;
   text-indent: 4px;
+  font-size: 12px;
 }
 
-.whichOne {
+.previous-next {
   display: flex;
   flex-direction: column;
   height: 95%;
@@ -182,6 +178,8 @@ export default {
   z-index: 12;
   overflow: hidden;
   place-items: inherit;
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
