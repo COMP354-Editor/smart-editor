@@ -13,7 +13,7 @@
 
 <script>
 
-import EditItem from "./EditItem";
+import EditItem from "../EditItem";
 import GroupHeader from "./GroupHeader";
 
 export default {
