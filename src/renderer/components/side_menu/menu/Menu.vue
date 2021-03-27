@@ -2,6 +2,7 @@
   <div id="menu">
     <v-btn
       height="25px"
+      :ripple="false"
       :class="{ menu_layer0: !isFileListOn, file_layer0_unfolded: isFileListOn }"
       @click="turnOnFileList()"
     >
@@ -15,6 +16,7 @@
     <File v-if="isFileListOn" />
     <v-btn
       height="25px"
+      :ripple="false"
       :class="{ menu_layer0: !isEditListOn, edit_layer0_unfolded: isEditListOn }"
       @click="turnOnEditList()"
     >
@@ -29,12 +31,15 @@
     <v-btn
       height="25px"
       class="menu_layer0"
+      :ripple="false"
     >
       Help
     </v-btn>
     <v-btn
       height="25px"
       class="menu_layer0"
+      :ripple="false"
+      @click="setWin('close')"
     >
       Exit
     </v-btn>
@@ -44,6 +49,8 @@
 <script>
 import File from "./File"
 import Edit from "./Edit"
+
+const {ipcRenderer} = require('electron')
 export default {
   name: 'Menu',
   components:{
@@ -64,6 +71,9 @@ export default {
     turnOnEditList(){
       this.isEditListOn=!this.isEditListOn
       this.isFileListOn=false
+    },
+    setWin(type){
+      ipcRenderer.send(type);
     }
   }
 

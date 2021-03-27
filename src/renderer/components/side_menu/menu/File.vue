@@ -9,18 +9,21 @@
     <v-btn
       height="25px"
       class="menu-layer1"
+      :ripple="false"
     >
       Open
     </v-btn>
     <v-btn
       height="25px"
       class="menu-layer1"
+      :ripple="false"
     >
       Save
     </v-btn>
     <v-btn
       height="25px"
       class="menu-layer1"
+      :ripple="false"
     >
       Save as
     </v-btn>

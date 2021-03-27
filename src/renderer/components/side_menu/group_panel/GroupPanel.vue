@@ -1,10 +1,16 @@
 <template>
   <div id="group-panel">
     <div id="group_addOrDelete">
-      <v-btn class="btn add">
+      <v-btn
+        class="btn add"
+        :ripple="false"
+      >
         Add Group
       </v-btn>
-      <v-btn class="btn delete">
+      <v-btn
+        class="btn delete"
+        :ripple="false"
+      >
         Delete
       </v-btn>
     </div>
@@ -12,14 +18,15 @@
       id="scroll-top-btn"
       class="panel_folded"
       height="18px"
+      :ripple="false"
     />
     <div id="scroll-panel">
       <GroupContainer />
     </div>
-    <!--      :class="{ panel_folded1: !isSelectUndoAble, panel_unfolded1: isSelectUndoAble }"-->
     <v-btn
       id="scroll-end-btn"
       height="18px"
+      :ripple="false"
     />
     <v-btn
       id="apply"
@@ -52,7 +59,8 @@ export default {
   width: 90%;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 7px;
+  height: 22px !important;
+  flex-shrink:0;
 }
 
 .btn {
@@ -73,7 +81,10 @@ export default {
 .add {
   background: #FBFBFB !important;
   color: #656565 !important;
-  width: 50px !important;
+  width: fit-content !important;
+  max-width: 80%;
+  min-width: 1%;
+  padding: 0 10px !important;
 }
 
 .delete {
@@ -82,7 +93,7 @@ export default {
 }
 
 .panel_folded {
-  margin-top: 0;
+  margin-top: 7px;
 }
 
 #scroll-top-btn {
@@ -129,7 +140,6 @@ export default {
   flex: 2;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   padding: 9px 0 5px 0;
   margin-right: 20px;
 }
@@ -142,6 +152,7 @@ export default {
   margin-top: 5px;
   color: #FFFFFF;
   box-shadow: 0 0 0 #c6c6c6;
+  align-self:flex-end;
 }
 </style>
 
