@@ -63,28 +63,45 @@
       </v-btn>
     </div>
     <div id="replaceButtons">
-      <v-btn
-        icon
-        class="no-background-hover"
-        x-small
-        @click="eraseText();"
+      <v-tooltip
+        bottom
       >
-        <img
-          src="../../assets/icons/replace.svg"
-          alt="replace"
-        >
-      </v-btn>
-      <v-btn
-        icon
-        class="no-background-hover"
-        x-small
-        @click="eraseText();"
-      >
-        <img
-          src="../../assets/icons/replaceAll.svg"
-          alt="replaceAll"
-        >
-      </v-btn>
+        <template #activator="{ on, attrs }">
+          <v-btn
+            icon
+            class="no-background-hover"
+            x-small
+            v-bind="attrs"
+            :ripple="false"
+            @click="eraseText();"
+            v-on="on"
+          >
+            <img 
+              src="../../assets/icons/replaceAll.svg"
+              alt="replaceAll"
+            >
+          </v-btn>
+        </template>
+        <span>ReplaceAll</span>
+      </v-tooltip>
+      <v-tooltip bottom>
+        <template #activator="{ on, attrs }">
+          <v-btn
+            icon
+            class="no-background-hover"
+            x-small
+            v-bind="attrs"
+            @click="eraseText();"
+            v-on="on"
+          >
+            <img
+              src="../../assets/icons/replace.svg"
+              alt="replace"
+            >
+          </v-btn>
+        </template>
+        <span>Replace</span>
+      </v-tooltip>
     </div>
   </div>
 </template>
@@ -124,7 +141,7 @@ export default {
   outline: none;
   height: 95%;
   text-indent: 4px;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .previous-next {

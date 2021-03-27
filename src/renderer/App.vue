@@ -12,6 +12,7 @@
             id="cancel-full-screen"
             icon
             large
+            :ripple="false"
             @click="isEditorFullScreen = false"
           >
             <img

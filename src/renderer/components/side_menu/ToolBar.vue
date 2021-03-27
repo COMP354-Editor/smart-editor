@@ -7,13 +7,16 @@
     >
       <v-btn
         id="menu"
-        @click="$emit('turnMenuOn')"
+        :class="{ menu_activated:isMenuOn, menu_normal:!isMenuOn}"
+        :ripple="false"
+        @click="$emit('turnMenuOn');isMenuOn=!isMenuOn"
       >
         menu
       </v-btn>
       <v-btn
         v-if="!isSideMenuFolded&&!isGroupOn"
         id="groupOff"
+        :ripple="false"
         @click="$emit('turnGroupOn'); isGroupOn=true"
       >
         group
@@ -21,6 +24,7 @@
       <v-btn
         v-if="!isSideMenuFolded&&isGroupOn"
         id="groupOn"
+        :ripple="false"
         @click="$emit('turnGroupOff'); isGroupOn=false"
       >
         group
@@ -55,7 +59,7 @@
         icon
         class="no-background-hover"
         large
-        @click="$emit('foldSideMenu'); $emit('unlockFold')"
+        @click="$emit('foldSideMenu'); $emit('unlockFold');isGroupOn=false; $emit('turnGroupOff')"
       >
         <img
           src="../../assets/icons/crossButton.svg"
@@ -89,7 +93,8 @@ export default {
   data () {
     return {
       inSearch: false,
-      isGroupOn:false
+      isGroupOn:false,
+      isMenuOn:false
     }
   },
   watch: {
@@ -112,12 +117,17 @@ export default {
 </script>
 
 <style scoped>
+.menu_activated{
+  background: #FFA24D !important;
+}
+.menu_normal{
+  background: #858585 !important;
+}
 #groupOff {
   width: 65px;
   height: 26px;
   background: #858585;
   border-radius: 36px;
-
   font-family: Roboto, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -146,9 +156,7 @@ export default {
 #menu {
   width: 65px;
   height: 26px;
-  background: #858585;
   border-radius: 36px;
-
   font-family: Roboto, sans-serif;
   font-style: normal;
   font-weight: normal;
