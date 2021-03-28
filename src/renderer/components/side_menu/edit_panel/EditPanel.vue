@@ -5,12 +5,13 @@
     <SelectUndoPanel
       v-if="!isGroupOn"
       :is-side-menu-folded="isSideMenuFolded"
-      @enable-select-undo="isSelectUndoAble=!isSelectUndoAble; lockSelectPanel() "
+      @enable-select-undo="isSelectUndoEnabled=!isSelectUndoEnabled; lockSelectPanel() "
     />
     <v-btn
       id="scroll-top-btn"
       :class="{ panel_folded: isSideMenuFolded, panel_unfolded: !isSideMenuFolded&&!isGroupOn, panel_unfolded_GroupOn: !isSideMenuFolded&&isGroupOn}"
       height="18px"
+      :ripple="false"
     />
     <div
       id="scroll-panel"
@@ -19,15 +20,17 @@
         v-for="edit in edits"
         :key="edit.key"
         :content="edit.content"
+        :is-select-undo-enabled="isSelectUndoEnabled"
       />
     </div>
     <v-btn
       id="scroll-end-btn"
-      :class="{ panel_folded1: !isSelectUndoAble, panel_unfolded1: isSelectUndoAble }"
+      :class="{ panel_folded1: !isSelectUndoEnabled, panel_unfolded1: isSelectUndoEnabled }"
       height="18px"
+      :ripple="false"
     />
     <v-btn
-      v-if="isSelectUndoAble"
+      v-if="isSelectUndoEnabled"
       id="apply"
       height="32px"
       width="136px"
@@ -80,19 +83,19 @@ export default {
         {key: 27, content: 'edit 28'},
 
       ],
-      isSelectUndoAble: false
+      isSelectUndoEnabled: false
     }
   },
   watch: {
     isSideMenuFolded: function (val) {
       if (val) {
-        this.isSelectUndoAble = false
+        this.isSelectUndoEnabled = false
       }
     }
   },
   methods: {
     lockSelectPanel () {
-      if (this.isSelectUndoAble) {
+      if (this.isSelectUndoEnabled) {
         this.$emit('lockFold')
       } else {
         this.$emit('unlockFold')

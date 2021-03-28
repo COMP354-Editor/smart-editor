@@ -3,18 +3,21 @@
     <v-btn
       height="25px"
       class="menu-layer1"
+      :ripple="false"
     >
       Select
     </v-btn>
     <v-btn
       height="25px"
       class="menu-layer1"
+      :ripple="false"
     >
       Copy
     </v-btn>
     <v-btn
       height="25px"
       class="menu-layer1"
+      :ripple="false"
     >
       Paste
     </v-btn>

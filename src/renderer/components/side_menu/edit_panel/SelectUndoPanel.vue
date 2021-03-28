@@ -6,11 +6,13 @@
     <v-btn
       id="delete"
       :class="{unlockedDelete: enableSelectUndo, lockedDelete: !enableSelectUndo}"
+      :ripple="false"
     >
       Delete
     </v-btn>
     <v-btn 
       id="select"
+      :ripple="false"
       @click="$emit('enable-select-undo', enableSelectUndo); enableSelectUndo=!enableSelectUndo"
     >
       Select
