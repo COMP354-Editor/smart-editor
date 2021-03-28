@@ -34,11 +34,17 @@ export default {
       default: ''
     },
     isGroup:Boolean,
-    isSelectUndoEnabled:Boolean
+    isSelectUndoEnabled:Boolean,
+    ensureSelectOff:Boolean
   },
   data(){
     return{
       isItemSelected:false
+    }
+  },
+  watch: {
+    ensureSelectOff: function () {
+        this.isItemSelected = false
     }
   }
 }
