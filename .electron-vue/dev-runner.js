@@ -3,20 +3,21 @@
 const chalk = require('chalk')
 const electron = require('electron')
 const path = require('path')
-const { say } = require('cfonts')
-const { spawn } = require('child_process')
+const {say} = require('cfonts')
+const {spawn} = require('child_process')
 const webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 
 const mainConfig = require('./webpack.main.config')
 const rendererConfig = require('./webpack.renderer.config')
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 let electronProcess = null
 let manualRestart = false
 let hotMiddleware
 
-function logStats (proc, data) {
+function logStats(proc, data) {
   let log = ''
 
   log += chalk.yellow.bold(`┏ ${proc} Process ${new Array((19 - proc.length) + 1).join('-')}`)
@@ -38,7 +39,7 @@ function logStats (proc, data) {
   console.log(log)
 }
 
-function startRenderer () {
+function startRenderer() {
   return new Promise((resolve, reject) => {
     rendererConfig.entry.renderer = [path.join(__dirname, 'dev-client')].concat(rendererConfig.entry.renderer)
     rendererConfig.mode = 'development'
@@ -49,8 +50,8 @@ function startRenderer () {
     })
 
     compiler.hooks.compilation.tap('compilation', compilation => {
-      compilation.hooks.htmlWebpackPluginAfterEmit.tapAsync('html-webpack-plugin-after-emit', (data, cb) => {
-        hotMiddleware.publish({ action: 'reload' })
+      HtmlWebpackPlugin.getHooks(compilation).afterEmit.tapAsync('html-webpack-plugin-after-emit', (data, cb) => {
+        hotMiddleware.publish({action: 'reload'})
         cb()
       })
     })
@@ -64,7 +65,7 @@ function startRenderer () {
       {
         contentBase: path.join(__dirname, '../'),
         quiet: true,
-        before (app, ctx) {
+        before(app, ctx) {
           app.use(hotMiddleware)
           ctx.middleware.waitUntilValid(() => {
             resolve()
@@ -77,15 +78,19 @@ function startRenderer () {
   })
 }
 
-function startMain () {
+function startMain() {
   return new Promise((resolve, reject) => {
     mainConfig.entry.main = [path.join(__dirname, '../src/main/index.dev.js')].concat(mainConfig.entry.main)
     mainConfig.mode = 'development'
     const compiler = webpack(mainConfig)
+    hotMiddleware = webpackHotMiddleware(compiler, {
+      log: false,
+      heartbeat: 2500
+    })
 
     compiler.hooks.watchRun.tapAsync('watch-run', (compilation, done) => {
       logStats('Main', chalk.white.bold('compiling...'))
-      hotMiddleware.publish({ action: 'compiling' })
+      hotMiddleware.publish({action: 'compiling'})
       done()
     })
 
@@ -113,11 +118,11 @@ function startMain () {
   })
 }
 
-function startElectron () {
-  var args = [
+function startElectron() {
+  let args = [
     '--inspect=5858',
     path.join(__dirname, '../dist/electron/main.js')
-  ]
+  ];
 
   // detect yarn or npm and process commandline args accordingly
   if (process.env.npm_execpath.endsWith('yarn.js')) {
@@ -127,7 +132,7 @@ function startElectron () {
   }
 
   electronProcess = spawn(electron, args)
-  
+
   electronProcess.stdout.on('data', data => {
     electronLog(data, 'blue')
   })
@@ -140,7 +145,7 @@ function startElectron () {
   })
 }
 
-function electronLog (data, color) {
+function electronLog(data, color) {
   let log = ''
   data = data.toString().split(/\r?\n/)
   data.forEach(line => {
@@ -157,7 +162,7 @@ function electronLog (data, color) {
   }
 }
 
-function greeting () {
+function greeting() {
   const cols = process.stdout.columns
   let text = ''
 
@@ -175,16 +180,24 @@ function greeting () {
   console.log(chalk.blue('  getting ready...') + '\n')
 }
 
-function init () {
+function init() {
   greeting()
 
-  Promise.all([startRenderer(), startMain()])
-    .then(() => {
-      startElectron()
-    })
-    .catch(err => {
-      console.error(err)
-    })
+  // Promise.all([startRenderer(), startMain()])
+  //   .then(() => {
+  //     startElectron()
+  //   })
+  //   .catch(err => {
+  //     console.error(err)
+  //   })
+  startMain().then(() => {
+      startRenderer().then(() => {
+        startElectron()
+      })
+    }
+  ).catch(err => {
+    console.error(err)
+  })
 }
 
 init()

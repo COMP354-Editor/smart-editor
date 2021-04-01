@@ -49,6 +49,7 @@
         @click="$emit('turnOffSideMenu')"
       >
         <img
+          svg-inline
           src="../../assets/icons/FullScreen.svg"
           alt="FullScreen"
         >
@@ -62,6 +63,7 @@
         @click="$emit('foldSideMenu'); $emit('unlockFold');isGroupOn=false; $emit('turnGroupOff')"
       >
         <img
+          svg-inline
           src="../../assets/icons/crossButton.svg"
           alt="crossButton"
         >
@@ -90,11 +92,11 @@ export default {
   props: {
     isSideMenuFolded: Boolean,
   },
-  data () {
+  data() {
     return {
       inSearch: false,
-      isGroupOn:false,
-      isMenuOn:false
+      isGroupOn: false,
+      isMenuOn: false
     }
   },
   watch: {
@@ -102,13 +104,13 @@ export default {
       console.log(val)
     },
     isSideMenuFolded: function (val) {
-      if(val) {
+      if (val) {
         this.isGroupOn = false
       }
     }
   },
   methods: {
-    toggleSearch () {
+    toggleSearch() {
       this.inSearch = !this.inSearch
     },
   }
@@ -117,12 +119,14 @@ export default {
 </script>
 
 <style scoped>
-.menu_activated{
+.menu_activated {
   background: #FFA24D !important;
 }
-.menu_normal{
+
+.menu_normal {
   background: #858585 !important;
 }
+
 #groupOff {
   width: 65px;
   height: 26px;
@@ -137,6 +141,7 @@ export default {
   box-shadow: 0 0 0 #c6c6c6;
   margin-left: 6px
 }
+
 #groupOn {
   width: 65px;
   height: 26px;

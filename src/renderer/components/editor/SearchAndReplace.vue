@@ -76,7 +76,8 @@
             @click="eraseText();"
             v-on="on"
           >
-            <img 
+            <img
+              svg-inline
               src="../../assets/icons/replaceAll.svg"
               alt="replaceAll"
             >
@@ -95,6 +96,7 @@
             v-on="on"
           >
             <img
+              svg-inline
               src="../../assets/icons/replace.svg"
               alt="replace"
             >

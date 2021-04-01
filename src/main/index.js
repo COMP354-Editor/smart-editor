@@ -28,7 +28,12 @@ function createWindow () {
     frame: false,
     titleBarStyle: 'hidden',
     transparent: true,
-    hasShadow: false
+    hasShadow: false,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true
+    }
   })
 
   // TODO: windows OS specific feature
