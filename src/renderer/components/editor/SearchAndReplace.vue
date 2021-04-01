@@ -42,7 +42,7 @@
         <v-icon
           size="18px"
           color="#7C7C7C"
-          style="bottom: 0"
+          style="bottom: -1px"
         >
           mdi-menu-up-outline
         </v-icon>
@@ -56,7 +56,7 @@
         <v-icon
           size="18px"
           color="#7C7C7C"
-          style="bottom: 5px"
+          style="bottom: 2px"
         >
           mdi-menu-down-outline
         </v-icon>
@@ -72,7 +72,8 @@
             class="no-background-hover"
             x-small
             v-bind="attrs"
-            :ripple="false"
+            
+            style="padding-bottom: 1px"
             @click="eraseText();"
             v-on="on"
           >
@@ -80,6 +81,7 @@
               svg-inline
               src="../../assets/icons/replaceAll.svg"
               alt="replaceAll"
+              style="outline: none"
             >
           </v-btn>
         </template>
@@ -99,6 +101,7 @@
               svg-inline
               src="../../assets/icons/replace.svg"
               alt="replace"
+              style="outline: none"
             >
           </v-btn>
         </template>
