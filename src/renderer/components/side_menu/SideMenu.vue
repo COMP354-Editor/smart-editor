@@ -77,6 +77,7 @@ export default {
 #ContentFamily {
   display: flex;
   flex-direction: row;
+  overflow: auto;
   flex: 2;
 }
 
@@ -87,6 +88,5 @@ export default {
 #side-menu {
   display: flex;
   flex-direction: column;
-  /*align-items: stretch;*/
 }
 </style>
