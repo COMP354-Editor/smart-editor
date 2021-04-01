@@ -21,6 +21,7 @@
         :key="edit.key"
         :content="edit.content"
         :is-select-undo-enabled="isSelectUndoEnabled"
+        :ensure-select-off="ensureSelectOff"
       />
     </div>
     <v-btn
@@ -49,7 +50,8 @@ export default {
   components: {EditItem, SelectUndoPanel},
   props: {
     isSideMenuFolded: Boolean,
-    isGroupOn:Boolean
+    isGroupOn:Boolean,
+    ensureSelectOff:Boolean
   },
   data () {
     return {
@@ -91,6 +93,9 @@ export default {
       if (val) {
         this.isSelectUndoEnabled = false
       }
+    },
+    ensureSelectOff:function (){
+        this.isSelectUndoEnabled = false
     }
   },
   methods: {

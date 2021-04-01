@@ -11,6 +11,7 @@
       @turnGroupOff="isGroupOn=false; $emit('turnGroupOff');$emit('unlockFold')"
       @unlockFold="$emit('unlockFold')"
       @lockFold="$emit('lockFold')"
+      @ensureSelectOff="ensureSelectOff=!ensureSelectOff;"
     />
     <Menu
       v-if="isMenuOn"
@@ -23,6 +24,7 @@
       <EditPanel
         :is-group-on="isGroupOn"
         :is-side-menu-folded="isSideMenuFolded"
+        :ensure-select-off="ensureSelectOff"
         @unlockFold="$emit('unlockFold')"
         @lockFold="$emit('lockFold')"
       />
@@ -45,7 +47,8 @@ export default {
   data() {
     return {
       isMenuOn: false,
-      isGroupOn: false
+      isGroupOn: false,
+      ensureSelectOff: false
     }
   },
   watch: {
@@ -64,7 +67,7 @@ export default {
         this.isMenuOn = true
         this.$emit('lockFold')
       }
-    }
+    },
   }
 }
 

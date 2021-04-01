@@ -17,7 +17,7 @@
         v-if="!isSideMenuFolded&&!isGroupOn"
         id="groupOff"
         :ripple="false"
-        @click="$emit('turnGroupOn'); isGroupOn=true"
+        @click="$emit('turnGroupOn'); isGroupOn=true; $emit('ensureSelectOff')"
       >
         group
       </v-btn>
@@ -60,7 +60,7 @@
         icon
         class="no-background-hover"
         large
-        @click="$emit('foldSideMenu'); $emit('unlockFold');isGroupOn=false; $emit('turnGroupOff')"
+        @click="$emit('foldSideMenu'); $emit('unlockFold');isGroupOn=false; $emit('turnGroupOff');$emit('ensureSelectOff')"
       >
         <img
           svg-inline
