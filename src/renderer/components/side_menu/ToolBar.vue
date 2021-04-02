@@ -7,13 +7,25 @@
     >
       <v-btn
         id="menu"
-        @click="$emit('turnMenuOn')"
+        :class="{ menu_activated:isMenuOn, menu_normal:!isMenuOn}"
+        :ripple="false"
+        @click="$emit('turnMenuOn');isMenuOn=!isMenuOn"
       >
         menu
       </v-btn>
       <v-btn
-        v-show="!isSideMenuFolded"
-        id="group"
+        v-if="!isSideMenuFolded&&!isGroupOn"
+        id="groupOff"
+        :ripple="false"
+        @click="$emit('turnGroupOn'); isGroupOn=true; $emit('ensureSelectOff')"
+      >
+        group
+      </v-btn>
+      <v-btn
+        v-if="!isSideMenuFolded&&isGroupOn"
+        id="groupOn"
+        :ripple="false"
+        @click="$emit('turnGroupOff'); isGroupOn=false"
       >
         group
       </v-btn>
@@ -37,7 +49,8 @@
         @click="$emit('turnOffSideMenu')"
       >
         <img
-          src="../assets/icons/FullScreen.svg"
+          svg-inline
+          src="../../assets/icons/FullScreen.svg"
           alt="FullScreen"
         >
       </v-btn>
@@ -47,10 +60,11 @@
         icon
         class="no-background-hover"
         large
-        @click="$emit('foldSideMenu')"
+        @click="$emit('foldSideMenu'); $emit('unlockFold');isGroupOn=false; $emit('turnGroupOff');$emit('ensureSelectOff')"
       >
         <img
-          src="../assets/icons/crossButton.svg"
+          svg-inline
+          src="../../assets/icons/crossButton.svg"
           alt="crossButton"
         >
       </v-btn>
@@ -78,18 +92,25 @@ export default {
   props: {
     isSideMenuFolded: Boolean,
   },
-  data () {
+  data() {
     return {
       inSearch: false,
+      isGroupOn: false,
+      isMenuOn: false
     }
   },
   watch: {
     isThatHovered: function (val) {
       console.log(val)
+    },
+    isSideMenuFolded: function (val) {
+      if (val) {
+        this.isGroupOn = false
+      }
     }
   },
   methods: {
-    toggleSearch () {
+    toggleSearch() {
       this.inSearch = !this.inSearch
     },
   }
@@ -98,7 +119,30 @@ export default {
 </script>
 
 <style scoped>
-#group {
+.menu_activated {
+  background: #FFA24D !important;
+}
+
+.menu_normal {
+  background: #858585 !important;
+}
+
+#groupOff {
+  width: 65px;
+  height: 26px;
+  background: #858585;
+  border-radius: 36px;
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  letter-spacing: -0.333333px;
+  color: #F4F4F4;
+  box-shadow: 0 0 0 #c6c6c6;
+  margin-left: 6px
+}
+
+#groupOn {
   width: 65px;
   height: 26px;
   background: #FFA24D;
@@ -111,15 +155,13 @@ export default {
   letter-spacing: -0.333333px;
   color: #F4F4F4;
   box-shadow: 0 0 0 #c6c6c6;
-  left: 6px
+  margin-left: 6px
 }
 
 #menu {
   width: 65px;
   height: 26px;
-  background: #858585;
   border-radius: 36px;
-
   font-family: Roboto, sans-serif;
   font-style: normal;
   font-weight: normal;

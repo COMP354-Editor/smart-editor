@@ -3,13 +3,15 @@
     id="edit-panel"
   >
     <SelectUndoPanel
+      v-if="!isGroupOn"
       :is-side-menu-folded="isSideMenuFolded"
-      @enable-select-undo="isSelectUndoAble=!isSelectUndoAble; lockSelectPanel() "
+      @enable-select-undo="isSelectUndoEnabled=!isSelectUndoEnabled; lockSelectPanel() "
     />
     <v-btn
       id="scroll-top-btn"
-      :class="{ panel_folded: isSideMenuFolded, panel_unfolded: !isSideMenuFolded }"
+      :class="{ panel_folded: isSideMenuFolded, panel_unfolded: !isSideMenuFolded&&!isGroupOn, panel_unfolded_GroupOn: !isSideMenuFolded&&isGroupOn}"
       height="18px"
+      :ripple="false"
     />
     <div
       id="scroll-panel"
@@ -18,15 +20,18 @@
         v-for="edit in edits"
         :key="edit.key"
         :content="edit.content"
+        :is-select-undo-enabled="isSelectUndoEnabled"
+        :ensure-select-off="ensureSelectOff"
       />
     </div>
     <v-btn
       id="scroll-end-btn"
-      :class="{ panel_folded1: !isSelectUndoAble, panel_unfolded1: isSelectUndoAble }"
+      :class="{ panel_folded1: !isSelectUndoEnabled, panel_unfolded1: isSelectUndoEnabled }"
       height="18px"
+      :ripple="false"
     />
     <v-btn
-      v-if="isSelectUndoAble"
+      v-if="isSelectUndoEnabled"
       id="apply"
       height="32px"
       width="136px"
@@ -37,7 +42,7 @@
 </template>
 
 <script>
-import EditItem from './EditItem'
+import EditItem from '../EditItem'
 import SelectUndoPanel from './SelectUndoPanel'
 
 export default {
@@ -45,6 +50,8 @@ export default {
   components: {EditItem, SelectUndoPanel},
   props: {
     isSideMenuFolded: Boolean,
+    isGroupOn:Boolean,
+    ensureSelectOff:Boolean
   },
   data () {
     return {
@@ -67,20 +74,33 @@ export default {
         {key: 16, content: 'edit 17'},
         {key: 17, content: 'edit 18'},
         {key: 18, content: 'edit 19'},
+        {key: 19, content: 'edit 20'},
+        {key: 20, content: 'edit 21'},
+        {key: 21, content: 'edit 22'},
+        {key: 22, content: 'edit 23'},
+        {key: 23, content: 'edit 24'},
+        {key: 24, content: 'edit 25'},
+        {key: 25, content: 'edit 26'},
+        {key: 26, content: 'edit 27'},
+        {key: 27, content: 'edit 28'},
+
       ],
-      isSelectUndoAble: false
+      isSelectUndoEnabled: false
     }
   },
   watch: {
     isSideMenuFolded: function (val) {
       if (val) {
-        this.isSelectUndoAble = false
+        this.isSelectUndoEnabled = false
       }
+    },
+    ensureSelectOff:function (){
+        this.isSelectUndoEnabled = false
     }
   },
   methods: {
     lockSelectPanel () {
-      if (this.isSelectUndoAble) {
+      if (this.isSelectUndoEnabled) {
         this.$emit('lockFold')
       } else {
         this.$emit('unlockFold')
@@ -97,6 +117,9 @@ export default {
 /*"Do not remove this, it is actually working"*/
 .panel_unfolded{
   margin-top: 0;
+}
+.panel_unfolded_GroupOn{
+  margin-top: 25px;
 }
 /*"Do not remove this, it is actually working"*/
 .panel_folded1{
@@ -130,7 +153,7 @@ export default {
   margin-top: 10px;
   background: #E9E9E9;
   border-radius: 12px;
-  flex: 2;
+  flex: 3;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

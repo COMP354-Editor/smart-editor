@@ -1,6 +1,8 @@
 <template>
   <v-app>
-    <div :class="{ bg_folded: isSideMenuFolded, bg_unfolded: !isSideMenuFolded }">
+    <div
+      :class="{ bg_folded: isSideMenuFolded, bg_unfolded: !isSideMenuFolded&&!isGroupOn, bg_unfolded_groupOn:!isSideMenuFolded&&isGroupOn}"
+    >
       <v-main>
         <Navbar id="navbar" />
         <div
@@ -12,9 +14,11 @@
             id="cancel-full-screen"
             icon
             large
+            :ripple="false"
             @click="isEditorFullScreen = false"
           >
             <img
+              svg-inline
               src="./assets/icons/UnFullScreen.svg"
               alt="UnFullScreen"
             >
@@ -28,10 +32,12 @@
               :is-side-menu-folded="isSideMenuFolded"
               :style="{width:sideMenuWidthPixel + 'px'}"
               style="height: 100%"
-              @maximizeEditor="isEditorFullScreen = true"
+              @maximizeEditor="isEditorFullScreen = true; onUnfoldLock()"
               @foldSideMenu="isSideMenuFolded = true"
-              @lockFold="foldLockHandler()"
-              @unlockFold="unfoldLockHandler()"
+              @lockFold="onFoldLock()"
+              @unlockFold="onUnfoldLock()"
+              @turnGroupOn="isGroupOn=true"
+              @turnGroupOff="isGroupOn=false"
             />
           </div>
           <div
@@ -39,7 +45,9 @@
             :style="{width:editorWidthPixel + 'px'}"
             @mouseenter="onEditorHovered()"
           >
-            <Editor />
+            <Editor
+              :is-group-on="isGroupOn"
+            />
           </div>
         </div>
       </v-main>
@@ -48,10 +56,10 @@
 </template>
 
 <script>
-import Editor from './components/Editor'
-import SideMenu from './components/SideMenu'
-import Navbar from './components/Navbar'
 import { remote, ipcRenderer } from 'electron'
+import Editor from './components/editor/Editor'
+import SideMenu from './components/side_menu/SideMenu'
+import Navbar from './components/Navbar'
 
 export default {
   name: 'SmartEditor',
@@ -60,7 +68,7 @@ export default {
     Editor,
     Navbar
   },
-  data () {
+  data() {
     return {
       isSideMenuFolded: true,
       // timer to expand sideMenu
@@ -69,13 +77,18 @@ export default {
       widthPixel: 0,
       isEditorFullScreen: false,
       isFoldLocked: false,
+      isGroupOn: false
     }
   },
   computed: {
-    sideMenuWidthPixel () {
+    sideMenuWidthPixel() {
       if (!this.isSideMenuFolded) {
         // sideMenu width when expanded
-        return 359
+        if (this.isGroupOn) {
+          return 643
+        } else {
+          return 359
+        }
       } else if (this.isEditorFullScreen) {
         // sideMenu hidden when editor is full screen
         return 0
@@ -84,12 +97,12 @@ export default {
         return 177
       }
     },
-    editorWidthPixel () {
+    editorWidthPixel() {
       // cut width to prevent overflow
       return this.widthPixel - this.sideMenuWidthPixel
     },
   },
-  created () {
+  created() {
     // cut textarea height to prevent overflow
     const heightCutOffset = 75
     const widthCutOffset = 80
@@ -105,31 +118,31 @@ export default {
     })
   },
   methods: {
-    onSideMenuHovered () {
+    onSideMenuHovered() {
       clearTimeout(this.ticktock)
-      if(!this.isFoldLocked) {
+      if (!this.isFoldLocked) {
         this.ticktock = setTimeout(() => {
           // expand side menu after time out
           this.isSideMenuFolded = false
         }, 800)
       }
     },
-    onEditorHovered () {
+    onEditorHovered() {
       clearTimeout(this.ticktock)
-      if(!this.isFoldLocked) {
+      if (!this.isFoldLocked) {
         this.ticktock = setTimeout(() => {
           // fold side menu after time out
           this.isSideMenuFolded = true
         }, 800)
       }
     },
-    foldLockHandler(){
+    onFoldLock() {
       clearTimeout(this.ticktock);
-      this.isFoldLocked=true
+      this.isFoldLocked = true
     },
-    unfoldLockHandler(){
+    onUnfoldLock() {
       clearTimeout();
-      this.isFoldLocked=false
+      this.isFoldLocked = false
     }
   },
 
@@ -140,27 +153,37 @@ export default {
 html {
   overflow: hidden;
 }
-#app{
+
+#app {
   /*"Do not remove this, it is actually working"*/
   background: transparent;
 }
-#navbar{
+
+#navbar {
   margin-bottom: 1px;
 }
 
 .bg_folded {
   /*"Do not remove this, it is actually working"*/
   background: linear-gradient(110.5deg, rgba(199, 243, 238, 0.8) 0%, rgba(207, 231, 228, 0.8) 7.38%, rgba(243, 233, 218, 0.8) 92.91%), rgba(196, 196, 196, 0.8);
-  height:100%;
+  height: 100%;
   border-radius: 12px;
 }
 
 .bg_unfolded {
   /*"Do not remove this, it is actually working"*/
-  background: linear-gradient(110.5deg, rgba(199, 243, 238, 0.8) 0%, rgba(207, 231, 228, 0.8) 7.38%, rgba(243, 233, 218, 0.8) 92.91%), rgba(196, 196, 196, 0.8);
-  height:100%;
+  background: linear-gradient(110.5deg, rgba(199, 243, 238, 0.8) 0%, rgba(207, 231, 228, 0.8) 21.9%, rgba(243, 233, 218, 0.8) 92.91%), rgba(196, 196, 196, 0.8);
+  height: 100%;
   border-radius: 12px;
 }
+
+.bg_unfolded_groupOn {
+  /*"Do not remove this, it is actually working"*/
+  background: linear-gradient(110.5deg, rgba(199, 243, 238, 0.8) 5.93%, rgba(207, 231, 228, 0.8) 36.41%, rgba(243, 233, 218, 0.8) 92.91%), rgba(196, 196, 196, 0.8);
+  height: 100%;
+  border-radius: 12px;
+}
+
 
 #container {
   width: 100%;

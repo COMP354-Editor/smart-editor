@@ -10,6 +10,7 @@
         medium
         title="minimize"
         class="minimize noDrag"
+        :ripple="false"
         @click="setWin('min')"
       >
         <v-icon>mdi-window-minimize</v-icon>
@@ -19,6 +20,7 @@
         medium
         title="maximize"
         class="maximize noDrag"
+        :ripple="false"
         @click="setWin('max')"
       >
         <v-icon>mdi-window-maximize</v-icon>
@@ -29,6 +31,7 @@
         medium
         title="close"
         class="close noDrag"
+        :ripple="false"
         @click="setWin('close')"
       >
         <v-icon>mdi-close-circle</v-icon>

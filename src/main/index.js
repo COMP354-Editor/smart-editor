@@ -21,14 +21,19 @@ function createWindow () {
    */
   mainWindow = new BrowserWindow({
     minWidth:911,
-    minHeight:527,
+    minHeight:555,
     height: 601,
     useContentSize: true,
     width: 1060,
     frame: false,
     titleBarStyle: 'hidden',
     transparent: true,
-    hasShadow: false
+    hasShadow: false,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true
+    }
   })
 
   // TODO: windows OS specific feature
