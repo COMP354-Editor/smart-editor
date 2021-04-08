@@ -20,13 +20,17 @@
     <div id="ContentFamily">
       <GroupPanel
         v-if="isGroupOn"
+        @selectedEditsUpdated="selectedEditsUpdated"
       />
       <EditPanel
         :is-group-on="isGroupOn"
         :is-side-menu-folded="isSideMenuFolded"
         :ensure-select-off="ensureSelectOff"
+        :edits="allEdits"
         @unlockFold="$emit('unlockFold')"
         @lockFold="$emit('lockFold')"
+        @selectedEditsUpdated="selectedEditsUpdated"
+        @deleteSelectedEdits="deleteSelectedEdits"
       />
     </div>
   </div>
@@ -37,6 +41,7 @@ import ToolBar from './ToolBar'
 import EditPanel from './edit_panel/EditPanel'
 import Menu from './menu/Menu'
 import GroupPanel from './group_panel/GroupPanel'
+import editManager from "../../model/EditManager";
 
 export default {
   name: 'SideMenu',
@@ -48,8 +53,14 @@ export default {
     return {
       isMenuOn: false,
       isGroupOn: false,
-      ensureSelectOff: false
+      ensureSelectOff: false,
+      selectedEdits: []
     }
+  },
+  computed: {
+    allEdits() {
+      return editManager.edits
+    },
   },
   watch: {
     isSideMenuFolded: function (val) {
@@ -68,6 +79,21 @@ export default {
         this.$emit('lockFold')
       }
     },
+    selectedEditsUpdated(selectedEdit) {
+      let index = this.selectedEdits.indexOf(selectedEdit)
+      if (index === -1) {
+        this.selectedEdits.push(selectedEdit)
+      } else {
+        this.selectedEdits.splice(index, 1);
+      }
+      console.log(this.selectedEdits)
+    },
+    deleteSelectedEdits(){
+      for (let i = 0; i < this.selectedEdits.length; i++) {
+        console.log(this.selectedEdits[i])
+        editManager.deleteEdit(this.selectedEdits[i])
+      }
+    }
   }
 }
 
