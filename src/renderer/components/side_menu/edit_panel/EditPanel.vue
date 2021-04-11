@@ -7,6 +7,7 @@
       :is-side-menu-folded="isSideMenuFolded"
       @enable-select-undo="isSelectUndoEnabled=!isSelectUndoEnabled; lockSelectPanel() "
       @delete-selected-edits="$emit('delete-selected-edits')"
+      @ensureSelectOff="$emit('ensureSelectOff')"
     />
     <v-btn
       id="scroll-top-btn"
