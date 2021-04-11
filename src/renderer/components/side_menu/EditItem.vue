@@ -57,7 +57,7 @@ export default {
   methods: {
     toggleSelect(){
       this.isItemSelected=!this.isItemSelected
-      this.$emit('toggleSelect', this.edit)
+      this.$emit('toggle-select', this.edit)
     }
   }
 }

@@ -20,7 +20,7 @@
     <div id="ContentFamily">
       <GroupPanel
         v-if="isGroupOn"
-        @selectedEditsUpdated="selectedEditsUpdated"
+        @selected-edits-updated="selectedEditsUpdated"
       />
       <EditPanel
         :is-group-on="isGroupOn"
@@ -29,8 +29,8 @@
         :edits="allEdits"
         @unlockFold="$emit('unlockFold')"
         @lockFold="$emit('lockFold')"
-        @selectedEditsUpdated="selectedEditsUpdated"
-        @deleteSelectedEdits="deleteSelectedEdits"
+        @selected-edits-updated="selectedEditsUpdated"
+        @delete-selected-edits="deleteSelectedEdits"
       />
     </div>
   </div>
@@ -54,13 +54,9 @@ export default {
       isMenuOn: false,
       isGroupOn: false,
       ensureSelectOff: false,
-      selectedEdits: []
+      selectedEdits: [],
+      allEdits: editManager.edits
     }
-  },
-  computed: {
-    allEdits() {
-      return editManager.edits
-    },
   },
   watch: {
     isSideMenuFolded: function (val) {
@@ -82,18 +78,23 @@ export default {
     selectedEditsUpdated(selectedEdit) {
       let index = this.selectedEdits.indexOf(selectedEdit)
       if (index === -1) {
+        // if the edit is not in list, add it
         this.selectedEdits.push(selectedEdit)
       } else {
+        // if the edit is in the list, it is unselect operation; delete it
         this.selectedEdits.splice(index, 1);
       }
-      console.log(this.selectedEdits)
     },
     deleteSelectedEdits(){
       for (let i = 0; i < this.selectedEdits.length; i++) {
-        console.log(this.selectedEdits[i])
-        editManager.deleteEdit(this.selectedEdits[i])
+        editManager.deleteEdit(this.selectedEdits[i].id)
+        this.refreshEdits()
       }
+    },
+    refreshEdits(){
+      this.allEdits = editManager.edits
     }
+
   }
 }
 

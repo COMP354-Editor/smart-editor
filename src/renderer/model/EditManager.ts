@@ -8,7 +8,7 @@ class EditManager {
         this.edits = [];
     }
 
-    createEdit(operation: 'writing' | 'deletion') {
+    createEdit(operation: 'writing' | 'deletion'): void {
         switch (operation) {
             case "writing":
                 break;
@@ -19,9 +19,17 @@ class EditManager {
         }
     }
 
-    deleteEdit(editToDelete: Edit) {
-        this.edits.filter(edit => edit != editToDelete)
-        console.log(editToDelete)
+    deleteEdit(editId: number): void {
+        this.edits = this.edits.filter(edit => edit.id != editId)
+    }
+
+    getEditById(editId: number): Edit{
+        const editFound = this.edits.find(edit => edit.id === editId)
+        if (editFound != undefined){
+            return editFound;
+        } else {
+            throw "Edit not found by id"
+        }
     }
 }
 

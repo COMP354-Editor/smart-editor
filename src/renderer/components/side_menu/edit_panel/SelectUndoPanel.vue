@@ -7,7 +7,7 @@
       id="delete"
       :class="{unlockedDelete: enableSelectUndo, lockedDelete: !enableSelectUndo}"
       :ripple="false"
-      @click="$emit('deleteSelectedEdits')"
+      @click="$emit('delete-selected-edits')"
     >
       Delete
     </v-btn>

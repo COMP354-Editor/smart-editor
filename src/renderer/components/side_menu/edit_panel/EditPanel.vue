@@ -6,7 +6,7 @@
       v-if="!isGroupOn"
       :is-side-menu-folded="isSideMenuFolded"
       @enable-select-undo="isSelectUndoEnabled=!isSelectUndoEnabled; lockSelectPanel() "
-      @deleteSelectedEdits="$emit('deleteSelectedEdits')"
+      @delete-selected-edits="$emit('delete-selected-edits')"
     />
     <v-btn
       id="scroll-top-btn"
@@ -19,11 +19,11 @@
     >
       <EditItem
         v-for="edit in edits"
-        :key="edit.key"
+        :key="edit.id"
         :edit="edit"
         :is-select-undo-enabled="isSelectUndoEnabled"
         :ensure-select-off="ensureSelectOff"
-        @toggleSelect="selectedEditsUpdated"
+        @toggle-select="selectedEditsUpdated"
       />
     </div>
     <v-btn
@@ -84,7 +84,7 @@ export default {
     },
 
     selectedEditsUpdated(selectedEdit){
-      this.$emit("selectedEditsUpdated", selectedEdit)
+      this.$emit("selected-edits-updated", selectedEdit)
     }
   }
 

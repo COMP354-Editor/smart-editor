@@ -1,6 +1,5 @@
 import TextChar from "./TextChar";
 
-// eslint-disable-next-line no-unused-vars
 class TextCharManager {
     textChars: Array<TextChar>
     private visibleTextChars: Array<TextChar>
@@ -16,25 +15,22 @@ class TextCharManager {
      * @param content - a char or string
      */
     createTextChar(position: number, content: string): void {
-        // get the index in textChars should the new TextChar being inserted
-        // TODO: when visibleTextChars.length === 0
+        // create textChar instant for each char
+        let textCharsToInsert: Array<TextChar> = []
+        for (let i = 0; i < content.length; i++) {
+            textCharsToInsert.push(new TextChar(content.charAt(i)))
+        }
+        // get the index in textChars should the new TextChar be inserted
         if (this.visibleTextChars.length === 0) {
-            let textCharsToInsert: Array<TextChar> = []
-            for (let i = 0; i < content.length; i++) {
-                textCharsToInsert.push(new TextChar(content.charAt(i)))
-            }
+            // no visible chars; insert at the head
             this.textChars.splice(0, 0, ...textCharsToInsert)
         } else {
             let index;
             if (position >= this.visibleTextChars.length) {
+                // position out of bound; insert in the end
                 index = this.visibleTextChars.length
             } else {
                 index = this.textChars.indexOf(this.visibleTextChars[position])
-            }
-            // create TextChar for each character
-            let textCharsToInsert: Array<TextChar> = []
-            for (let i = 0; i < content.length; i++) {
-                textCharsToInsert.push(new TextChar(content.charAt(i)))
             }
             // insert into textChars
             this.textChars.splice(index, 0, ...textCharsToInsert)
