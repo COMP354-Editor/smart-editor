@@ -44,7 +44,7 @@ export default {
       this.enableSelectUndo=!this.enableSelectUndo;
       this.$emit('enable-select-undo', this.enableSelectUndo);
       if(this.enableSelectUndo===false){
-       this.$emit('ensureSelectOff')
+       this.$emit('ensure-select-off')
       }
 
     }

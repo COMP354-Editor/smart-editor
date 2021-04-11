@@ -31,7 +31,7 @@
         @lockFold="$emit('lockFold')"
         @selected-edits-updated="selectedEditsUpdated"
         @delete-selected-edits="deleteSelectedEdits"
-        @ensureSelectOff="ensureSelectOff=!ensureSelectOff;"
+        @ensure-select-off="ensureSelectOff=!ensureSelectOff;"
       />
     </div>
   </div>

@@ -25,7 +25,7 @@
 <script>
 import HighlightedText from './HighlightedText'
 import PlainText from './PlainText'
-import TextCharManager from '../../model/TextCharManager.ts'
+import TextCharManager from '../../model/TextCharManager'
 
 export default {
   name: 'TextArea',
@@ -51,7 +51,6 @@ export default {
             text: 'highlight text'
           }
         }
-
       ]
     }
   },
