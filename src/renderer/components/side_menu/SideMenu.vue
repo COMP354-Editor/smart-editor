@@ -20,13 +20,17 @@
     <div id="ContentFamily">
       <GroupPanel
         v-if="isGroupOn"
+        @selected-edits-updated="selectedEditsUpdated"
       />
       <EditPanel
         :is-group-on="isGroupOn"
         :is-side-menu-folded="isSideMenuFolded"
         :ensure-select-off="ensureSelectOff"
+        :edits="allEdits"
         @unlockFold="$emit('unlockFold')"
         @lockFold="$emit('lockFold')"
+        @selected-edits-updated="selectedEditsUpdated"
+        @delete-selected-edits="deleteSelectedEdits"
       />
     </div>
   </div>
@@ -37,6 +41,7 @@ import ToolBar from './ToolBar'
 import EditPanel from './edit_panel/EditPanel'
 import Menu from './menu/Menu'
 import GroupPanel from './group_panel/GroupPanel'
+import editManager from "../../model/EditManager";
 
 export default {
   name: 'SideMenu',
@@ -48,7 +53,9 @@ export default {
     return {
       isMenuOn: false,
       isGroupOn: false,
-      ensureSelectOff: false
+      ensureSelectOff: false,
+      selectedEdits: [],
+      allEdits: editManager.edits
     }
   },
   watch: {
@@ -68,6 +75,26 @@ export default {
         this.$emit('lockFold')
       }
     },
+    selectedEditsUpdated(selectedEdit) {
+      let index = this.selectedEdits.indexOf(selectedEdit)
+      if (index === -1) {
+        // if the edit is not in list, add it
+        this.selectedEdits.push(selectedEdit)
+      } else {
+        // if the edit is in the list, it is unselect operation; delete it
+        this.selectedEdits.splice(index, 1);
+      }
+    },
+    deleteSelectedEdits(){
+      for (let i = 0; i < this.selectedEdits.length; i++) {
+        editManager.deleteEdit(this.selectedEdits[i].id)
+        this.refreshEdits()
+      }
+    },
+    refreshEdits(){
+      this.allEdits = editManager.edits
+    }
+
   }
 }
 

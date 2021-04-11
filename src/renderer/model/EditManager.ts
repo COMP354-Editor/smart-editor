@@ -1,4 +1,5 @@
 import Edit from "./Edit";
+import textCharManager from "./TextCharManager";
 
 class EditManager {
     edits: Array<Edit>
@@ -7,8 +8,8 @@ class EditManager {
         this.edits = [];
     }
 
-    createEdit(operation: 'writing' | 'deletion') {
-        switch (operation){
+    createEdit(operation: 'writing' | 'deletion'): void {
+        switch (operation) {
             case "writing":
                 break;
             case "deletion":
@@ -17,9 +18,25 @@ class EditManager {
                 throw "Invalid edit operation"
         }
     }
+
+    deleteEdit(editId: number): void {
+        this.edits = this.edits.filter(edit => edit.id != editId)
+    }
+
+    getEditById(editId: number): Edit{
+        const editFound = this.edits.find(edit => edit.id === editId)
+        if (editFound != undefined){
+            return editFound;
+        } else {
+            throw "Edit not found by id"
+        }
+    }
 }
 
 const editManager = new EditManager()
+const edit1 = new Edit("writing", textCharManager.textChars.slice(0, 5))
+const edit2 = new Edit("writing", textCharManager.textChars.slice(5))
+editManager.edits = [edit1, edit2]
 
 
 export default editManager

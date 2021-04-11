@@ -16,7 +16,7 @@
       min-width="24px"
       :class="{ is_active:isItemSelected, is_not_active:!isItemSelected}"
       :ripple="false"
-      @click="isItemSelected=!isItemSelected"
+      @click="toggleSelect"
     >
       <v-icon x-small>
         mdi-plus
@@ -26,12 +26,14 @@
 </template>
 
 <script>
+import Edit from "../../model/Edit";
+
 export default {
   name: 'EditItem',
   props: {
-    content: {
-      type: String,
-      default: ''
+    edit: {
+      type: Edit,
+      default: () => {}
     },
     isGroup:Boolean,
     isSelectUndoEnabled:Boolean,
@@ -39,12 +41,23 @@ export default {
   },
   data(){
     return{
-      isItemSelected:false
+      isItemSelected:false,
+    }
+  },
+  computed:{
+    content(){
+      return this.edit.getContent()
     }
   },
   watch: {
     ensureSelectOff: function () {
         this.isItemSelected = false
+    }
+  },
+  methods: {
+    toggleSelect(){
+      this.isItemSelected=!this.isItemSelected
+      this.$emit('toggle-select', this.edit)
     }
   }
 }

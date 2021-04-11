@@ -7,10 +7,11 @@
       id="delete"
       :class="{unlockedDelete: enableSelectUndo, lockedDelete: !enableSelectUndo}"
       :ripple="false"
+      @click="$emit('delete-selected-edits')"
     >
       Delete
     </v-btn>
-    <v-btn 
+    <v-btn
       id="select"
       :ripple="false"
       @click="$emit('enable-select-undo', enableSelectUndo); enableSelectUndo=!enableSelectUndo"

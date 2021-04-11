@@ -1,6 +1,6 @@
 <template>
   <div>
-    <GroupHeader 
+    <GroupHeader
       id="group-Header-appearance"
       :group-name="groupName"
     />
@@ -8,7 +8,7 @@
       v-for="edit in edits"
       id="group-editItem-appearance"
       :key="edit.key"
-      :content="edit.content"
+      :edit="edit"
       :is-group="isGroup"
     />
   </div>
