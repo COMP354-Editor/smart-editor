@@ -18,9 +18,17 @@ export default class Edit {
         return this.textChars.map(textChar => textChar.content).reduce((str1, str2) => str1.concat(str2))
     }
 
-    // TODO
     undo() {
-
+        console.log("In edit undo")
+        if (this.operation == "writing"){
+            this.textChars.forEach(textChar => {
+                textChar.isWritingUndone = true;
+            })
+        } else {
+            this.textChars.forEach(textChar => {
+                textChar.isDeleted = false;
+            })
+        }
     }
 
     // TODO

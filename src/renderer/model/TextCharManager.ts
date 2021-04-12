@@ -44,6 +44,7 @@ class TextCharManager {
      * @return a string of text to display
      */
     getTextValue(): string {
+        this.visibleTextChars = this.textChars.filter(textChar => !textChar.isHidden())
         if (this.visibleTextChars.length === 0) return ''
         return this.visibleTextChars.map(textChar => textChar.content).reduce((str1, str2) => str1.concat(str2))
 

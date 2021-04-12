@@ -30,6 +30,7 @@ import HighlightedText from './HighlightedText'
 import PlainText from './PlainText'
 import textCharManager from '../../model/TextCharManager.ts'
 import editManager from "../../model/EditManager";
+import { bus } from "../../main";
 
 export default {
   name: 'TextArea',
@@ -76,6 +77,12 @@ export default {
     setInterval(this.refreshState, 2000)
     this.startPosition = this.$refs.textarea.selectionStart
     this.endPosition = this.$refs.textarea.selectionStart
+  },
+  created(){
+    // emitted from EditItem
+    bus.$on('update-text-value', () => {
+      this.textValue = textCharManager.getTextValue()
+    })
   },
   methods: {
     // *********** methods for preview ************
@@ -177,6 +184,10 @@ export default {
         this.startPosition = this.endPosition = this.$refs.textarea.selectionStart
       }
 
+    },
+    // ********* other methods ******
+    updateText(){
+      this.textValue = textCharManager.visibleTextValue
     }
 
   }

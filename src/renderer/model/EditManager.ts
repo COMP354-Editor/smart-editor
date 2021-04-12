@@ -33,6 +33,7 @@ class EditManager {
             throw "Edit not found by id"
         }
     }
+
 }
 
 const editManager = new EditManager()
