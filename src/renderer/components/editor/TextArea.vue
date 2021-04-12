@@ -18,6 +18,7 @@
       ref="textarea"
       v-model="textValue"
       class="text-area-editable"
+      @keydown="onKeyDown"
       @input="onInput"
       @select="onSelect"
     />
@@ -57,8 +58,10 @@ export default {
         }
       ],
       // *********** data for type handling ***********
-      // position of a continuous typing/deleting at the start
+      // start position of a continuous typing/deleting
       startPosition: 0,
+      // end position of a continuous typing/deleting
+      endPosition: 0,
       // text buffer for continuous typing
       textBuffer: [],
       // count num of chars in a continuous deleting
@@ -70,7 +73,9 @@ export default {
   mounted() {
     // auto focus
     this.$refs.textarea.focus()
-    setInterval(this.refreshState, 2000);
+    setInterval(this.refreshState, 2000)
+    this.startPosition = this.$refs.textarea.selectionStart
+    this.endPosition = this.$refs.textarea.selectionStart
   },
   methods: {
     // *********** methods for preview ************
@@ -115,17 +120,45 @@ export default {
     },
 
     // ************ methods for type handling *********
+
+    // used to handle tabs, since tab will not be handled by onInput
+    onKeyDown(keyEvent) {
+      if (keyEvent.keyCode === 9) { // tab pressed
+        keyEvent.preventDefault();
+        const textArea = this.$refs.textarea
+        const start = textArea.selectionStart
+        const end = textArea.selectionEnd
+
+        // set textarea value to: text before caret + tab + text after caret
+        textArea.value = textArea.value.substring(0, start) + "\t" + textArea.value.substring(end);
+
+        // put caret at right position again
+        textArea.selectionStart = textArea.selectionEnd = start + 1;
+
+        // call onInput to handle this as an input
+        this.onInput({
+          inputType: 'insertText',
+          data: '\t',
+          target: textArea,
+        })
+      }
+    },
     onInput(inputEvent) {
-      if (inputEvent.inputType === 'insertText' && this.typeState === 'type'){
-        // we are in a continuous typing
-        if (this.textBuffer.length === 0){
-          // this is the first type in a continuous typing, update position
-          this.startPosition = inputEvent.target.selectionStart
+      const textArea = this.$refs.textarea
+      if (inputEvent.inputType === 'insertText' && this.typeState === 'type') {
+        // we are in a continuous typing; push char into buffer
+
+        if (textArea.selectionStart !== this.endPosition + 1){
+          // current caret isn't at on position after the last edit position
+          // this mean user moved the caret (by mouse or arrow key)
+          // in this case, refresh state before continue
+          this.refreshState()
         }
         // push the new text into buffer
         this.textBuffer.push(inputEvent.data)
+        this.endPosition++
       }
-      console.log(inputEvent.target.selectionStart)
+      console.log(textArea.selectionStart)
       console.log(inputEvent.inputType)
       console.log(inputEvent.data)
     },
@@ -141,6 +174,7 @@ export default {
         const textChars = textCharManager.createTextChar(this.startPosition, this.textBuffer.join(""))
         editManager.createEdit('writing', textChars)
         this.textBuffer = []
+        this.startPosition = this.endPosition = this.$refs.textarea.selectionStart
       }
 
     }
