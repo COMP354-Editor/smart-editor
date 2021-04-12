@@ -18,7 +18,7 @@
       id="scroll-panel"
     >
       <EditItem
-        v-for="edit in edits"
+        v-for="edit in edits.slice().reverse()"
         :key="edit.id"
         :edit="edit"
         :is-select-undo-enabled="isSelectUndoEnabled"
