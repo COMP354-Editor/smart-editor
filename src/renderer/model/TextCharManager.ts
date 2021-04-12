@@ -14,7 +14,7 @@ class TextCharManager {
      * @param position - the index as a visible char
      * @param content - a char or string
      */
-    createTextChar(position: number, content: string): void {
+    createTextChar(position: number, content: string): Array<TextChar> {
         // create textChar instant for each char
         let textCharsToInsert: Array<TextChar> = []
         for (let i = 0; i < content.length; i++) {
@@ -37,6 +37,7 @@ class TextCharManager {
         }
         // update visibleTextChars
         this.visibleTextChars = this.textChars.filter(textChar => !textChar.isHidden())
+        return textCharsToInsert
     }
 
     /**

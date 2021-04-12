@@ -18,6 +18,8 @@
       ref="textarea"
       v-model="textValue"
       class="text-area-editable"
+      @input="onInput"
+      @select="onSelect"
     />
   </div>
 </template>
@@ -25,18 +27,20 @@
 <script>
 import HighlightedText from './HighlightedText'
 import PlainText from './PlainText'
-import TextCharManager from '../../model/TextCharManager.ts'
+import textCharManager from '../../model/TextCharManager.ts'
+import editManager from "../../model/EditManager";
 
 export default {
   name: 'TextArea',
   components: {HighlightedText, PlainText},
-  data () {
+  data() {
     return {
+      // *********** data for preview ***********
       // enable text to be highlighted
       // use to preview edits
       highlightView: false,
       // TODO: this is a UI data; should have another variable to receive data from backend
-      textValue: TextCharManager.getTextValue(),
+      textValue: textCharManager.getTextValue(),
       // used in highlight view
       textComponents: [
         {
@@ -51,23 +55,33 @@ export default {
             text: 'highlight text'
           }
         }
-
-      ]
+      ],
+      // *********** data for type handling ***********
+      // position of a continuous typing/deleting at the start
+      startPosition: 0,
+      // text buffer for continuous typing
+      textBuffer: [],
+      // count num of chars in a continuous deleting
+      deleteCount: 0,
+      // we have three states: type, delete, select
+      typeState: 'type',
     }
   },
-  mounted () {
+  mounted() {
     // auto focus
     this.$refs.textarea.focus()
+    setInterval(this.refreshState, 2000);
   },
   methods: {
-    toggleHighlightView () {
+    // *********** methods for preview ************
+    toggleHighlightView() {
       this.highlightView = !this.highlightView
     },
 
     // highlight text pieces specified by ranges
     // ranges is an array of object of {from: int, to: int}
     // TODO: in application, user add highlight one by one, not as a whole
-    highlight (ranges) {
+    highlight(ranges) {
       if (ranges.length === 0) return
       this.textComponents = []
       let front = 0 // record where to start processing
@@ -98,6 +112,37 @@ export default {
       })
 
       this.toggleHighlightView()
+    },
+
+    // ************ methods for type handling *********
+    onInput(inputEvent) {
+      if (inputEvent.inputType === 'insertText' && this.typeState === 'type'){
+        // we are in a continuous typing
+        if (this.textBuffer.length === 0){
+          // this is the first type in a continuous typing, update position
+          this.startPosition = inputEvent.target.selectionStart
+        }
+        // push the new text into buffer
+        this.textBuffer.push(inputEvent.data)
+      }
+      console.log(inputEvent.target.selectionStart)
+      console.log(inputEvent.inputType)
+      console.log(inputEvent.data)
+    },
+    onSelect(selectEvent) {
+      console.log("Selection start:")
+      console.log(selectEvent.target.selectionStart)
+      console.log("Selection end:")
+      console.log(selectEvent.target.selectionEnd)
+    },
+    refreshState() {
+      if (this.textBuffer.length > 0) {
+        // continuous typing: create textChars and add to an edit
+        const textChars = textCharManager.createTextChar(this.startPosition, this.textBuffer.join(""))
+        editManager.createEdit('writing', textChars)
+        this.textBuffer = []
+      }
+
     }
 
   }
