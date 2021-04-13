@@ -28,6 +28,7 @@
 <script>
 import HighlightedText from './HighlightedText'
 import PlainText from './PlainText'
+
 import textCharManager from '../../model/TextCharManager.ts'
 import editManager from "../../model/EditManager";
 import { bus } from "../../main";

@@ -14,7 +14,7 @@
     <v-btn
       id="select"
       :ripple="false"
-      @click="$emit('enable-select-undo', enableSelectUndo); enableSelectUndo=!enableSelectUndo"
+      @click="ToggleSelectUndoPanel"
     >
       Select
     </v-btn>
@@ -37,6 +37,16 @@ export default {
       if(val) {
         this.enableSelectUndo = false
       }
+    }
+  },
+  methods:{
+    ToggleSelectUndoPanel(){
+      this.enableSelectUndo=!this.enableSelectUndo;
+      this.$emit('enable-select-undo', this.enableSelectUndo);
+      if(this.enableSelectUndo===false){
+       this.$emit('ensure-select-off')
+      }
+
     }
   }
 
