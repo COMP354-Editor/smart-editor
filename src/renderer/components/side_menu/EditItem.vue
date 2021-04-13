@@ -2,7 +2,7 @@
   <div id="edit-item-container">
     <div
       id="content-packer"
-      :class="{margin_for_select_undo:isSelectUndoEnabled, scroll_panel_not_undone: !undone_UI, scroll_panel_undone: undone_UI}"
+      :class="{margin_for_select_undo:isSelectUndoEnabled, scroll_panel_not_undone: !isUndone, scroll_panel_undone: isUndone}"
     >
       <div
         id="content"
@@ -49,7 +49,7 @@ export default {
   data(){
     return{
       isItemSelected:false,
-      undone_UI:false,
+      isUndone:false,
     }
   },
   computed:{
@@ -68,8 +68,12 @@ export default {
       this.$emit('toggle-select', this.edit)
     },
     undoEdit(){
-      this.undone_UI=!this.undone_UI
-      editManager.getEditById(this.edit.id).undo()
+      if (this.isUndone){
+        editManager.getEditById(this.edit.id).redo()
+      } else {
+        editManager.getEditById(this.edit.id).undo()
+      }
+      this.isUndone=!this.isUndone
       // tell TextArea to update text value
       bus.$emit('update-text-value')
     }
