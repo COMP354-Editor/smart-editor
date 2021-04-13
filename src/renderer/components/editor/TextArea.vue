@@ -187,9 +187,6 @@ export default {
 
     },
     // ********* other methods ******
-    updateText(){
-      this.textValue = textCharManager.visibleTextValue
-    }
 
   }
 }

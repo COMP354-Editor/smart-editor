@@ -19,7 +19,6 @@ export default class Edit {
     }
 
     undo() {
-        console.log("In edit undo")
         if (this.operation == "writing"){
             this.textChars.forEach(textChar => {
                 textChar.isWritingUndone = true;
@@ -31,8 +30,17 @@ export default class Edit {
         }
     }
 
-    // TODO
     redo() {
+        if(this.operation == "writing"){
+            this.textChars.forEach(textChar => {
+                textChar.isWritingUndone = false;
+            })
+        } else {
+            // operation is deletion
+            this.textChars.forEach(textChar => {
+                textChar.isDeleted = true;
+            })
+        }
 
     }
 }
