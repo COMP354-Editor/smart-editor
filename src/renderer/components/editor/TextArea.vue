@@ -14,7 +14,6 @@
       />
     </div>
     <textarea
-      id = "text-io"
       v-else
       ref="textarea"
       v-model="textValue"
