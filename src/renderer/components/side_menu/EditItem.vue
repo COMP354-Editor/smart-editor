@@ -1,13 +1,17 @@
 <template>
   <div id="edit-item-container">
-    <v-btn
-      id="content"
-      :class="{margin_for_select_undo:isSelectUndoEnabled}"
-      :ripple="false"
-      @click="undoEdit"
+    <div
+      id="content-packer"
+      :class="{margin_for_select_undo:isSelectUndoEnabled, scroll_panel_not_undone: !undone_UI, scroll_panel_undone: undone_UI}"
     >
-      {{ content }}
-    </v-btn>
+      <div
+        id="content"
+        :ripple="false"
+        @click="undoEdit"
+      >
+        {{ content }}
+      </div>
+    </div>
     <v-btn
       v-if="isGroup||isSelectUndoEnabled"
       id="onSelect"
@@ -45,6 +49,7 @@ export default {
   data(){
     return{
       isItemSelected:false,
+      undone_UI:false,
     }
   },
   computed:{
@@ -63,6 +68,7 @@ export default {
       this.$emit('toggle-select', this.edit)
     },
     undoEdit(){
+      this.undone_UI=!this.undone_UI
       editManager.getEditById(this.edit.id).undo()
       // tell TextArea to update text value
       bus.$emit('update-text-value')
@@ -72,8 +78,18 @@ export default {
 </script>
 
 <style scoped>
+.scroll_panel_not_undone{
+  background: #F4F4F4 !important;
+  color: #626262;
+  overflow: hidden;
+}
+.scroll_panel_undone{
+  background: #FFA24D !important;
+  color: #F4F4F4;
+  overflow: hidden;
+}
 .margin_for_select_undo{
-  margin-left: 24px;
+  margin-left: 18px;
 }
 .is_not_active{
   background: white !important;
@@ -88,18 +104,25 @@ export default {
   right:15px;
   box-shadow: 0 0 0 #c6c6c6;
 }
-#content {
-  justify-content: left;
-  font-family: Roboto, sans-serif;
-  color: #545454;
-  background: #F4F4F4;
+#content-packer {
+  justify-content: center;
   border-radius: 36px;
   height: 24px;
   margin-bottom: 4px;
-  box-shadow: 0 0 0 #c6c6c6;
-  font-size: 13px;
   width: 90%;
-  text-transform: none;
+  overflow: hidden;
+}
+#content {
+  height:100%;
+  width: 88%;
+  margin:0 auto;
+  background: transparent;
+  overflow:hidden;
+  font-size: 14px;
+  font-family: Roboto, sans-serif;
+  white-space:nowrap;
+  padding-top:1px;
+  font-weight: 406;
 }
 
 #edit-item-container {
