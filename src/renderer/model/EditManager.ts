@@ -1,4 +1,5 @@
 import Edit from "./Edit";
+import TextChar from "./TextChar";
 import textCharManager from "./TextCharManager";
 
 class EditManager {
@@ -8,9 +9,10 @@ class EditManager {
         this.edits = [];
     }
 
-    createEdit(operation: 'writing' | 'deletion'): void {
+    createEdit(operation: 'writing' | 'deletion', textChars: Array<TextChar>): void {
         switch (operation) {
             case "writing":
+                this.edits.push(new Edit(operation, textChars));
                 break;
             case "deletion":
                 break;
@@ -31,6 +33,7 @@ class EditManager {
             throw "Edit not found by id"
         }
     }
+
 }
 
 const editManager = new EditManager()

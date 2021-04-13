@@ -4,6 +4,7 @@
       id="content"
       :class="{margin_for_select_undo:isSelectUndoEnabled}"
       :ripple="false"
+      @click="undoEdit"
     >
       {{ content }}
     </v-btn>
@@ -27,6 +28,8 @@
 
 <script>
 import Edit from "../../model/Edit";
+import editManager from "../../model/EditManager";
+import { bus } from "../../main";
 
 export default {
   name: 'EditItem',
@@ -58,6 +61,11 @@ export default {
     toggleSelect(){
       this.isItemSelected=!this.isItemSelected
       this.$emit('toggle-select', this.edit)
+    },
+    undoEdit(){
+      editManager.getEditById(this.edit.id).undo()
+      // tell TextArea to update text value
+      bus.$emit('update-text-value')
     }
   }
 }

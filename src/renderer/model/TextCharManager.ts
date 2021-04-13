@@ -14,7 +14,7 @@ class TextCharManager {
      * @param position - the index as a visible char
      * @param content - a char or string
      */
-    createTextChar(position: number, content: string): void {
+    createTextChar(position: number, content: string): Array<TextChar> {
         // create textChar instant for each char
         let textCharsToInsert: Array<TextChar> = []
         for (let i = 0; i < content.length; i++) {
@@ -37,12 +37,14 @@ class TextCharManager {
         }
         // update visibleTextChars
         this.visibleTextChars = this.textChars.filter(textChar => !textChar.isHidden())
+        return textCharsToInsert
     }
 
     /**
      * @return a string of text to display
      */
     getTextValue(): string {
+        this.visibleTextChars = this.textChars.filter(textChar => !textChar.isHidden())
         if (this.visibleTextChars.length === 0) return ''
         return this.visibleTextChars.map(textChar => textChar.content).reduce((str1, str2) => str1.concat(str2))
 
