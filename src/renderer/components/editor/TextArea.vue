@@ -79,7 +79,7 @@ export default {
     this.startPosition = this.$refs.textarea.selectionStart
     this.endPosition = this.$refs.textarea.selectionStart
   },
-  created(){
+  created() {
     // emitted from EditItem
     bus.$on('update-text-value', () => {
       this.textValue = textCharManager.getTextValue()
@@ -153,17 +153,24 @@ export default {
     },
     onInput(inputEvent) {
       const textArea = this.$refs.textarea
-      if (inputEvent.inputType === 'insertText' && this.typeState === 'type') {
+      // if (inputEvent.inputType === 'insertLineBreak') {
+      //
+      // } else
+      if (this.typeState === 'type' && (inputEvent.inputType === 'insertText' || inputEvent.inputType === 'insertLineBreak')) {
         // we are in a continuous typing; push char into buffer
 
-        if (textArea.selectionStart !== this.endPosition + 1){
+        if (textArea.selectionStart !== this.endPosition + 1) {
           // current caret isn't at on position after the last edit position
           // this mean user moved the caret (by mouse or arrow key)
           // in this case, refresh state before continue
           this.refreshState()
         }
+        if (inputEvent.inputType === 'insertLineBreak') {
+          this.textBuffer.push('\n')
+        } else {
+          this.textBuffer.push(inputEvent.data)
+        }
         // push the new text into buffer
-        this.textBuffer.push(inputEvent.data)
         this.endPosition++
       }
       console.log(textArea.selectionStart)
@@ -178,6 +185,7 @@ export default {
     },
     refreshState() {
       if (this.textBuffer.length > 0) {
+        // if space/linebreak
         // continuous typing: create textChars and add to an edit
         const textChars = textCharManager.createTextChar(this.startPosition, this.textBuffer.join(""))
         editManager.createEdit('writing', textChars)
@@ -187,7 +195,7 @@ export default {
 
     },
     // ********* other methods ******
-    updateText(){
+    updateText() {
       this.textValue = textCharManager.visibleTextValue
     }
 
