@@ -206,7 +206,6 @@ export default {
     updateText() {
       this.textValue = textCharManager.visibleTextValue
     }
-
   }
 }
 </script>
