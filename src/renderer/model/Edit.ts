@@ -15,12 +15,14 @@ export default class Edit {
     }
 
     getContent(): string {
-        return this.textChars.map(textChar => textChar.content).reduce((str1, str2) => str1.concat(str2))
+        return this.textChars
+            .map(textChar => textChar.content == '\n' ? ' ' : textChar.content)
+            .reduce((str1, str2) => str1.concat(str2))
     }
 
     undo() {
         console.log("In edit undo")
-        if (this.operation == "writing"){
+        if (this.operation == "writing") {
             this.textChars.forEach(textChar => {
                 textChar.isWritingUndone = true;
             })
