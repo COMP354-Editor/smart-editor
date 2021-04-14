@@ -10,6 +10,7 @@
       height="25px"
       class="menu-layer1"
       :ripple="false"
+      @click="openFile"
     >
       Open
     </v-btn>
@@ -17,6 +18,7 @@
       height="25px"
       class="menu-layer1"
       :ripple="false"
+      @click="saveFile"
     >
       Save
     </v-btn>
@@ -31,16 +33,25 @@
 </template>
 
 <script>
+
+import ioService from "../../../service/IOService";
+
+
 export default {
   name: 'File',
-  data () {
-    return {
-    }
+  data() {
+    return {}
   },
   methods: {
+    openFile() {
+      ioService.open()
+    },
+    saveFile() {
+      ioService.saveAs()
+    }
   }
-
 }
+
 </script>
 
 <style scoped>
@@ -52,15 +63,17 @@ export default {
   padding-top: 7px;
   padding-bottom: 7px;
 }
-.menu-layer1{
+
+.menu-layer1 {
   box-shadow: 0 0 0 #c6c6c6;
   margin-bottom: 2px;
   margin-top: 2px;
-  background:#858585 !important;
+  background: #858585 !important;
   color: #FEFEFE !important;
   justify-content: inherit;
   border-radius: 0;
 }
+
 .menu-layer1::before {
   background-color: transparent !important;
 }
