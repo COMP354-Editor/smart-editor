@@ -15,6 +15,8 @@ class EditManager {
                 this.edits.push(new Edit(operation, textChars));
                 break;
             case "deletion":
+                textChars.forEach(textChar => textChar.isDeleted = true)
+                this.edits.push(new Edit(operation, textChars));
                 break;
             default:
                 throw "Invalid edit operation"

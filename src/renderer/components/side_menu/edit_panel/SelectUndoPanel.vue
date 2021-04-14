@@ -46,7 +46,6 @@ export default {
       if(this.enableSelectUndo===false){
        this.$emit('ensure-select-off')
       }
-
     }
   }
 

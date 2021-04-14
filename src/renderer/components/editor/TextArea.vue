@@ -75,7 +75,7 @@ export default {
   mounted() {
     // auto focus
     this.$refs.textarea.focus()
-    setInterval(this.refreshState, 2000)
+    setInterval(this.refreshState, 5000)
     this.startPosition = this.$refs.textarea.selectionStart
     this.endPosition = this.$refs.textarea.selectionStart
   },
@@ -152,27 +152,34 @@ export default {
       }
     },
     onInput(inputEvent) {
-      const textArea = this.$refs.textarea
-      if (this.typeState === 'type' && (inputEvent.inputType === 'insertText' || inputEvent.inputType === 'insertLineBreak')) {
-        // we are in a continuous typing; push char into buffer
-
-        if (textArea.selectionStart !== this.endPosition + 1) {
-          // current caret isn't at on position after the last edit position
-          // this mean user moved the caret (by mouse or arrow key)
-          // in this case, refresh state before continue
+      console.log(inputEvent.inputType)
+      if (this.typeState === 'type') {
+        // we are in a continuous typing state
+        if (inputEvent.inputType === 'insertText' || inputEvent.inputType === 'insertLineBreak') {
+          this.handleType(inputEvent)
+        } else if (inputEvent.inputType === 'deleteContentBackward'){
+          this.typeState = 'delete'
+          // state transition happens; refresh state first
           this.refreshState()
+          // refresh state will put startPosition and endPosition to the current caret position
+          // however, we have deleted one char, the start position should be one larger
+          this.startPosition++
+          this.handleDelete()
         }
-        if (inputEvent.inputType === 'insertLineBreak') {
-          this.textBuffer.push('\n')
-        } else {
-          this.textBuffer.push(inputEvent.data)
+      } else if (this.typeState === 'delete'){
+        if (inputEvent.inputType === 'deleteContentBackward'){
+          this.handleDelete();
+        } else if (inputEvent.inputType === 'insertText' || inputEvent.inputType === 'insertLineBreak'){
+          this.typeState = 'type'
+          // state transition happens; refresh state
+          this.refreshState()
+          this.handleType(inputEvent)
         }
-        // push the new text into buffer
-        this.endPosition++
       }
       // console.log(textArea.selectionStart)
-      console.log(inputEvent.inputType)
-      console.log(inputEvent.data)
+      // console.log(inputEvent.data)
+      // console.log(this.$refs.textarea.selectionStart)
+      // console.log(this.endPosition)
     },
     onSelect(selectEvent) {
       console.log("Selection start:")
@@ -180,13 +187,43 @@ export default {
       console.log("Selection end:")
       console.log(selectEvent.target.selectionEnd)
     },
+    handleType(inputEvent){
+      const textArea = this.$refs.textarea
+      if (textArea.selectionStart !== this.endPosition + 1) {
+        // current caret isn't at one position after the last edit position
+        // this means user moved the caret (by mouse or arrow key)
+        // in this case, refresh state before continue
+        this.refreshState()
+      }
+      if (inputEvent.inputType === 'insertLineBreak') {
+        this.textBuffer.push('\n')
+      } else {
+        this.textBuffer.push(inputEvent.data)
+      }
+      // push the new text into buffer
+      this.endPosition++
+      console.log(this.endPosition)
+    },
+    handleDelete(){
+      const textArea = this.$refs.textarea
+      console.log(textArea.selectionStart)
+      console.log(this.endPosition)
+      if (textArea.selectionStart !== this.endPosition - 1){
+        // current caret isn't at one position before the last edit position
+        // this means user moved the cared (by mouse or arrow key)
+        // in this case, refresh state before continue
+        this.refreshState()
+      }
+      this.deleteCount++
+      this.endPosition--
+    },
     refreshState() {
       if (this.textBuffer.length > 0) {
         // if buffer contains space/linebreak, flush out the the last space/linebreak
         let textToFlush = []
         const lastSpaceIndex = this.textBuffer.lastIndexOf(' ')
         const lastLinebreakIndex = this.textBuffer.lastIndexOf('\n')
-        if (lastSpaceIndex === -1 && lastLinebreakIndex === -1){
+        if (lastSpaceIndex === -1 && lastLinebreakIndex === -1) {
           // no space or line break in the buffer
           textToFlush = this.textBuffer.slice()
           this.textBuffer = []
@@ -200,12 +237,15 @@ export default {
         const textChars = textCharManager.createTextChar(this.startPosition, textToFlush.join(""))
         editManager.createEdit('writing', textChars)
         this.startPosition = this.endPosition = this.$refs.textarea.selectionStart
+      } else if (this.deleteCount > 0){
+        // get textChars, create delete edit
+        const textChars = textCharManager.getTextCharsByVisiblePosition(this.endPosition, this.startPosition);
+        editManager.createEdit('deletion', textChars)
+        this.deleteCount = 0;
       }
     },
     // ********* other methods ******
-    updateText() {
-      this.textValue = textCharManager.visibleTextValue
-    }
+
   }
 }
 </script>
