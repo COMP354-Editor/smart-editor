@@ -127,6 +127,10 @@ export default {
   white-space:nowrap;
   padding-top:1px;
   font-weight: 406;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #edit-item-container {
