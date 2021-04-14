@@ -49,6 +49,15 @@ class TextCharManager {
         return this.visibleTextChars.map(textChar => textChar.content).reduce((str1, str2) => str1.concat(str2))
 
     }
+
+    /**
+     *
+     * @param start index of the first textChar (inclusive)
+     * @param end index of the last textChar (exclusive)
+     */
+    getTextCharsByVisiblePosition(start: number, end: number): Array<TextChar> {
+        return this.visibleTextChars.slice(start, end);
+    }
 }
 
 const textCharManager = new TextCharManager()
