@@ -133,7 +133,7 @@ export default {
         this.ticktock = setTimeout(() => {
           // fold side menu after time out
           this.isSideMenuFolded = true
-        }, 800)
+        }, 1200)
       }
     },
     onFoldLock() {
