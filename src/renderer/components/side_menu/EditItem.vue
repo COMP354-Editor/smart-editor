@@ -2,7 +2,7 @@
   <div id="edit-item-container">
     <div
       id="content-packer"
-      :class="{margin_for_select_undo:isSelectUndoEnabled, scroll_panel_not_undone: !isUndone, scroll_panel_undone: isUndone}"
+      :class="{margin_for_select_undo:isSelectUndoEnabled,scroll_panel_not_undone_created: !isUndone&&!isDeleted, scroll_panel_not_undone_delete: !isUndone&&isDeleted, scroll_panel_undone: isUndone}"
     >
       <div
         id="content"
@@ -40,16 +40,17 @@ export default {
   props: {
     edit: {
       type: Edit,
-      default: () => {}
+      default: () => {},
     },
     isGroup:Boolean,
     isSelectUndoEnabled:Boolean,
-    ensureSelectOff:Boolean
+    ensureSelectOff:Boolean,
   },
   data(){
     return{
       isItemSelected:false,
       isUndone:false,
+      isDeleted:false
     }
   },
   computed:{
@@ -60,6 +61,12 @@ export default {
   watch: {
     ensureSelectOff: function () {
         this.isItemSelected = false
+    },
+  },
+  created:function (){
+    if(this.edit.operation === 'deletion'){
+      this.isDeleted=true
+      console.log(this.edit.operation)
     }
   },
   methods: {
@@ -82,14 +89,19 @@ export default {
 </script>
 
 <style scoped>
-.scroll_panel_not_undone{
+.scroll_panel_not_undone_create{
   background: #F4F4F4 !important;
   color: #626262;
   overflow: hidden;
 }
+.scroll_panel_not_undone_delete{
+  background: #FFA29C !important;
+  color: #ffffff;
+  overflow: hidden;
+}
 .scroll_panel_undone{
   background: #FFA24D !important;
-  color: #F4F4F4;
+  color: #f4f4f4;
   overflow: hidden;
 }
 .margin_for_select_undo{
