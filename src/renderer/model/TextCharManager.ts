@@ -63,6 +63,5 @@ class TextCharManager {
 const textCharManager = new TextCharManager()
 textCharManager.createTextChar(0, 'edit1 ')
 textCharManager.createTextChar(6, 'edit2 ')
-console.log(textCharManager.textChars)
 
 export default textCharManager;

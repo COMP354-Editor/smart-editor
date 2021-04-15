@@ -75,7 +75,7 @@ export default {
   mounted() {
     // auto focus
     this.$refs.textarea.focus()
-    setInterval(this.refreshState, 30000)
+    // setInterval(this.refreshState, 30000)
     this.startPosition = this.$refs.textarea.selectionStart
     this.endPosition = this.$refs.textarea.selectionStart
   },
@@ -195,15 +195,25 @@ export default {
     handleType(inputEvent) {
       console.log("%cHandle type", "color: green")
       const textArea = this.$refs.textarea
-      console.log("caret index: " + textArea.selectionStart)
-      console.log("end position: " + this.endPosition)
+      console.log("inputType = " + inputEvent.inputType)
+      console.log("data = " + inputEvent.data)
+      // console.log("caret index: " + textArea.selectionStart)
+      // console.log("end position: " + this.endPosition)
       if (textArea.selectionStart !== this.endPosition + 1) {
         // current caret isn't at one position after the last edit position
         // this means user moved the caret (by mouse or arrow key)
         // in this case, refresh state before continue
+        // the first refresh is to clear the buffer to the last space/linebreak
+        // the second refresh is to clear the remaining in the buffer
         this.refreshState()
+        this.refreshState()
+        // refresh state will reset startPosition and endPosition to current caret position
+        // but one char has typed, hence, these two positions are one step forward than what they should be
+        this.startPosition--
+        this.endPosition--
       }
-      if (inputEvent.inputType === 'insertLineBreak') {
+      // sometimes the enter key emits the insertText event with data == null
+      if (inputEvent.inputType === 'insertLineBreak' || inputEvent.data === null) {
         this.textBuffer.push('\n')
       } else {
         this.textBuffer.push(inputEvent.data)
@@ -220,8 +230,15 @@ export default {
       if (textArea.selectionStart !== this.endPosition - 1) {
         // current caret isn't at one position before the last edit position
         // this means user moved the cared (by mouse or arrow key)
-        // in this case, refresh state before continue
+        // in this case, refresh state twice:
+        // the first refresh is to clear the buffer to the last space/linebreak
+        // the second refresh is to clear the remaining in the buffer
         this.refreshState()
+        this.refreshState()
+        // refresh state will reset startPosition and endPosition to current caret position
+        // but one char has deleted, hence, these two positions are one step back than what they should be
+        this.startPosition++
+        this.endPosition++
       }
       this.deleteCount++
       this.endPosition--
