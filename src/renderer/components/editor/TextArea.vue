@@ -68,8 +68,16 @@ export default {
       textBuffer: [],
       // count num of chars in a continuous deleting
       deleteCount: 0,
-      // we have three states: type, delete, select
-      typeState: 'type',
+      // we have four states: type, delete, idle, select
+      typeState: 'idle',
+      // take timeout object from setTimeout()
+      timeoutId: undefined,
+      // refresh time interval
+      timeInterval: 2000,
+
+      lastSelectionStart: 0,
+      lastSelectionEnd: 0,
+      currentLength: 0
     }
   },
   mounted() {
@@ -78,6 +86,9 @@ export default {
     // setInterval(this.refreshState, 30000)
     this.startPosition = this.$refs.textarea.selectionStart
     this.endPosition = this.$refs.textarea.selectionStart
+    this.lastSelectionStart = this.$refs.textarea.selectionStart
+    this.lastSelectionEnd = this.$refs.textarea.selectionEnd
+    this.currentLength = this.$refs.textarea.textLength
   },
   created() {
     // emitted from EditItem
@@ -153,14 +164,28 @@ export default {
     },
     onInput(inputEvent) {
       console.log(inputEvent.inputType)
-      if (this.typeState === 'type') {
-        // we are in a continuous typing state
+      if (this.typeState === 'idle') {
+        if (inputEvent.inputType === 'insertText' || inputEvent.inputType === 'insertLineBreak') {
+          // from idle to type
+          this.typeState = 'type'
+          this.timeoutId = setTimeout(this.refreshStateOnTimeout, this.timeInterval)
+          this.handleType(inputEvent)
+        } else if (inputEvent.inputType === 'deleteContentBackward') {
+          // from idle to delete
+          this.typeState = 'delete'
+          this.timeoutId = setTimeout(this.refreshStateOnTimeout, this.timeInterval)
+          this.handleDelete()
+        }
+      } else if (this.typeState === 'type') {
         if (inputEvent.inputType === 'insertText' || inputEvent.inputType === 'insertLineBreak') {
           this.handleType(inputEvent)
         } else if (inputEvent.inputType === 'deleteContentBackward') {
+          // from type to delete
           this.typeState = 'delete'
-          // state transition happens; refresh state first
+          // refresh state and reset a timer
           this.refreshState()
+          clearTimeout(this.timeoutId)
+          this.timeoutId = setTimeout(this.refreshStateOnTimeout, this.timeInterval)
           // refresh state will put startPosition and endPosition to the current caret position
           // however, we have deleted one char, the end position should be the place before this deletion
           this.startPosition++
@@ -171,14 +196,55 @@ export default {
         if (inputEvent.inputType === 'deleteContentBackward') {
           this.handleDelete();
         } else if (inputEvent.inputType === 'insertText' || inputEvent.inputType === 'insertLineBreak') {
+          // from delete to type
           this.typeState = 'type'
-          // state transition happens; refresh state
+          // refresh state and reset a timer
           this.refreshState()
+          clearTimeout(this.timeoutId)
+          this.timeoutId = setTimeout(this.refreshStateOnTimeout, this.timeInterval)
           // refresh state will put startPosition and endPosition to the current caret position
-          // however, we have inserted one char, the start position should be one before
+          // however, we have inserted one char, the positions should be one before
           this.startPosition--
           this.endPosition--
           this.handleType(inputEvent)
+        }
+      } else if (this.typeState === 'select') {
+        clearTimeout(this.timeoutId)
+        this.timeoutId = setTimeout(this.refreshStateOnTimeout, this.timeInterval)
+        if (inputEvent.inputType === 'insertText' || inputEvent.inputType === 'insertLineBreak') {
+          // from select to type
+          this.typeState = 'type'
+          // determine (select -> end select -> type) or (select -> type)
+          if (this.$refs.textarea.textLength === this.currentLength + 1) {
+            // this input add length by 1. It implies (select -> end select -> type)
+            this.handleType(inputEvent)
+          } else {
+            // this input doesn't change the length in a normal way. It implies (select -> type)
+            // create one delete edit first
+            const textChars = textCharManager.getTextCharsByVisiblePosition(this.lastSelectionStart, this.lastSelectionEnd);
+            editManager.createEdit('deletion', textChars)
+            this.deleteCount = 0;
+            this.startPosition = this.$refs.textarea.selectionStart - 1
+            this.endPosition = this.$refs.textarea.selectionStart - 1
+
+            this.handleType(inputEvent)
+          }
+        } else if (inputEvent.inputType === 'deleteContentBackward') {
+          // from select to delete
+          this.typeState = 'delete'
+          // determine (select -> end select -> delete) or (select -> delete)
+          if (this.$refs.textarea.textLength === this.currentLength - 1){
+            // this input deleted 1 char.
+            // (select -> end select -> delete) or (select 1 char -> delete)
+            this.handleDelete()
+          } else {
+            // this input deleted more than 1 char
+            // create a delete edit immediately
+            const textChars = textCharManager.getTextCharsByVisiblePosition(this.lastSelectionStart, this.lastSelectionEnd);
+            editManager.createEdit('deletion', textChars)
+            this.deleteCount = 0;
+            this.startPosition = this.endPosition = this.$refs.textarea.selectionStart
+          }
         }
       }
       // console.log(textArea.selectionStart)
@@ -187,14 +253,20 @@ export default {
       // console.log(this.endPosition)
     },
     onSelect(selectEvent) {
-      console.log("Selection start:")
-      console.log(selectEvent.target.selectionStart)
-      console.log("Selection end:")
-      console.log(selectEvent.target.selectionEnd)
+      // console.log("Selection start:")
+      // console.log(selectEvent.target.selectionStart)
+      this.lastSelectionStart = selectEvent.target.selectionStart
+      // console.log("Selection end:")
+      // console.log(selectEvent.target.selectionEnd)
+      this.lastSelectionEnd = selectEvent.target.selectionEnd
+      this.typeState = 'select'
+      clearTimeout(this.timeoutId)
+      this.refreshState()
     },
     handleType(inputEvent) {
       console.log("%cHandle type", "color: green")
       const textArea = this.$refs.textarea
+      this.currentLength = textArea.textLength
       console.log("inputType = " + inputEvent.inputType)
       console.log("data = " + inputEvent.data)
       // console.log("caret index: " + textArea.selectionStart)
@@ -225,6 +297,7 @@ export default {
     handleDelete() {
       console.log("%cHandle delete", "color: red")
       const textArea = this.$refs.textarea
+      this.currentLength = textArea.textLength
       console.log("caret index: " + textArea.selectionStart)
       console.log("end position: " + this.endPosition)
       if (textArea.selectionStart !== this.endPosition - 1) {
@@ -274,6 +347,12 @@ export default {
         this.startPosition = this.endPosition = this.$refs.textarea.selectionStart
       }
     },
+    // this is called when the refresh is called on timeout
+    //this will set state back to idle
+    refreshStateOnTimeout() {
+      this.refreshState();
+      this.typeState = 'idle';
+    }
     // ********* other methods ******
 
   }
