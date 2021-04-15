@@ -212,6 +212,7 @@ export default {
         this.startPosition--
         this.endPosition--
       }
+      // sometimes the enter key emits the insertText event with data == null
       if (inputEvent.inputType === 'insertLineBreak' || inputEvent.data === null) {
         this.textBuffer.push('\n')
       } else {
