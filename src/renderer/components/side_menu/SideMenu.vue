@@ -86,13 +86,13 @@ export default {
         this.selectedEdits.splice(index, 1);
       }
     },
-    deleteSelectedEdits(){
+    deleteSelectedEdits() {
       for (let i = 0; i < this.selectedEdits.length; i++) {
         editManager.deleteEdit(this.selectedEdits[i].id)
         this.refreshEdits()
       }
     },
-    refreshEdits(){
+    refreshEdits() {
       this.allEdits = editManager.edits
     }
 
