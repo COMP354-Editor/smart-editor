@@ -56,7 +56,11 @@ export default {
       isGroupOn: false,
       ensureSelectOff: false,
       selectedEdits: [],
-      allEdits: editManager.edits
+      allEdits: editManager.edits.map(edit => {
+        return {
+          groupId: -1, editItem: edit
+        }
+      })
     }
   },
   watch: {

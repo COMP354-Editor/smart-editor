@@ -53,9 +53,9 @@ export default {
       isDeleted:false
     }
   },
-  computed:{
-    content(){
-      return this.edit.getContent()
+  computed: {
+    content() {
+      return this.edit.editItem.getContent()
     }
   },
   watch: {
@@ -70,17 +70,17 @@ export default {
     }
   },
   methods: {
-    toggleSelect(){
-      this.isItemSelected=!this.isItemSelected
+    toggleSelect() {
+      this.isItemSelected = !this.isItemSelected
       this.$emit('toggle-select', this.edit)
     },
-    undoEdit(){
-      if (this.isUndone){
+    undoEdit() {
+      if (this.isUndone) {
         editManager.getEditById(this.edit.id).redo()
       } else {
         editManager.getEditById(this.edit.id).undo()
       }
-      this.isUndone=!this.isUndone
+      this.isUndone = !this.isUndone
       // tell TextArea to update text value
       bus.$emit('update-text-value')
     }
@@ -104,22 +104,27 @@ export default {
   color: #f4f4f4;
   overflow: hidden;
 }
-.margin_for_select_undo{
+
+.margin_for_select_undo {
   margin-left: 18px;
 }
-.is_not_active{
+
+.is_not_active {
   background: white !important;
 }
-.is_active{
+
+.is_active {
   background: #FFA24D !important;
   color: #EFEFEF;
 }
-#onSelect{
+
+#onSelect {
   background: white;
   z-index: 99;
-  right:15px;
+  right: 15px;
   box-shadow: 0 0 0 #c6c6c6;
 }
+
 #content-packer {
   justify-content: center;
   border-radius: 36px;
@@ -128,16 +133,17 @@ export default {
   width: 90%;
   overflow: hidden;
 }
+
 #content {
-  height:100%;
+  height: 100%;
   width: 88%;
-  margin:0 auto;
+  margin: 0 auto;
   background: transparent;
-  overflow:hidden;
+  overflow: hidden;
   font-size: 14px;
   font-family: Roboto, sans-serif;
-  white-space:nowrap;
-  padding-top:1px;
+  white-space: nowrap;
+  padding-top: 1px;
   font-weight: 406;
   -webkit-user-select: none;
   -moz-user-select: none;
