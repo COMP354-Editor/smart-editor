@@ -68,8 +68,13 @@ export default {
       textBuffer: [],
       // count num of chars in a continuous deleting
       deleteCount: 0,
-      // we have three states: type, delete, select
-      typeState: 'type',
+      // we have three states: type, delete, idle
+      typeState: 'idle',
+      // take timeout object from setTimeout()
+      timeoutId: undefined,
+      // refresh time interval
+      timeInterval: 2000,
+
     }
   },
   mounted() {
@@ -153,14 +158,28 @@ export default {
     },
     onInput(inputEvent) {
       console.log(inputEvent.inputType)
-      if (this.typeState === 'type') {
-        // we are in a continuous typing state
+      if (this.typeState === 'idle') {
+        if (inputEvent.inputType === 'insertText' || inputEvent.inputType === 'insertLineBreak') {
+          // from idle to type
+          this.typeState = 'type'
+          this.timeoutId = setTimeout(this.refreshStateOnTimeout, this.timeInterval)
+          this.handleType(inputEvent)
+        } else if (inputEvent.inputType === 'deleteContentBackward') {
+          // from idle to delete
+          this.typeState = 'delete'
+          this.timeoutId = setTimeout(this.refreshStateOnTimeout, this.timeInterval)
+          this.handleDelete()
+        }
+      } else if (this.typeState === 'type') {
         if (inputEvent.inputType === 'insertText' || inputEvent.inputType === 'insertLineBreak') {
           this.handleType(inputEvent)
         } else if (inputEvent.inputType === 'deleteContentBackward') {
+          // from type to delete
           this.typeState = 'delete'
-          // state transition happens; refresh state first
+          // refresh state and reset a timer
           this.refreshState()
+          clearTimeout(this.timeoutId)
+          this.timeoutId = setTimeout(this.refreshStateOnTimeout, this.timeInterval)
           // refresh state will put startPosition and endPosition to the current caret position
           // however, we have deleted one char, the end position should be the place before this deletion
           this.startPosition++
@@ -171,11 +190,14 @@ export default {
         if (inputEvent.inputType === 'deleteContentBackward') {
           this.handleDelete();
         } else if (inputEvent.inputType === 'insertText' || inputEvent.inputType === 'insertLineBreak') {
+          // from delete to type
           this.typeState = 'type'
-          // state transition happens; refresh state
+          // refresh state and reset a timer
           this.refreshState()
+          clearTimeout(this.timeoutId)
+          this.timeoutId = setTimeout(this.refreshStateOnTimeout, this.timeInterval)
           // refresh state will put startPosition and endPosition to the current caret position
-          // however, we have inserted one char, the start position should be one before
+          // however, we have inserted one char, the positions should be one before
           this.startPosition--
           this.endPosition--
           this.handleType(inputEvent)
@@ -274,6 +296,12 @@ export default {
         this.startPosition = this.endPosition = this.$refs.textarea.selectionStart
       }
     },
+    // this is called when the refresh is called on timeout
+    //this will set state back to idle
+    refreshStateOnTimeout() {
+      this.refreshState();
+      this.typeState = 'idle';
+    }
     // ********* other methods ******
 
   }
