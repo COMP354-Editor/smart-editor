@@ -89,7 +89,7 @@ export default {
 </script>
 
 <style scoped>
-.scroll_panel_not_undone_create{
+.scroll_panel_not_undone_created{
   background: #F4F4F4 !important;
   color: #626262;
   overflow: hidden;
