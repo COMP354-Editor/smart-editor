@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     content() {
-      return this.edit.editItem.getContent()
+      return this.edit.getContent()
     }
   },
   watch: {

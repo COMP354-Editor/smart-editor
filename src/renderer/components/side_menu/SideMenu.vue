@@ -26,7 +26,7 @@
         :is-group-on="isGroupOn"
         :is-side-menu-folded="isSideMenuFolded"
         :ensure-select-off="ensureSelectOff"
-        :edits="allEditsWithGroup"
+        :edits="allEdits"
         @unlockFold="$emit('unlockFold')"
         @lockFold="$emit('lockFold')"
         @selected-edits-updated="selectedEditsUpdated"
@@ -60,14 +60,6 @@ export default {
     }
   },
   computed: {
-    allEditsWithGroup() {
-      return this.allEdits.map(edit => {
-        return {
-          groupId: -1,
-          editItem: edit
-        }
-      })
-    }
   },
   watch: {
     isSideMenuFolded: function (val) {

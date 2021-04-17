@@ -20,7 +20,7 @@
     >
       <EditItem
         v-for="edit in edits.slice().reverse()"
-        :key="edit.editItem.id"
+        :key="edit.id"
         :edit="edit"
         :is-select-undo-enabled="isSelectUndoEnabled"
         :ensure-select-off="ensureSelectOff"
