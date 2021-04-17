@@ -1,5 +1,10 @@
 <template>
-  <div>
+  <div
+    @drop="onDrop($event,'text/plain')"
+    @dragover.prevent
+    @dragenter.prevent 
+  >
+  <!--@drop="event.preventDefault()" -->
     <GroupHeader
       id="group-Header-appearance"
       :group-name="groupName"
@@ -37,6 +42,18 @@ export default {
   data(){
     return{
       isGroup:true,
+
+      Group1: [
+      ]
+    }
+  },
+  method:{
+    onDrop(evt) {
+      console.log("here")
+      const editID = evt.dataTransfer.getData('text/plain')
+      //const tempEdit = this.EditManager.edits.find(Edit => Edit.id == editID)
+      console.log(editID)
+      //groupName.edits = tempEdit
     }
   }
 }
@@ -55,7 +72,7 @@ export default {
   color: #444444;
   border-radius: 36px;
   background: #D7D7D7;
-  height: 15px;
+  height: 30px; /*15*/
   width: fit-content;
   max-width: 80%;
   min-width: 1%;

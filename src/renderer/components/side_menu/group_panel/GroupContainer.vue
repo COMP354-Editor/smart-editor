@@ -5,6 +5,7 @@
       :key="group.groupName"
       :group-name="group.groupName"
       :edits="group.edits"
+      
     />
   </div>
 </template>
@@ -22,7 +23,7 @@ export default {
           groupName: 'Group 1',
           edits: [
             {key: 0, content: 'edit 1'},
-            {key: 1, content: 'edit 2'},
+            /*{key: 1, content: 'edit 2'},
             {key: 2, content: 'edit 3'},
             {key: 3, content: 'edit 4'},
             {key: 4, content: 'edit 5'},
@@ -33,21 +34,32 @@ export default {
             {key: 9, content: 'edit 10'},
             {key: 10, content: 'edit 11'},
             {key: 11, content: 'edit 12'},
-            {key: 12, content: 'edit 13'},
+            {key: 12, content: 'edit 13'},*/
           ]
         }, {
           groupName: 'Group 2',
           edits: [
-            {key: 0, content: 'edit 14'},
+            /*{key: 0, content: 'edit 14'},
             {key: 1, content: 'edit 15'},
             {key: 2, content: 'edit 16'},
             {key: 3, content: 'edit 17'},
-            {key: 4, content: 'edit 18'},
+            {key: 4, content: 'edit 18'},*/
           ]
         }
       ]
     }
+  }/*,
+    method:{
+    onDrop (evt,groupName) {
+      const editID = evt.dataTransfer.getData('id')
+      const tempEdit = this.EditManager.edits.find(Edit => Edit.id == editID)
+      groupName.edits = tempEdit
+      }
   }
+  @drop="onDrop($event, group.groupName)"
+      @dragover.prevent
+      @dragenter.prevent
+  */
 }
 </script>
 

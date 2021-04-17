@@ -23,10 +23,13 @@
         :key="edit.id"
         :edit="edit"
         :is-select-undo-enabled="isSelectUndoEnabled"
-        :ensure-select-off="ensureSelectOff"
+        :ensure-select-off="ensureSelectOff" 
+        draggable="true"
         @toggle-select="selectedEditsUpdated"
+        @ondragstart="event.dataTransfer.setData('text/plain',edit.id.toSting())"
       />
     </div>
+    <!--draggable="true"""@dragstart="startDrag($event, edit.id.toString())" @ondragstart="event.dataTransfer.setData(edit.id.toString())"  -->
     <v-btn
       id="scroll-end-btn"
       :class="{ panel_folded1: !isSelectUndoEnabled, panel_unfolded1: isSelectUndoEnabled }"
@@ -45,8 +48,10 @@
 </template>
 
 <script>
+
 import EditItem from '../EditItem'
 import SelectUndoPanel from './SelectUndoPanel'
+//import draggable from 'vuedraggable'
 
 export default {
   name: 'EditPanel',
@@ -86,10 +91,46 @@ export default {
 
     selectedEditsUpdated(selectedEdit){
       this.$emit("selected-edits-updated", selectedEdit)
+    },
+
+    startDrag(evt, item){
+      console.log("Start")
+      evt.dataTransfer.dropEffect = 'move'
+      evt.dataTransfer.effectAllowed = 'move'
+      evt.dataTransfer.setData('itemID', item.id)
     }
   }
 
 }
+
+  /* const {drag, droppable, addon} = require('electron-drag-drop');
+
+    // drag
+    let dragEL = document.getElementById('drag');
+
+    dragEL.addEventListener('dragstart', event => {
+      console.log("here")
+      drag.start(event.dataTransfer, {
+        effect: 'copy',
+        type: 'foobar',
+        items: EditItem,
+      });
+    }); */
+    /* dragEL.addEventListener('dragend', event => {
+      console.log("mm")
+      drag.end();
+    }); */
+
+   /*  // drop
+    let dropEL = document.getElementById('drop');
+
+    addon(dropEL, droppable);
+    dropEL._initDroppable(dropEL);
+    dropEL.addEventListener('drop-area-move', event => {
+      drag.updateDropEffect(event.detail.dataTransfer, 'copy');
+    }); */
+  
+
 </script>
 <style scoped>
 /*"Do not remove this, it is actually working"*/
