@@ -95,6 +95,10 @@ export default {
     bus.$on('update-text-value', () => {
       this.textValue = textCharManager.getTextValue()
     })
+    bus.$on('on-open-file', () => {
+      this.textValue = textCharManager.getTextValue()
+    })
+
   },
   methods: {
     // *********** methods for preview ************

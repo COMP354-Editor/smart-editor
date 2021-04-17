@@ -26,6 +26,7 @@
       height="25px"
       class="menu-layer1"
       :ripple="false"
+      @click="saveAsFile"
     >
       Save as
     </v-btn>
@@ -35,7 +36,7 @@
 <script>
 
 import ioService from "../../../service/IOService";
-
+import { bus } from "../../../main";
 
 export default {
   name: 'File',
@@ -44,10 +45,15 @@ export default {
   },
   methods: {
     openFile() {
-      ioService.open()
+      ioService.open().then(() => {
+        bus.$emit('on-open-file')
+      })
     },
-    saveFile() {
+    saveAsFile() {
       ioService.saveAs()
+    },
+    saveFile(){
+      ioService.save()
     }
   }
 }
