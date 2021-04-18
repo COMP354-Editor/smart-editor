@@ -32,18 +32,18 @@ import PlainText from './PlainText'
 import textCharManager from '../../model/TextCharManager.ts'
 import editManager from "../../model/EditManager";
 import { bus } from "../../main";
+import UndoPreviewService from "../../service/UndoPreviewService";
 
 export default {
   name: 'TextArea',
   components: {HighlightedText, PlainText},
   data() {
     return {
+      textValue: textCharManager.getTextValue(),
       // *********** data for preview ***********
       // enable text to be highlighted
       // use to preview edits
       highlightView: false,
-      // TODO: this is a UI data; should have another variable to receive data from backend
-      textValue: textCharManager.getTextValue(),
       // used in highlight view
       textComponents: [
         {
@@ -59,6 +59,7 @@ export default {
           }
         }
       ],
+      selectedEdits: [],
       // *********** data for type handling ***********
       // start position of a continuous typing/deleting
       startPosition: 0,
@@ -95,22 +96,42 @@ export default {
     bus.$on('update-text-value', () => {
       this.textValue = textCharManager.getTextValue()
     })
+    // emitted from File
     bus.$on('on-open-file', () => {
       this.textValue = textCharManager.getTextValue()
+    })
+    // emitted from SideMenu
+    bus.$on('selected-edits-updated', edits => {
+      this.selectedEdits = edits.map(edit => editManager.getEditById(edit.id))
+      this.preview(this.selectedEdits)
     })
 
   },
   methods: {
     // *********** methods for preview ************
-    toggleHighlightView() {
-      this.highlightView = !this.highlightView
+    preview(selectedEdits){
+
+      if (selectedEdits.length === 0) {
+        // no edits are selected, highlight view off
+        this.highlightView = false
+      } else {
+        // edits selected, generate highlight view
+        this.highlightView = true
+        // create text components with from the current textValue and selectedEdits
+        let ranges = UndoPreviewService.getRangesFromEdits(selectedEdits)
+        this.highlight(ranges)
+      }
     },
+
 
     // highlight text pieces specified by ranges
     // ranges is an array of object of {from: int, to: int}
     // TODO: in application, user add highlight one by one, not as a whole
     highlight(ranges) {
-      if (ranges.length === 0) return
+      if (ranges.length === 0) {
+        this.highlightView = false
+        return
+      }
       this.textComponents = []
       let front = 0 // record where to start processing
       for (let i = 0; i < ranges.length; i++) {
@@ -132,6 +153,7 @@ export default {
         })
         front = ranges[i].to
       }
+      // push the remaining from the last to to the end
       this.textComponents.push({
         component: PlainText,
         props: {
@@ -139,7 +161,7 @@ export default {
         }
       })
 
-      this.toggleHighlightView()
+      this.highlightView = true
     },
 
     // ************ methods for type handling *********
@@ -237,7 +259,7 @@ export default {
           // from select to delete
           this.typeState = 'delete'
           // determine (select -> end select -> delete) or (select -> delete)
-          if (this.$refs.textarea.textLength === this.currentLength - 1){
+          if (this.$refs.textarea.textLength === this.currentLength - 1) {
             // this input deleted 1 char.
             // (select -> end select -> delete) or (select 1 char -> delete)
             this.handleDelete()
@@ -357,7 +379,7 @@ export default {
       this.refreshState();
       this.typeState = 'idle';
     }
-    // ********* other methods ******
+
 
   }
 }

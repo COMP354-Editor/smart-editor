@@ -112,10 +112,12 @@ let rendererConfig = {
       // },
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: 'media/[name]--[folder].[ext]'
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            name: 'media/[name]--[folder].[ext]'
+          }
         }
       },
       {
@@ -174,7 +176,7 @@ let rendererConfig = {
 if (process.env.NODE_ENV !== 'production') {
   rendererConfig.plugins.push(
     new webpack.DefinePlugin({
-      '__static': `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`
+      '__static': `"${ path.join(__dirname, '../static').replace(/\\/g, '\\\\') }"`
     })
   )
 }

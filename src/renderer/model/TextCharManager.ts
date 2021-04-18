@@ -57,6 +57,15 @@ class TextCharManager {
     getTextCharsByVisiblePosition(start: number, end: number): Array<TextChar> {
         return this.visibleTextChars.slice(start, end);
     }
+
+    /**
+     * The position of the textChar in the visible context
+     * @param textChar
+     * @return the index of the textChar; -1 if not found
+     */
+    getVisiblePositionByTextChar(textChar: TextChar): number {
+        return this.visibleTextChars.indexOf(textChar)
+    }
 }
 
 const textCharManager = new TextCharManager()

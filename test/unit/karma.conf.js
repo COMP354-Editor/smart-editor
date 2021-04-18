@@ -1,7 +1,7 @@
 'use strict'
 
 const path = require('path')
-const merge = require('webpack-merge')
+const {merge} = require('webpack-merge')
 const webpack = require('webpack')
 
 const baseConfig = require('../../.electron-vue/webpack.renderer.config')
@@ -26,8 +26,19 @@ delete webpackConfig.externals
 delete webpackConfig.output.libraryTarget
 
 // apply vue option to apply isparta-loader on js
-webpackConfig.module.rules
-  .find(rule => rule.use.loader === 'vue-loader').use.options.loaders.js = 'babel-loader'
+let vueRule = webpackConfig.module.rules
+  .find(rule => {
+    if (Array.isArray(rule.use)) {
+      return rule.use.includes('vue-loader')
+    } else {
+      return false
+    }
+  })
+vueRule.use.options = {
+  loaders: {
+    js: 'babel-loader'
+  }
+}
 
 module.exports = config => {
   config.set({
@@ -38,8 +49,8 @@ module.exports = config => {
     coverageReporter: {
       dir: './coverage',
       reporters: [
-        { type: 'lcov', subdir: '.' },
-        { type: 'text-summary' }
+        {type: 'lcov', subdir: '.'},
+        {type: 'text-summary'}
       ]
     },
     customLaunchers: {
