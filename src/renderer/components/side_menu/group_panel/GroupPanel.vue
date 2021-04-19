@@ -21,7 +21,10 @@
       :ripple="false"
     />
     <div id="scroll-panel">
-      <GroupContainer />
+      <GroupContainer
+        :groups="groups"
+        :edits="edits"
+      />
     </div>
     <v-btn
       id="scroll-end-btn"
@@ -45,9 +48,24 @@ import GroupContainer from "./GroupContainer";
 export default {
   name: 'GroupPanel',
   components: {GroupContainer},
-  props: {},
+  props: {
+    edits: {
+      default: () => [],
+      type: Array
+    }
+  },
   data() {
-    return {}
+    return {
+      groups: [
+        {
+          groupId: 0,
+          groupName: 'Group 1'
+        }, {
+          groupId: 1,
+          groupName: 'Group 2',
+        }
+      ]
+    }
   },
 
 }
@@ -60,7 +78,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
   height: 22px !important;
-  flex-shrink:0;
+  flex-shrink: 0;
 }
 
 .btn {
@@ -152,7 +170,7 @@ export default {
   margin-top: 5px;
   color: #FFFFFF;
   box-shadow: 0 0 0 #c6c6c6;
-  align-self:flex-end;
+  align-self: flex-end;
 }
 </style>
 

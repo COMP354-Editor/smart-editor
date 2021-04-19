@@ -1,8 +1,8 @@
 import TextChar from "./TextChar";
 
 export default class Edit {
-    // TODO: add id for each edit
     id: number
+    groupId: number
     textChars: Array<TextChar>
     operation: "writing" | "deletion"
 
@@ -10,6 +10,7 @@ export default class Edit {
 
     constructor(operation: "writing" | "deletion", textChars: Array<TextChar>) {
         this.id = Edit.idCounter++
+        this.groupId = -1
         this.operation = operation
         this.textChars = textChars
     }

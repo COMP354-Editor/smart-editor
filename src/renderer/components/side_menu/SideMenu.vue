@@ -20,6 +20,7 @@
     <div id="ContentFamily">
       <GroupPanel
         v-if="isGroupOn"
+        :edits="allEdits"
         @selected-edits-updated="selectedEditsUpdated"
       />
       <EditPanel
@@ -59,6 +60,8 @@ export default {
       selectedEdits: [],
       allEdits: editManager.edits
     }
+  },
+  computed: {
   },
   watch: {
     isSideMenuFolded: function (val) {
