@@ -13,6 +13,7 @@
             :ripple="false"
             v-bind="attrs"
             v-on="on"
+            @click="addGroup()"
           >
             Add Group
           </v-btn>
@@ -59,6 +60,7 @@
       id="apply"
       height="32px"
       width="136px"
+      @click="groupApply()"
     >
       apply
     </v-btn>
@@ -91,9 +93,27 @@ export default {
       ],
     }
   },
-
+  methods: {
+    addGroup(){
+      this.groups.push({
+        groupId: this.groups.length + 1,
+        groupName: 'Group '+ (this.groups.length + 1),
+      })
+    },
+    groupApply(){  
+      this.groups.forEach(i=>{
+        if(this.group[i].groupSelect == true){
+          this.group.edits.forEach(j=>{
+              this.group.edits[j].groupId = -1
+            }
+          )
+        }
+      })
+    }
+  }
 }
 </script>
+
 <style scoped>
 #group_addOrDelete {
   display: flex;

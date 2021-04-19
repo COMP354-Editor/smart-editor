@@ -9,6 +9,7 @@
       :group-name="groupName"
       :on-index="onIndex"
       @group-header-btn-on="groupHeaderBtnOn=!groupHeaderBtnOn"
+      @click="groupSelect=true"
     />
     <EditItem
       v-for="edit in edits"
@@ -39,6 +40,10 @@ export default {
       type: Number,
       default: -1
     },
+    groupSelect: {
+      type: Boolean,
+      default:false
+    },
     edits: {
       type: Array,
       default: () => {
@@ -61,9 +66,7 @@ export default {
     },
     toggleSelectOnIndex(val){
       this.onIndex=this.onIndex+val
-    }
-
-
+    },
   }
 }
 
