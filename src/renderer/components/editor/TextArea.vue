@@ -109,7 +109,7 @@ export default {
   },
   methods: {
     // *********** methods for preview ************
-    preview(selectedEdits){
+    preview(selectedEdits) {
 
       if (selectedEdits.length === 0) {
         // no edits are selected, highlight view off
@@ -376,8 +376,13 @@ export default {
     // this is called when the refresh is called on timeout
     //this will set state back to idle
     refreshStateOnTimeout() {
-      this.refreshState();
-      this.typeState = 'idle';
+      this.refreshState()
+      this.typeState = 'idle'
+      setTimeout(() => {
+        if (this.typeState === 'idle') {
+          this.refreshState()
+        }
+      }, this.timeInterval)
     }
 
 
