@@ -7,7 +7,7 @@
     <div v-if="isWindows">
       <v-btn
         icon
-        medium
+        x-small
         title="minimize"
         class="minimize noDrag"
         :ripple="false"
@@ -17,7 +17,7 @@
       </v-btn>
       <v-btn
         icon
-        medium
+        x-small
         title="maximize"
         class="maximize noDrag"
         :ripple="false"
@@ -28,7 +28,7 @@
 
       <v-btn
         icon
-        medium
+        small
         title="close"
         class="close noDrag"
         :ripple="false"

@@ -1,18 +1,42 @@
 <template>
   <div id="group-panel">
     <div id="group_addOrDelete">
-      <v-btn
-        class="btn add"
-        :ripple="false"
+      <v-tooltip
+        bottom
+        z-index="99"
+        open-on-hover
+        open-delay="800"
       >
-        Add Group
-      </v-btn>
-      <v-btn
-        class="btn delete"
-        :ripple="false"
+        <template #activator="{ on, attrs }">
+          <v-btn
+            class="btn add"
+            :ripple="false"
+            v-bind="attrs"
+            v-on="on"
+          >
+            Add Group
+          </v-btn>
+        </template>
+        <span>Create a new group tag. (Hint: the edits on the right can be dragged and dropped into the group tag)</span>
+      </v-tooltip>
+      <v-tooltip
+        bottom
+        z-index="99"
+        open-on-hover
+        open-delay="800"
       >
-        Delete
-      </v-btn>
+        <template #activator="{ on, attrs }">
+          <v-btn
+            class="btn delete"
+            :ripple="false"
+            v-bind="attrs"
+            v-on="on"
+          >
+            Delete
+          </v-btn>
+        </template>
+        <span>Deletes edits from groups and makes them non-grouped</span>
+      </v-tooltip>
     </div>
     <v-btn
       id="scroll-top-btn"
