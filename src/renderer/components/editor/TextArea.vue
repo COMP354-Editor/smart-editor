@@ -17,6 +17,7 @@
       v-else
       ref="textarea"
       v-model="textValue"
+      :disabled="isGroupOn||isSelectUndoOn"
       class="text-area-editable"
       @keydown="onKeyDown"
       @input="onInput"
@@ -37,6 +38,9 @@ import UndoPreviewService from "../../service/UndoPreviewService";
 export default {
   name: 'TextArea',
   components: {HighlightedText, PlainText},
+  props: {
+    isGroupOn:Boolean
+  },
   data() {
     return {
       textValue: textCharManager.getTextValue(),
@@ -78,7 +82,15 @@ export default {
 
       lastSelectionStart: 0,
       lastSelectionEnd: 0,
-      currentLength: 0
+      currentLength: 0,
+      isSelectUndoOn:false
+    }
+  },
+  watch:{
+    isGroupOn: function (val) {
+      if(this.isSelectUndoOn && val){
+        this.isSelectUndoOn = false
+      }
     }
   },
   mounted() {
@@ -90,6 +102,10 @@ export default {
     this.lastSelectionStart = this.$refs.textarea.selectionStart
     this.lastSelectionEnd = this.$refs.textarea.selectionEnd
     this.currentLength = this.$refs.textarea.textLength
+    bus.$on("lock-textarea-by-select", (val) => {
+      this.isSelectUndoOn=val
+      console.log(this.isSelectUndoOn, this.isGroupOn)
+    })
   },
   created() {
     // emitted from EditItem

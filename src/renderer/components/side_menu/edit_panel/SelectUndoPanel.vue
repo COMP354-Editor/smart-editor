@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { bus } from "../../../main";
 export default {
   name: 'SelectUndoPanel',
   props: {
@@ -37,7 +38,10 @@ export default {
       if(val) {
         this.enableSelectUndo = false
       }
-    }
+    },
+    enableSelectUndo: function (val) {
+        bus.$emit('lock-textarea-by-select', val)
+    },
   },
   methods:{
     ToggleSelectUndoPanel(){

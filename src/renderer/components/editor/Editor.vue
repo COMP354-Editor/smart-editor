@@ -19,7 +19,9 @@
         id="deco_underline"
       />
       <div id="text-area-container">
-        <TextArea />
+        <TextArea 
+          :is-group-on="isGroupOn" 
+        />
       </div>
     </div>
   </div>
