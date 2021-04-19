@@ -126,8 +126,8 @@ export default {
 
     // highlight text pieces specified by ranges
     // ranges is an array of object of {from: int, to: int}
-    // TODO: in application, user add highlight one by one, not as a whole
     highlight(ranges) {
+
       if (ranges.length === 0) {
         this.highlightView = false
         return

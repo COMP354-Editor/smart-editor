@@ -10,6 +10,7 @@ export default {
             ranges = ranges.concat(this.getRangesFromEdit(edit))
         })
         // console.log(JSON.stringify(ranges))
+        ranges.sort((a, b) => a.from - b.from)
         return ranges
     },
 
