@@ -10,7 +10,7 @@
       <div
         id="content"
         :ripple="false"
-        @click="undoEdit"
+        @click="onUndoEdit"
       >
         {{ content }}
       </div>
@@ -46,20 +46,18 @@ export default {
       default: () => {
       },
     },
-    // dragstart: {
-    //   type: Function,
-    //   default: () => {
-    //   }
-    // },
     isGroup: Boolean,
     isSelectUndoEnabled: Boolean,
     ensureSelectOff: Boolean,
+    groupHeaderBtnOn: Boolean,
   },
   data() {
     return {
       isItemSelected: false,
       isUndone: false,
-      isDeleted: false
+      isDeleted: false,
+      increment: 1,
+      decrement: -1
     }
   },
   computed: {
@@ -80,8 +78,15 @@ export default {
   },
   methods: {
     toggleSelect() {
-      this.isItemSelected = !this.isItemSelected
-      this.$emit('toggle-select', this.edit)
+      if(!this.groupHeaderBtnOn){
+        this.isItemSelected = !this.isItemSelected
+        this.$emit('toggle-select', this.edit)
+        if(this.isItemSelected){
+          this.$emit('toggle-select-onIndex',this.increment)
+        }else if (!this.isItemSelected)(
+          this.$emit('toggle-select-onIndex',this.decrement)
+        )
+      }
     },
     undoEdit() {
       if (this.isUndone) {
@@ -97,6 +102,12 @@ export default {
       event.dataTransfer.setData("id", this.edit.id.toString())
       console.log("drag start with id: " + this.edit.id.toString())
       this.$emit('drag-start', this.edit.id)
+    },
+    onUndoEdit(){
+      if(!this.isGroup){
+        this.undoEdit()
+      }
+
     }
   }
 }
