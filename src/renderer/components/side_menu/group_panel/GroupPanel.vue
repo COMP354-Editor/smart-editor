@@ -91,7 +91,14 @@ export default {
       ],
     }
   },
-
+  methods: {
+    addGroup(){
+      this.groups.push({
+        groupId: this.groups.length + 1,
+        groupName: 'Group '+ (this.groups.length + 1),
+      })
+    },
+  }
 }
 </script>
 <style scoped>

@@ -12,7 +12,8 @@
         v-if="!isTooTight||!isGroupOn"
         id="time"
       >
-        2021/02/27
+      <!-- TODO CSS Display Current day -->
+      {{ new Date().toJSON().slice(0,10).replace(/-/g,'/') }}
       </div>
       <div 
         v-if="!isTooTight||!isGroupOn"
