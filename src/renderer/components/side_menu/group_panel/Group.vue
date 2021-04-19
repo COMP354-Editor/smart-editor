@@ -7,6 +7,8 @@
     <GroupHeader
       id="group-Header-appearance"
       :group-name="groupName"
+      :on-index="onIndex"
+      @group-header-btn-on="groupHeaderBtnOn=!groupHeaderBtnOn"
     />
     <EditItem
       v-for="edit in edits"
@@ -14,6 +16,8 @@
       :key="edit.key"
       :edit="edit"
       :is-group="isGroup"
+      :group-header-btn-on="groupHeaderBtnOn"
+      @toggle-select-onIndex="toggleSelectOnIndex"
     />
   </div>
 </template>
@@ -45,6 +49,8 @@ export default {
   data() {
     return {
       isGroup: true,
+      groupHeaderBtnOn: false,
+      onIndex:0
     }
   },
   methods: {
@@ -52,7 +58,12 @@ export default {
       const editId = event.dataTransfer.getData("id")
       this.$emit('drop-edit', this.groupId, parseInt(editId))
       console.log(editId)
+    },
+    toggleSelectOnIndex(val){
+      this.onIndex=this.onIndex+val
     }
+
+
   }
 }
 

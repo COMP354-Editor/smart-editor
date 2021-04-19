@@ -3,9 +3,9 @@
     <v-btn
       id="GroupHeaderBtn"
       x-small
-      :class="{ is_active:isGroupSelected, is_not_active:!isGroupSelected}"
+      :class="{ is_active:isGroupSelected, is_not_active:!isGroupSelected }"
       :ripple="false"
-      @click="isGroupSelected=!isGroupSelected"
+      @click=" toggleGroupSelected() "
     >
       {{ groupName }}
     </v-btn>
@@ -25,11 +25,23 @@ export default {
       default: () => {
         return []
       }
+    },
+    onIndex:{
+      type: Number,
+      default: 0
     }
   },
   data(){
     return{
-      isGroupSelected:false
+      isGroupSelected:false,
+    }
+  },
+  methods:{
+    toggleGroupSelected(){
+      if(this.onIndex===0){
+        this.isGroupSelected = !this.isGroupSelected;
+        this.$emit('group-header-btn-on')
+      }
     }
   }
 }

@@ -64,7 +64,7 @@ export default {
           groupId: 1,
           groupName: 'Group 2',
         }
-      ]
+      ],
     }
   },
 
