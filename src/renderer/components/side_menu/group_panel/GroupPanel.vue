@@ -49,6 +49,8 @@
       <GroupContainer
         :groups="groups"
         :edits="edits"
+        :ask-for-group-items-emit="askForGroupItemsEmit"
+        @group-selected="onGroupSelected"
       />
     </div>
     <v-btn
@@ -60,7 +62,7 @@
       id="apply"
       height="32px"
       width="136px"
-      @click="groupApply()"
+      @click="groupApply"
     >
       apply
     </v-btn>
@@ -70,6 +72,8 @@
 <script>
 
 import GroupContainer from "./GroupContainer";
+import editManager from "../../../model/EditManager";
+import { bus } from "../../../main";
 
 export default {
   name: 'GroupPanel',
@@ -91,24 +95,45 @@ export default {
           groupName: 'Group 2',
         }
       ],
+      askForGroupItemsEmit: false,
+      selectedGroupId: -1
     }
   },
   methods: {
-    addGroup(){
+    addGroup() {
       this.groups.push({
         groupId: this.groups.length + 1,
-        groupName: 'Group '+ (this.groups.length + 1),
+        groupName: 'Group ' + (this.groups.length + 1),
       })
     },
-    groupApply(){  
-      this.groups.forEach(i=>{
-        if(this.group[i].groupSelect == true){
-          this.group.edits.forEach(j=>{
-              this.group.edits[j].groupId = -1
-            }
-          )
-        }
-      })
+    onGroupSelected(groupId) {
+      if (this.groupId === groupId) {
+        // this group is already selected. Unselect now
+        this.groupId = -1
+      } else {
+        this.groupId = groupId
+      }
+
+    },
+    groupApply() {
+      console.log("groupId: " + this.groupId)
+      if (this.groupId !== -1) {
+        const editIds = editManager.edits.filter(edit => edit.groupId === this.groupId).map(edit => edit.id)
+        editIds.forEach(id => {
+          editManager.getEditById(id).undo()
+        })
+      }
+      bus.$emit('update-text-value')
+
+      // this.groups.forEach(group=>{
+      //   if(group.groupSelect === true){
+      //     this.group.edits.forEach(j=>{
+      //         console.log(j)
+      //         // this.group.edits[j].groupId = -1
+      //       }
+      //     )
+      //   }
+      // })
     }
   }
 }

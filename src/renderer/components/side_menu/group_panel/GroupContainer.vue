@@ -6,7 +6,10 @@
       :group-name="group.groupName"
       :group-id="group.groupId"
       :edits="getEditsByGroupId(group.groupId)"
+      :ask-for-group-items-emit="askForGroupItemsEmit"
       @drop-edit="onDropEdit"
+      @replyForGroupItemsEmit="replyForGroupItems"
+      @group-selected="onGroupSelected"
     />
   </div>
 </template>
@@ -26,10 +29,22 @@ export default {
     groups: {
       default: () => [],
       type: Array
+    },
+    askForGroupItemsEmit:{
+      default: false,
+      type: Boolean
     }
   },
   data() {
-    return {}
+    return {
+    }
+  },
+  watch: {
+    // askForGroupItemsEmit(newVal, oldVal){
+    //   console.log("In GroupContainer: ")
+    //   console.log("oldVal = " + oldVal)
+    //   console.log("newVal = " + newVal)
+    // }
   },
   methods: {
     getEditsByGroupId(groupId) {
@@ -39,6 +54,13 @@ export default {
       console.log("In groupContainer, editId = " + editId)
       const edit = editManager.getEditById(editId)
       edit.groupId = groupId
+    },
+    replyForGroupItems(groupName,groupId,groupSelect,edits){
+      this.$emit('reply-for-group-items-emit',groupName,groupId,groupSelect,edits)
+    },
+    onGroupSelected(groupId){
+      console.log("In GroupContainer: " + groupId)
+      this.$emit('group-selected', groupId)
     }
   },
 
