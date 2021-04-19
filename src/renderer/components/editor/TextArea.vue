@@ -102,10 +102,6 @@ export default {
     this.lastSelectionStart = this.$refs.textarea.selectionStart
     this.lastSelectionEnd = this.$refs.textarea.selectionEnd
     this.currentLength = this.$refs.textarea.textLength
-    bus.$on("lock-textarea-by-select", (val) => {
-      this.isSelectUndoOn=val
-      console.log(this.isSelectUndoOn, this.isGroupOn)
-    })
   },
   created() {
     // emitted from EditItem
@@ -120,6 +116,10 @@ export default {
     bus.$on('selected-edits-updated', edits => {
       this.selectedEdits = edits.map(edit => editManager.getEditById(edit.id))
       this.preview(this.selectedEdits)
+    })
+    // lock textarea on select edit, from SelectUndoPanel
+    bus.$on("lock-textarea-by-select", (val) => {
+      this.isSelectUndoOn=val
     })
 
   },
