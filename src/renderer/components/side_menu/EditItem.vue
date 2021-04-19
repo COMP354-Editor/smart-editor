@@ -1,5 +1,8 @@
 <template>
-  <div id="edit-item-container">
+  <div
+    id="edit-item-container"
+    @dragstart="onDragStart"
+  >
     <div
       id="content-packer"
       :class="{margin_for_select_undo:isSelectUndoEnabled,scroll_panel_not_undone_created: !isUndone&&!isDeleted, scroll_panel_not_undone_delete: !isUndone&&isDeleted, scroll_panel_undone: isUndone}"
@@ -40,17 +43,23 @@ export default {
   props: {
     edit: {
       type: Edit,
-      default: () => {},
+      default: () => {
+      },
     },
-    isGroup:Boolean,
-    isSelectUndoEnabled:Boolean,
-    ensureSelectOff:Boolean,
+    // dragstart: {
+    //   type: Function,
+    //   default: () => {
+    //   }
+    // },
+    isGroup: Boolean,
+    isSelectUndoEnabled: Boolean,
+    ensureSelectOff: Boolean,
   },
-  data(){
-    return{
-      isItemSelected:false,
-      isUndone:false,
-      isDeleted:false
+  data() {
+    return {
+      isItemSelected: false,
+      isUndone: false,
+      isDeleted: false
     }
   },
   computed: {
@@ -60,12 +69,12 @@ export default {
   },
   watch: {
     ensureSelectOff: function () {
-        this.isItemSelected = false
+      this.isItemSelected = false
     },
   },
-  created:function (){
-    if(this.edit.operation === 'deletion'){
-      this.isDeleted=true
+  created: function () {
+    if (this.edit.operation === 'deletion') {
+      this.isDeleted = true
       console.log(this.edit.operation)
     }
   },
@@ -83,23 +92,30 @@ export default {
       this.isUndone = !this.isUndone
       // tell TextArea to update text value
       bus.$emit('update-text-value')
+    },
+    onDragStart(event){
+      event.dataTransfer.setData("id", this.edit.id.toString())
+      console.log("drag start with id: " + this.edit.id.toString())
+      this.$emit('drag-start', this.edit.id)
     }
   }
 }
 </script>
 
 <style scoped>
-.scroll_panel_not_undone_created{
+.scroll_panel_not_undone_created {
   background: #F4F4F4 !important;
   color: #626262;
   overflow: hidden;
 }
-.scroll_panel_not_undone_delete{
+
+.scroll_panel_not_undone_delete {
   background: #FFA29C !important;
   color: #ffffff;
   overflow: hidden;
 }
-.scroll_panel_undone{
+
+.scroll_panel_undone {
   background: #FFA24D !important;
   color: #f4f4f4;
   overflow: hidden;

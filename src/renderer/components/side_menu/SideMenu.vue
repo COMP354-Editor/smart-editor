@@ -20,6 +20,7 @@
     <div id="ContentFamily">
       <GroupPanel
         v-if="isGroupOn"
+        :edits="allEdits"
         @selected-edits-updated="selectedEditsUpdated"
       />
       <EditPanel

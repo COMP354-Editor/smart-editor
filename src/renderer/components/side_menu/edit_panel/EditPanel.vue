@@ -19,12 +19,15 @@
       id="scroll-panel"
     >
       <EditItem
-        v-for="edit in edits.slice().reverse()"
+        v-for="edit in editsToShow"
+        ref="editItems"
         :key="edit.id"
         :edit="edit"
         :is-select-undo-enabled="isSelectUndoEnabled"
         :ensure-select-off="ensureSelectOff"
+        :draggable="isGroupOn"
         @toggle-select="selectedEditsUpdated"
+        @drag-start="onDragStart"
       />
     </div>
     <v-btn
@@ -65,6 +68,15 @@ export default {
       isSelectUndoEnabled: false
     }
   },
+  computed: {
+    editsToShow() {
+      if (this.isGroupOn) {
+        return this.edits.filter(edit => edit.groupId === -1).reverse()
+      } else {
+        return this.edits.slice().reverse()
+      }
+    }
+  },
   watch: {
     isSideMenuFolded: function (val) {
       if (val) {
@@ -84,8 +96,21 @@ export default {
       }
     },
 
-    selectedEditsUpdated(selectedEdit){
+    selectedEditsUpdated(selectedEdit) {
       this.$emit("selected-edits-updated", selectedEdit)
+    },
+    onDragStart(){
+      // console.log(id)
+      // TODO: remove this editItem
+    },
+    getEditItemByDOM(htmlElement){
+      const index = this.$refs.editItems.indexOf(htmlElement);
+      if (index === -1){
+        return null
+      } else {
+        return this.editsToShow[index]
+      }
+
     }
   }
 
@@ -146,7 +171,7 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   padding: 2% 0 5px 0;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 #scroll-panel {

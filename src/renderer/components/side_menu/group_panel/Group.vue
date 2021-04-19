@@ -1,5 +1,9 @@
 <template>
-  <div>
+  <div
+    id="group"
+    @dragover.prevent=""
+    @drop.prevent="onDrop"
+  >
     <GroupHeader
       id="group-Header-appearance"
       :group-name="groupName"
@@ -27,6 +31,10 @@ export default {
       type: String,
       default: 'Group'
     },
+    groupId: {
+      type: Number,
+      default: -1
+    },
     edits: {
       type: Array,
       default: () => {
@@ -34,9 +42,16 @@ export default {
       }
     }
   },
-  data(){
-    return{
-      isGroup:true,
+  data() {
+    return {
+      isGroup: true,
+    }
+  },
+  methods: {
+    onDrop(event) {
+      const editId = event.dataTransfer.getData("id")
+      this.$emit('drop-edit', this.groupId, parseInt(editId))
+      console.log(editId)
     }
   }
 }
@@ -45,12 +60,17 @@ export default {
 </script>
 
 <style scoped>
-#onSelect{
+#group {
+  width: 100%;
+}
+
+#onSelect {
   width: 20px;
   height: 20px;
   background: white;
 }
-#group-Header-appearance{
+
+#group-Header-appearance {
   font-family: Roboto, sans-serif;
   color: #444444;
   border-radius: 36px;
@@ -69,7 +89,8 @@ export default {
   align-content: center;
   display: flex;
 }
-#group-editItem-appearance{
+
+#group-editItem-appearance {
   width: 89%;
   display: flex;
   margin-left: auto;
