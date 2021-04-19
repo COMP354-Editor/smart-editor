@@ -43,6 +43,7 @@ import EditPanel from './edit_panel/EditPanel'
 import Menu from './menu/Menu'
 import GroupPanel from './group_panel/GroupPanel'
 import editManager from "../../model/EditManager";
+import { bus } from "../../main";
 
 export default {
   name: 'SideMenu',
@@ -85,6 +86,8 @@ export default {
         // if the edit is in the list, it is unselect operation; delete it
         this.selectedEdits.splice(index, 1);
       }
+      // let textarea update highlight range
+      bus.$emit("selected-edits-updated", this.selectedEdits)
     },
     deleteSelectedEdits() {
       for (let i = 0; i < this.selectedEdits.length; i++) {

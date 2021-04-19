@@ -39,8 +39,8 @@ class EditManager {
 }
 
 const editManager = new EditManager()
-const edit1 = new Edit("writing", textCharManager.textChars.slice(0, 5))
-const edit2 = new Edit("writing", textCharManager.textChars.slice(5))
+const edit1 = new Edit("writing", textCharManager.textChars.slice(0, 6))
+const edit2 = new Edit("writing", textCharManager.textChars.slice(6))
 editManager.edits = [edit1, edit2]
 
 
