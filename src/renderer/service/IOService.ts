@@ -27,8 +27,12 @@ class IOService {
                     this.selectedFilePath = fileNames.filePaths[0]; 
                     //store Name Path
                     this.selectedFileName = path.basename(this.selectedFilePath);
-                    
-                    //console.log(this.selectedFileName);
+                    //Set File Name replace Title
+                    (document.getElementById('title') as HTMLFormElement).textContent = this.selectedFileName.split('.').slice(0, -1).join('.');
+                    //Set File Created Data
+                    const info = fs.statSync(this.selectedFilePath);
+                    //console.log(info.birthtime);
+                    (document.getElementById('time') as HTMLFormElement).textContent = "Creation Date: " + info.birthtime.toJSON().slice(0,10).replace(/-/g,'/');
 
                     //Node JS call reading file method
                     fs.readFile(fileNames.filePaths[0], 'utf-8', function (err: { message: string; }, data: string) {
@@ -76,6 +80,11 @@ class IOService {
                 console.log(err);
                 return;
             }
+            //Set Title back to Original one
+            (document.getElementById('title') as HTMLFormElement).textContent = ("This is the title.");
+            //Set Time back to Current Date
+            (document.getElementById('time') as HTMLFormElement).textContent = "Date: " + new Date().toJSON().slice(0,10).replace(/-/g,'/');
+
             alert("The File Has Been Saved.");
             }); 
         }else{

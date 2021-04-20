@@ -13,7 +13,7 @@
         id="time"
       >
       <!-- TODO CSS Display Current day -->
-      {{ new Date().toJSON().slice(0,10).replace(/-/g,'/') }}
+      Date: {{ new Date().toJSON().slice(0,10).replace(/-/g,'/') }}
       </div>
       <div 
         v-if="!isTooTight||!isGroupOn"
