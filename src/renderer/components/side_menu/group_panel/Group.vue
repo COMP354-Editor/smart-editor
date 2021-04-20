@@ -9,8 +9,8 @@
       :group-name="groupName"
       :on-index="onIndex"
       @group-header-btn-on="groupHeaderBtnOn=!groupHeaderBtnOn"
+      @group-selected="$emit('group-selected', groupId)"
     />
-    <!-- @click="groupSelect=true" -->
     <EditItem
       v-for="edit in edits"
       id="group-editItem-appearance"
@@ -40,18 +40,31 @@ export default {
       type: Number,
       default: -1
     },
+    groupSelect: {
+      type: Boolean,
+      default: false
+    },
     edits: {
       type: Array,
       default: () => {
         return []
       }
+    },
+    askForGroupItemsEmit: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
       isGroup: true,
       groupHeaderBtnOn: false,
-      onIndex:0
+      onIndex: 0
+    }
+  },
+  watch: {
+    askForGroupItemsEmit() {
+      this.$emit('replyForGroupItemsEmit')
     }
   },
   methods: {
@@ -60,11 +73,9 @@ export default {
       this.$emit('drop-edit', this.groupId, parseInt(editId))
       console.log(editId)
     },
-    toggleSelectOnIndex(val){
-      this.onIndex=this.onIndex+val
-    }
-
-
+    toggleSelectOnIndex(val) {
+      this.onIndex = this.onIndex + val
+    },
   }
 }
 

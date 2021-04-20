@@ -5,6 +5,7 @@ export default class Edit {
     groupId: number
     textChars: Array<TextChar>
     operation: "writing" | "deletion"
+    isUndone: boolean
 
     static idCounter = 0
 
@@ -13,6 +14,7 @@ export default class Edit {
         this.groupId = -1
         this.operation = operation
         this.textChars = textChars
+        this.isUndone = false
     }
 
     getContent(): string {
@@ -31,6 +33,7 @@ export default class Edit {
                 textChar.isDeleted = false;
             })
         }
+        this.isUndone = true;
     }
 
     redo() {
@@ -44,6 +47,7 @@ export default class Edit {
                 textChar.isDeleted = true;
             })
         }
+        this.isUndone = false;
 
     }
 }
