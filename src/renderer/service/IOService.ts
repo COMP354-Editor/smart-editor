@@ -52,18 +52,22 @@ class IOService {
         const content = textCharManager.getTextValue();
         //Call Dialog Window
         dialog.showSaveDialog({ properties: ['showHiddenFiles'] })
-            .then((fileName:SaveDialogReturnValue) => {
-                if (fileName === undefined) {
+            .then((result:SaveDialogReturnValue) => {
+                if (result === undefined) {
                     alert("You Can Not Save The File.");
                     return;
                 }
+                
                 //Node JS call reading file method
-                fs.writeFile(fileName.filePath, content, function (err: { message: string; }) {
-                    if (err) {
-                        console.error("Error occurred creating the file : " + err.message)
-                    }
-                    alert("The File Has Been Saved.");
-                });
+                if (!result.canceled){
+                    fs.writeFile(result.filePath, content, function (err: { message: string; }) {
+                        if (err) {
+                            console.error("Error occurred creating the file : " + err.message)
+                        }
+                        alert("The File Has Been Saved.");
+                    });
+
+                }
             });
     }
     //open exist file and edited, then save to same file
