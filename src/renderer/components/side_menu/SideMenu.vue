@@ -22,6 +22,7 @@
         v-if="isGroupOn"
         :edits="allEdits"
         @selected-edits-updated="selectedEditsUpdated"
+        @apply-selected-edits="applySelectedEdits"
       />
       <EditPanel
         :is-group-on="isGroupOn"
