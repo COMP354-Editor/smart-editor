@@ -121,6 +121,7 @@ export default {
     },
     groupApply() {
       // console.log("groupId: " + this.groupId)
+      this.$emit('apply-selected-edits');
       if (this.selectedGroupId !== -1) {
         const editIds = editManager.edits.filter(edit => edit.groupId === this.selectedGroupId).map(edit => edit.id)
         editIds.forEach(id => {
@@ -139,7 +140,6 @@ export default {
       }
     },
     selectedEditsUpdate(selectedEdit){
-      console.log("In GroupPanel: " + selectedEdit)
       this.$emit('selected-edits-updated', selectedEdit)
     }
   }
