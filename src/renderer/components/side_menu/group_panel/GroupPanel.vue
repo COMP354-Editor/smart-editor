@@ -32,6 +32,7 @@
             :ripple="false"
             v-bind="attrs"
             v-on="on"
+            @click="deleteGroupEdit()"
           >
             Delete
           </v-btn>
@@ -124,16 +125,15 @@ export default {
         })
       }
       bus.$emit('update-text-value')
-
-      // this.groups.forEach(group=>{
-      //   if(group.groupSelect === true){
-      //     this.group.edits.forEach(j=>{
-      //         console.log(j)
-      //         // this.group.edits[j].groupId = -1
-      //       }
-      //     )
-      //   }
-      // })
+    },
+    deleteGroupEdit(){
+      console.log("groupId: " + this.groupId)
+      if (this.groupId !== -1) {
+        const editIds = editManager.edits.filter(edit => edit.groupId === this.groupId).map(edit => edit.id)
+        editIds.forEach(id => {
+          editManager.getEditById(id).groupId = -1
+        })
+      }
     }
   }
 }
