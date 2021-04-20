@@ -1,6 +1,6 @@
 const  fs  = require('fs')
 const { dialog } = require('electron').remote
-
+const path = require('path')
 
 import {SaveDialogReturnValue, OpenDialogReturnValue} from 'electron'
 import textCharManager from "../model/TextCharManager";
@@ -8,9 +8,11 @@ import textCharManager from "../model/TextCharManager";
 class IOService {
 
     selectedFilePath: string;
+    selectedFileName: string;
 
     constructor() {
         this.selectedFilePath = "";
+        this.selectedFileName = "";
     }
 
     open() {
@@ -22,7 +24,12 @@ class IOService {
                     alert("No File Selected");
                 } else {
                     //store File Path
-                    this.selectedFilePath = fileNames.filePaths[0];             
+                    this.selectedFilePath = fileNames.filePaths[0]; 
+                    //store Name Path
+                    this.selectedFileName = path.basename(this.selectedFilePath);
+                    
+                    //console.log(this.selectedFileName);
+
                     //Node JS call reading file method
                     fs.readFile(fileNames.filePaths[0], 'utf-8', function (err: { message: string; }, data: string) {
                         if (err) {

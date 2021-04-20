@@ -10,6 +10,7 @@
       :on-index="onIndex"
       @group-header-btn-on="groupHeaderBtnOn=!groupHeaderBtnOn"
     />
+    <!-- @click="groupSelect=true" -->
     <EditItem
       v-for="edit in edits"
       id="group-editItem-appearance"
