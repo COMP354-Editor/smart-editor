@@ -33,6 +33,7 @@
         @selected-edits-updated="selectedEditsUpdated"
         @delete-selected-edits="deleteSelectedEdits"
         @ensure-select-off="ensureSelectOff=!ensureSelectOff;"
+        @apply-selected-edits="applySelectedEdits"
       />
     </div>
   </div>
@@ -61,8 +62,7 @@ export default {
       allEdits: editManager.edits
     }
   },
-  computed: {
-  },
+  computed: {},
   watch: {
     isSideMenuFolded: function (val) {
       if (val) {
@@ -81,6 +81,7 @@ export default {
       }
     },
     selectedEditsUpdated(selectedEdit) {
+      console.log("IN sidemenu: " + selectedEdit)
       let index = this.selectedEdits.indexOf(selectedEdit)
       if (index === -1) {
         // if the edit is not in list, add it
@@ -100,6 +101,14 @@ export default {
     },
     refreshEdits() {
       this.allEdits = editManager.edits
+    },
+    applySelectedEdits() {
+      const ids = this.selectedEdits.map(edit => edit.id)
+      console.log(ids)
+      ids.forEach(id => editManager.getEditById(id).undoRedo())
+
+      this.refreshEdits()
+      bus.$emit('update-text-value')
     }
 
   }

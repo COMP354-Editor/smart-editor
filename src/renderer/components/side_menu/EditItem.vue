@@ -5,7 +5,7 @@
   >
     <div
       id="content-packer"
-      :class="{margin_for_select_undo:isSelectUndoEnabled,scroll_panel_not_undone_created: !isUndone&&!isDeleted, scroll_panel_not_undone_delete: !isUndone&&isDeleted, scroll_panel_undone: isUndone}"
+      :class="{margin_for_select_undo:isSelectUndoEnabled,scroll_panel_not_undone_created: !edit.isUndone&&!isDeleted, scroll_panel_not_undone_delete: !edit.isUndone&&isDeleted, scroll_panel_undone: edit.isUndone}"
     >
       <div
         id="content"
@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       isItemSelected: false,
-      isUndone: false,
+      // isUndone: false,
       isDeleted: false,
       increment: 1,
       decrement: -1
@@ -78,13 +78,13 @@ export default {
   },
   methods: {
     toggleSelect() {
-      if(!this.groupHeaderBtnOn){
+      if (!this.groupHeaderBtnOn) {
         this.isItemSelected = !this.isItemSelected
         this.$emit('toggle-select', this.edit)
-        if(this.isItemSelected){
-          this.$emit('toggle-select-onIndex',this.increment)
-        }else if (!this.isItemSelected)(
-          this.$emit('toggle-select-onIndex',this.decrement)
+        if (this.isItemSelected) {
+          this.$emit('toggle-select-onIndex', this.increment)
+        } else if (!this.isItemSelected) (
+          this.$emit('toggle-select-onIndex', this.decrement)
         )
       }
     },
@@ -98,13 +98,13 @@ export default {
       // tell TextArea to update text value
       bus.$emit('update-text-value')
     },
-    onDragStart(event){
+    onDragStart(event) {
       event.dataTransfer.setData("id", this.edit.id.toString())
       console.log("drag start with id: " + this.edit.id.toString())
       this.$emit('drag-start', this.edit.id)
     },
-    onUndoEdit(){
-      if(!this.isGroup){
+    onUndoEdit() {
+      if (!this.isGroup) {
         this.undoEdit()
       }
 

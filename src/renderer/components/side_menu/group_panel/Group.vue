@@ -19,6 +19,7 @@
       :is-group="isGroup"
       :group-header-btn-on="groupHeaderBtnOn"
       @toggle-select-onIndex="toggleSelectOnIndex"
+      @toggle-select="selectedEditsUpdate"
     />
   </div>
 </template>
@@ -62,11 +63,6 @@ export default {
       onIndex: 0
     }
   },
-  watch: {
-    askForGroupItemsEmit() {
-      this.$emit('replyForGroupItemsEmit')
-    }
-  },
   methods: {
     onDrop(event) {
       const editId = event.dataTransfer.getData("id")
@@ -76,6 +72,9 @@ export default {
     toggleSelectOnIndex(val) {
       this.onIndex = this.onIndex + val
     },
+    selectedEditsUpdate(selectedEdit) {
+      this.$emit('selected-edits-update', selectedEdit)
+    }
   }
 }
 

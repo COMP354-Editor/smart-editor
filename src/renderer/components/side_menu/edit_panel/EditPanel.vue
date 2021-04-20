@@ -41,6 +41,7 @@
       id="apply"
       height="32px"
       width="136px"
+      @click="applySelectedEdits"
     >
       apply
     </v-btn>
@@ -103,14 +104,8 @@ export default {
       // console.log(id)
       // TODO: remove this editItem
     },
-    getEditItemByDOM(htmlElement){
-      const index = this.$refs.editItems.indexOf(htmlElement);
-      if (index === -1){
-        return null
-      } else {
-        return this.editsToShow[index]
-      }
-
+    applySelectedEdits(){
+      this.$emit('apply-selected-edits');
     }
   }
 

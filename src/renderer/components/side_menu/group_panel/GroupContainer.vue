@@ -6,10 +6,10 @@
       :group-name="group.groupName"
       :group-id="group.groupId"
       :edits="getEditsByGroupId(group.groupId)"
-      :ask-for-group-items-emit="askForGroupItemsEmit"
       @drop-edit="onDropEdit"
       @replyForGroupItemsEmit="replyForGroupItems"
       @group-selected="onGroupSelected"
+      @selected-edits-update="selectedEditsUpdate"
     />
   </div>
 </template>
@@ -30,28 +30,16 @@ export default {
       default: () => [],
       type: Array
     },
-    askForGroupItemsEmit:{
-      default: false,
-      type: Boolean
-    }
   },
   data() {
     return {
     }
-  },
-  watch: {
-    // askForGroupItemsEmit(newVal, oldVal){
-    //   console.log("In GroupContainer: ")
-    //   console.log("oldVal = " + oldVal)
-    //   console.log("newVal = " + newVal)
-    // }
   },
   methods: {
     getEditsByGroupId(groupId) {
       return this.edits.filter(edit => edit.groupId === groupId)
     },
     onDropEdit(groupId, editId) {
-      console.log("In groupContainer, editId = " + editId)
       const edit = editManager.getEditById(editId)
       edit.groupId = groupId
     },
@@ -59,8 +47,11 @@ export default {
       this.$emit('reply-for-group-items-emit',groupName,groupId,groupSelect,edits)
     },
     onGroupSelected(groupId){
-      console.log("In GroupContainer: " + groupId)
       this.$emit('group-selected', groupId)
+    },
+    selectedEditsUpdate(selectedEdit) {
+      console.log("In groupContainer: " + selectedEdit)
+      this.$emit('selected-edits-update', selectedEdit)
     }
   },
 

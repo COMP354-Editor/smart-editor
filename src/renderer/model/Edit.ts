@@ -23,8 +23,16 @@ export default class Edit {
             .reduce((str1, str2) => str1.concat(str2))
     }
 
+    undoRedo() {
+        if (this.isUndone) {
+            this.redo()
+        } else {
+            this.undo()
+        }
+    }
+
     undo() {
-        if (this.operation == "writing"){
+        if (this.operation == "writing") {
             this.textChars.forEach(textChar => {
                 textChar.isWritingUndone = true;
             })
@@ -37,7 +45,7 @@ export default class Edit {
     }
 
     redo() {
-        if(this.operation == "writing"){
+        if (this.operation == "writing") {
             this.textChars.forEach(textChar => {
                 textChar.isWritingUndone = false;
             })

@@ -50,8 +50,8 @@
       <GroupContainer
         :groups="groups"
         :edits="edits"
-        :ask-for-group-items-emit="askForGroupItemsEmit"
         @group-selected="onGroupSelected"
+        @selected-edits-update="selectedEditsUpdate"
       />
     </div>
     <v-btn
@@ -108,32 +108,39 @@ export default {
       })
     },
     onGroupSelected(groupId) {
-      if (this.groupId === groupId) {
+      if (this.selectedGroupId === groupId) {
         // this group is already selected. Unselect now
-        this.groupId = -1
+        this.selectedGroupId = -1
+        bus.$emit('selected-edits-updated', [])
       } else {
-        this.groupId = groupId
+        this.selectedGroupId = groupId
+        const selectedEdits = editManager.edits.filter(edit => edit.groupId === this.selectedGroupId)
+        bus.$emit('selected-edits-updated', selectedEdits)
       }
 
     },
     groupApply() {
-      console.log("groupId: " + this.groupId)
-      if (this.groupId !== -1) {
-        const editIds = editManager.edits.filter(edit => edit.groupId === this.groupId).map(edit => edit.id)
+      // console.log("groupId: " + this.groupId)
+      if (this.selectedGroupId !== -1) {
+        const editIds = editManager.edits.filter(edit => edit.groupId === this.selectedGroupId).map(edit => edit.id)
         editIds.forEach(id => {
-          editManager.getEditById(id).undo()
+          editManager.getEditById(id).undoRedo()
         })
       }
       bus.$emit('update-text-value')
     },
-    deleteGroupEdit(){
-      console.log("groupId: " + this.groupId)
-      if (this.groupId !== -1) {
-        const editIds = editManager.edits.filter(edit => edit.groupId === this.groupId).map(edit => edit.id)
+    deleteGroupEdit() {
+      console.log("groupId: " + this.selectedGroupId)
+      if (this.selectedGroupId !== -1) {
+        const editIds = editManager.edits.filter(edit => edit.groupId === this.selectedGroupId).map(edit => edit.id)
         editIds.forEach(id => {
           editManager.getEditById(id).groupId = -1
         })
       }
+    },
+    selectedEditsUpdate(selectedEdit){
+      console.log("In GroupPanel: " + selectedEdit)
+      this.$emit('selected-edits-updated', selectedEdit)
     }
   }
 }

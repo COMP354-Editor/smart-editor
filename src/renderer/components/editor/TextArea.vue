@@ -39,7 +39,7 @@ export default {
   name: 'TextArea',
   components: {HighlightedText, PlainText},
   props: {
-    isGroupOn:Boolean
+    isGroupOn: Boolean
   },
   data() {
     return {
@@ -83,12 +83,12 @@ export default {
       lastSelectionStart: 0,
       lastSelectionEnd: 0,
       currentLength: 0,
-      isSelectUndoOn:false
+      isSelectUndoOn: false
     }
   },
-  watch:{
+  watch: {
     isGroupOn: function (val) {
-      if(this.isSelectUndoOn && val){
+      if (this.isSelectUndoOn && val) {
         this.isSelectUndoOn = false
       }
     }
@@ -106,6 +106,7 @@ export default {
   created() {
     // emitted from EditItem
     bus.$on('update-text-value', () => {
+      this.highlightView = false;
       this.textValue = textCharManager.getTextValue()
     })
     // emitted from File
@@ -115,11 +116,15 @@ export default {
     // emitted from SideMenu
     bus.$on('selected-edits-updated', edits => {
       this.selectedEdits = edits.map(edit => editManager.getEditById(edit.id))
-      this.preview(this.selectedEdits)
+      if (this.selectedEdits.length > 0) {
+        this.preview(this.selectedEdits)
+      } else {
+        this.highlightView = false;
+      }
     })
     // lock textarea on select edit, from SelectUndoPanel
     bus.$on("lock-textarea-by-select", (val) => {
-      this.isSelectUndoOn=val
+      this.isSelectUndoOn = val
     })
 
   },
