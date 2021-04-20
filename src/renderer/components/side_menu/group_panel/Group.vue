@@ -11,7 +11,6 @@
       @group-header-btn-on="groupHeaderBtnOn=!groupHeaderBtnOn"
       @group-selected="$emit('group-selected', groupId)"
     />
-
     <EditItem
       v-for="edit in edits"
       id="group-editItem-appearance"
