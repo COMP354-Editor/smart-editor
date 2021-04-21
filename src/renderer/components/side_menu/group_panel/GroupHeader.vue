@@ -41,8 +41,8 @@ export default {
       if (this.onIndex === 0) {
         this.isGroupSelected = !this.isGroupSelected;
         this.$emit('group-header-btn-on')
+        this.$emit('group-selected')
       }
-      this.$emit('group-selected')
     }
   }
 }
