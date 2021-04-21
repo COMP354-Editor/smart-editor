@@ -9,6 +9,10 @@ class TextCharManager {
         this.visibleTextChars = []
     }
 
+    init(){
+        this.textChars = [];
+        this.visibleTextChars = [];
+    }
     /**
      * create a textChar at a position
      * @param position - the index as a visible char

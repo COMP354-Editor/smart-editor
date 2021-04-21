@@ -9,6 +9,10 @@ class EditManager {
         this.edits = [];
     }
 
+    init(){
+        this.edits = [];
+    }
+
     createEdit(operation: 'writing' | 'deletion', textChars: Array<TextChar>): void {
         switch (operation) {
             case "writing":

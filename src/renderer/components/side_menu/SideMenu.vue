@@ -71,6 +71,11 @@ export default {
       }
     }
   },
+  created(){
+    bus.$on('on-open-file', () => {
+      this.allEdits = editManager.edits
+    })
+  },
   methods: {
     turnTheMenuOn() {
       if (this.isMenuOn) {

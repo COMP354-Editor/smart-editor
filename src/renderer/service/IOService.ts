@@ -1,3 +1,5 @@
+import editManager from "../model/EditManager";
+
 const  fs  = require('fs')
 const { dialog } = require('electron').remote
 const path = require('path')
@@ -17,14 +19,14 @@ class IOService {
 
     open() {
         return new Promise ((resolve) => {
-            
+
             dialog.showOpenDialog({ properties: ['openFile', 'openDirectory'] })
             .then((fileNames: OpenDialogReturnValue) => {
                 if (fileNames === undefined) {
                     alert("No File Selected");
                 } else {
                     //store File Path
-                    this.selectedFilePath = fileNames.filePaths[0]; 
+                    this.selectedFilePath = fileNames.filePaths[0];
                     //store Name Path
                     this.selectedFileName = path.basename(this.selectedFilePath);
                     //Set File Name replace Title
@@ -40,6 +42,8 @@ class IOService {
                             console.error("Error Occurred Reading The File : " + err.message);
                             return;
                         }
+                        textCharManager.init()
+                        editManager.init()
                         textCharManager.createTextChar(0, data)
                         resolve(data);
                     });
@@ -57,7 +61,7 @@ class IOService {
                     alert("You Can Not Save The File.");
                     return;
                 }
-                
+
                 //Node JS call reading file method
                 if (!result.canceled){
                     fs.writeFile(result.filePath, content, function (err: { message: string; }) {
@@ -90,10 +94,10 @@ class IOService {
             (document.getElementById('time') as HTMLFormElement).textContent = "Date: " + new Date().toJSON().slice(0,10).replace(/-/g,'/');
 
             alert("The File Has Been Saved.");
-            }); 
+            });
         }else{
             alert("Please Select A File.");
-        }      
+        }
     }
 }
 
