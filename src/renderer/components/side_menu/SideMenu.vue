@@ -87,7 +87,6 @@ export default {
       }
     },
     selectedEditsUpdated(selectedEdit) {
-      console.log("IN sidemenu: " + selectedEdit)
       let index = this.selectedEdits.indexOf(selectedEdit)
       if (index === -1) {
         // if the edit is not in list, add it
@@ -104,6 +103,8 @@ export default {
         editManager.deleteEdit(this.selectedEdits[i].id)
         this.refreshEdits()
       }
+      this.selectedEdits = []
+      bus.$emit("selected-edits-updated", this.selectedEdits)
     },
     refreshEdits() {
       this.allEdits = editManager.edits
